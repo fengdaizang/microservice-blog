@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="common/macro-head :: macro-head"></head>
+    <body>
+        <div th:replace="common/header :: header"></div>
+        <div class="wrapper">
+            <div class="main-wrap">
+                <main th:include="common/article-list :: article-list"></main>
+                <div th:replace="common/side :: side"></div>
+            </div>
+        </div>
+        <div th:include="common/footer :: footer"></div>
+    </body>
+</html>

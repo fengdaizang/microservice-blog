@@ -1,0 +1,50 @@
+package com.fdzang.microservice.blog.article.feign.client.impl;
+
+import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
+import com.fdzang.microservice.blog.common.framework.ApiResult;
+import feign.hystrix.FallbackFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author tanghu
+ * @Date: 2019/1/8 16:44
+ */
+@Component
+@Slf4j
+public class ArticleHystrix implements FallbackFactory<ArticleClient> {
+    @Override
+    public ArticleClient create(Throwable throwable) {
+        return new ArticleClient() {
+            @Override
+            public ApiResult getArticles(String keyword, Integer pageNo, Integer pageSize) {
+                return null;
+            }
+
+            @Override
+            public ApiResult getArticleByPermalink(String permalink) {
+                return null;
+            }
+
+            @Override
+            public ApiResult addArticleViewCount(String id) {
+                return null;
+            }
+
+            @Override
+            public ApiResult getMostCommentArticles() {
+                return null;
+            }
+
+            @Override
+            public ApiResult getMostViewCountArticles() {
+                return null;
+            }
+
+            @Override
+            public ApiResult getArticlesByTagId(String tagId) {
+                return null;
+            }
+        };
+    }
+}

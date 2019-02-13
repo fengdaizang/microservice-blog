@@ -1,0 +1,34 @@
+server:
+  port: 7005
+
+spring:
+  profiles:
+    active: local
+  application:
+    name: blog-ucenter-v1
+  output:
+    ansi:
+      enabled: never
+
+mybatis:
+  check-config-location: true
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+feign:
+  hystrix:
+    enable: true
+
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 20000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000 #缺省为2000
+  threadpool:
+    default:
+      coreSize: 20 #缺省为10

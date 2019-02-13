@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+    <div class="banner">
+        <div class="fn-clear wrapper">
+            <h1 class="fn-inline">
+                <a th:href="${session.servePath}" rel="start" th:text="${session.blogTitle}"></a>
+            </h1>
+            <small th:text=" ${session.blogSubtitle}"> </small>
+            <div class="fn-right">
+                <a th:if="${session.isLoggedIn}" th:href="@{${session.servePath}+'/admin-index.do#main'}" th:title="#{adminLabel}">
+                    <i class="icon-setting"></i><span th:text="#{adminLabel}"></span>
+                </a>
+                <a th:if="${session.isLoggedIn}" th:href="${session.logoutURL}">
+                    <i class="icon-logout"></i><span th:text="#{logoutLabel}"></span>
+                </a>
+                <a th:unless="${session.isLoggedIn}" th:href="${session.loginURL}">
+                    <i class="icon-login"></i><span th:text="#{loginLabel}"></span>
+                </a>
+                <a th:unless="${session.isLoggedIn}" th:href="@{${session.servePath}+'/register'}">
+                    <i class="icon-register"></i><span th:text="#{registerLabel}"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <div class="fn-clear wrapper">
+            <nav class="fn-left">
+                <a th:href="@{${session.servePath}+'/index.html'}">
+                    <i class="icon-home"></i>
+                    <span th:text="#{indexLabel}"></span>
+                </a>
+                <a th:href="@{${session.servePath}+'/dynamic.html'}" rel="section">
+                    <i class="icon-refresh"></i>
+                    <span th:text="#{dynamicLabel}"></span>
+                </a>
+                <a th:href="@{${session.servePath}+'/tags.html'}" rel="section">
+                    <i class="icon-tags"></i>
+                    <span th:text="#{allTagsLabel}"></span>
+                </a>
+                <a th:href="@{${session.servePath}+'/archives.html'}">
+                    <i class="icon-inbox"></i>
+                    <span th:text="#{archiveLabel}"></span>
+                </a>
+                <a rel="archive" th:href="@{${session.servePath}+'/links.html'}">
+                    <i class="icon-link"></i>
+                    <span th:text="#{linkLabel}"></span>
+                </a>
+                <a rel="alternate section" th:href="@{${session.servePath}+'/blog-articles-rss.do'}">
+                    <i class="icon-rss"></i> RSS
+                </a>
+            </nav>
+            <div class="fn-right">
+                <form class="form" th:action="@{${session.servePath}+'/search'}">
+                    <input th:placeholder="#{searchLabel}" id="search" type="text" name="keyword"/>
+                    <button type="submit"><i class="icon-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

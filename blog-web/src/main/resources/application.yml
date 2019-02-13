@@ -1,0 +1,34 @@
+server:
+  port: 7007
+
+spring:
+  output:
+    ansi:
+      enabled: never
+  application:
+    name: blog-web
+  thymeleaf:
+    encoding: utf-8 #默认
+    enabled: true #默认开启
+    mode: LEGACYHTML5 #默认
+    cache: false #默认为true，在开发阶段通常设为false
+  messages:
+    encoding: UTF-8  #默认
+    cache-seconds: 1  #默认为-1s
+    basename: i18n/lang #默认为messages，这里设置指向resource下的message配置文件
+
+#global ribbon config
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 5000
+
+feign:
+  hystrix:
+    enabled: true
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 10 # 每10s获取一次service信息
+    service-url:
+      #defaultZone: http://tanghu.tk:7001/eureka/,http://tanghu.tk:7002/eureka/,http://tanghu.tk:7003/eureka/
+      defaultZone: http://localhost:7003/eureka/

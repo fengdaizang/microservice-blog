@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="common/macro-head :: macro-head"></head>
+    <body>
+        <div th:replace="common/header :: header"></div>
+            <div class="wrapper">
+                <div class="main-wrap">
+                    <main>
+                        <div class="title">
+                            <h2 class="tip">
+                                <i class="icon-inbox"></i>
+                                &nbsp;[[${session.archiveDate.archiveDateYear}]] [[#{yearLabel}]]
+                                [[${session.archiveDate.archiveDateMonth}]]
+                                [[#{monthLabel}]]-
+                                [[${session.archiveDate.archivedatePublishedArticleCount}]][[#{articleLabel}]]
+                            </h2>
+                        </div>
+                        <div th:replace="common/article-list :: article-list"></div>
+                    </main>
+                    <div th:replace="common/side :: side"></div>
+                </div>
+            </div>
+        <div th:include="common/footer :: footer"></div>
+    </body>
+</html>

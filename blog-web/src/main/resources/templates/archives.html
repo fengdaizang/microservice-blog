@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="common/macro-head :: macro-head"></head>
+    <body>
+        <div th:replace="common/header :: header"></div>
+        <div class="wrapper">
+            <div class="main-wrap">
+                <main class="other">
+                    <span class="title">
+                         <h2><i class="icon-inbox"></i>
+                             &nbsp;[[${session.statisticPublishedBlogArticleCount}]] [[#{articleLabel}]]</h2>
+                    </span>
+                    <ul class="list" th:if="${not #lists.isEmpty(session.archiveDates)}">
+                        <li th:each="archiveDate:${session.archiveDates}">
+                            <a class="post-title" th:href="@{${session.servePath}+'/archives/'+${archiveDate.archiveDateYear}+'/'+${archiveDate.archiveDateMonth}}">
+                                [[${archiveDate.archiveDateYear}]] [[#{yearLabel}]] [[${archiveDate.archiveDateMonth}]]
+                                [[#{monthLabel}]]([[${archiveDate.archivedatePublishedArticleCount}]])
+                            </a>
+                        </li>
+                    </ul>
+                </main>
+                <div th:replace="common/side :: side"></div>
+            </div>
+        </div>
+        <div th:include="common/footer :: footer"></div>
+    </body>
+</html>
