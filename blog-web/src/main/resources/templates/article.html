@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:include="common/macro-head :: macro-head"></head>
+<body>
+    <div th:replace="common/header :: header"></div>
+        <div class="wrapper">
+            <div class="main-wrap">
+                <main>
+                    <article class="post">
+                        <header>
+                            <h1>
+                                <a rel="bookmark" th:href="${servePath}${article.articlePermalink}">
+                                    [[${article.articleTitle}]]
+                                </a>
+                                <sup th:if="${article.articlePutTop}" th:text="#{topArticleLabel}"></sup>
+                                <sup th:if="${article.hasUpdated}" th:text="#{updatedLabel}"></sup>
+                            </h1>
+                            <div class="meta">
+                                <span class="tooltipped tooltipped-n" th:aria-label="#{createDateLabel}">
+                                    <i class="icon-date"></i>
+                                    <time th:text="${#dates.format(article.articleCreateDate,'yyyy-MM-dd')}"></time>
+                                </span>
+                                <span class="tooltipped tooltipped-n" th:aria-label="#{commentCountLabel}">
+                                    <i class="icon-comments"></i>
+                                    <a th:href="@{${session.servePath}+${article.articlePermalink}+'#comments'}">
+                                        <span th:text="${article.articleCommentCount}"></span>
+                                        <span th:text="#{commentLabel}"></span></a>
+                                </span>&nbsp; | &nbsp;
+                                                <span class="tooltipped tooltipped-n" th:aria-label="#{viewCount1Label}">
+                                    <i class="icon-views"></i>
+                                    <span th:text="${article.articleViewCount}"></span>
+                                    <span th:text="#{viewLabel}"></span>
+                                </span>
+                            </div>
+                        </header>
+                        <div class="content-reset" th:utext="${article.articleAbstract}"></div>
+
+                        <footer th:each="articleTag : ${#strings.setSplit(article.articleTags,',')}" class="fn-clear tags">
+                            <a class="tag" rel="tag" th:text="${articleTag}" th:href="@{${session.servePath}+'/tags/'+${articleTag}}"></a>
+                            <a th:href="@{${session.servePath}+${article.articlePermalink}+'#more'}"
+                               th:text="#{readmoreLabel}" rel="contents" class="fn-right"></a>
+                        </footer>
+
+                        <div id="externalRelevantArticles" class="list"></div>
+                        <div id="relevantArticles" class="list"></div>
+                        <div id="randomArticles" class="list"></div>
+                    </article>
+                </main>
+            </div>
+            <div th:replace="common/side :: side"></div>
+        </div>
+    </div>
+    <div th:include="common/footer :: footer"></div>
+</body>
+</html>

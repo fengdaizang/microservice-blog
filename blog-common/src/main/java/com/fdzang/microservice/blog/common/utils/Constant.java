@@ -20,6 +20,10 @@ public class Constant {
     public class Session{
         public static final String ARTICLES = "articles";
         public static final String PAGINATIONPAGECOUNT = "paginationPageCount";
+        public static final String PAGINATIONPAGENUMS = "paginationPageNums";
+        public static final String PAGINATIONPREVIOUSPAGENUM = "paginationPreviousPageNum";
+        public static final String PAGINATIONCURRENTPAGENUM = "paginationCurrentPageNum";
+        public static final String PAGINATIONNEXTPAGENUM = "paginationNextPageNum";
         public static final String ARTICLECOMMENTS = "articleComments";
         public static final String STATISTICBLOGVIEWCOUNT = "statisticBlogViewCount";
         public static final String ADMINEMAIL = "adminEmail";
@@ -52,6 +56,8 @@ public class Constant {
         public static final String REGISTER = "register";
         public static final String LOGIN = "login";
         public static final String TAGS = "tags";
+        public static final String DYNAMIC = "dynamic";
+        public static final String ARTICLE = "article";
         public static final String ARCHIVES = "archives";
         public static final String TAG_ARTICLES = "tag-articles";
         public static final String ARCHIVE_ARTICLES = "archive-articles";

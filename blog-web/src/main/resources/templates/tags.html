@@ -8,10 +8,10 @@
                 <main class="other">
                     <div class="title">
                         <h2><i class="icon-tags"></i>
-                            &nbsp; [[#{sumLabel}]] [[${#lists.size(tags)}]] [[#{tagLabel}]]
+                            &nbsp; [[#{sumLabel}]] [[${#lists.size(session.tags)}]] [[#{tagLabel}]]
                         </h2>
                     </div>
-                    <div class="tags" th:each="tag:${tags}">
+                    <div class="tags" th:each="tag:${session.tags}">
                         <a rel="tag" th:data-count="${tag.tagPublishedRefCount}" class="tag"
                            th:href="@{${session.servePath}+'/tags/'+${tag.tagTitle}}">
                             <span>[[${tag.tagTitle}]]</span>

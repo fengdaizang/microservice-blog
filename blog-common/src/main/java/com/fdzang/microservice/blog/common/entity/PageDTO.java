@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,6 +16,15 @@ public class PageDTO<T> {
 
     @JsonProperty("total_count")
     private long totalCount;
+
+    @JsonProperty("pages")
+    private List<Long> pages;
+
+    @JsonProperty("previous")
+    private Integer previous;
+
+    @JsonProperty("next")
+    private Integer next;
 
     @JsonProperty("page_size")
     private int pageSize;
@@ -59,4 +69,48 @@ public class PageDTO<T> {
             return (int)(totalCount);
         }
     }
+
+    @JsonIgnore
+    public List<Long> getPages() {
+        pages = new ArrayList<>();
+        totalCount=getTotalPage();
+
+        long indexPage = 1;
+        if (totalCount - 2 <= 0){
+            indexPage = 1;
+        }else if (pageNo - totalCount <= 2)
+        {
+            indexPage = pageNo - 4;
+        } else
+        {
+            indexPage = totalCount - 2;
+        }
+        for (int i = 1; i <= 5 && indexPage <= pageNo; indexPage++, i++)
+        {
+            pages.add(indexPage);
+        }
+
+        return pages;
+    }
+
+    @JsonIgnore
+    public Integer getPrevious() {
+        previous = 0;
+        if(pageNo>1){
+            previous=pageNo-1;
+        }
+        return previous;
+    }
+    
+    @JsonIgnore
+    public Integer getNext() {
+        next=pageNo;
+        if(pageNo+1<=getTotalPage()){
+            next = pageNo+1;
+        }
+        return next;
+    }
 }
+
+
+

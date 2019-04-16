@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://tanghu.tk:3306/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    url: jdbc:mysql://120.78.121.110:3306/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     driver-class-name: com.mysql.jdbc.Driver
 
 eureka:

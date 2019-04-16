@@ -125,6 +125,7 @@
         <module>blog-web</module>
         <module>blog-console</module>
         <module>blog-eureka</module>
+        <module>blog-web-ftl</module>
     </modules>
 
 

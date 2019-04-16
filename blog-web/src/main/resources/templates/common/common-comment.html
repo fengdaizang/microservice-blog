@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<ul>
+    <li th:each="comment : ${session.comments}" id="${comment.oId}">
+        <div>
+            <div class="avatar tooltipped tooltipped-n" aria-label="${comment.commentName}"
+                 style="background-image: url(${comment.commentThumbnailURL})"></div>
+            <main>
+                <div class="fn-clear">
+                    <span th:if="${comment.commentURL == 'http://'}" th:text="#{topArticleLabel}">
+                        [[${comment.commentName}]]
+                    </span>
+                    <a th:if="${comment.commentURL != 'http://'}" class="user-name"
+                       th:href="${comment.commentURL}" target="_blank">[[${comment.commentName}]]
+                    </a>
+                    <span th:if="${comment.isReply}" th:text="#{topArticleLabel}">
+                    @<a class="user-name" th:href="${servePath}+${article.permalink}+'#'+${comment.commentOriginalCommentId}"
+                       onmouseover="page.showComment(this, '${comment.commentOriginalCommentId}', 23);"
+                       onmouseout="page.hideComment('${comment.commentOriginalCommentId}')"
+                    >[[${comment.commentOriginalCommentName}]]</a>
+                    </span>
+                    <time th:text="${#dates.format(comment.commentDate2,'yyyy-MM-dd')}" class="ft-gray"></time>
+
+                    <a th:if="${article.commentable}"  class="reply-btn" href="javascript:replyTo('${comment.oId}')">${replyLabel}</a>
+                </div>
+                <div class="content-reset">
+                    [[${comment.commentContent}]]
+                </div>
+            </main>
+        </div>
+    </li>
+</ul>
