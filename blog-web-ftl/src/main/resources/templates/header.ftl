@@ -30,7 +30,7 @@
     <div class="navbar">
         <div class="fn-clear wrapper">
             <nav class="fn-left">
-                <a href="${request.contextPath}">
+                <a href="${request.contextPath}/index.html">
                     <i class="icon-home"></i>
                     首页
                 </a>

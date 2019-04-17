@@ -3,8 +3,8 @@
 <html>
     <head>
         <@head title="${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${archiveLabel}"/>
-        <meta name="description" content="${metaDescription},${archiveLabel}"/>
+        <meta name="keywords" content="${metaKeywords},标签"/>
+        <meta name="description" content="${metaDescription},标签"/>
         </@head>
     </head>
     <body>
@@ -14,7 +14,7 @@
                 <main class="other">
                     <div class="title">
                          <h2><i class="icon-link"></i>
-                             &nbsp;${linkLabel}</h2>
+                             &nbsp;标签</h2>
                     </div>
                     <#if 0 != links?size>
                         <ul class="list">

@@ -3,8 +3,8 @@
 <html>
     <head>
         <@head title="${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${dynamicLabel}"/>
-        <meta name="description" content="${metaDescription},${dynamicLabel}"/>
+        <meta name="keywords" content="${metaKeywords},动态"/>
+        <meta name="description" content="${metaDescription},动态"/>
         </@head>
     </head>
     <body>
@@ -15,19 +15,19 @@
                     <#if 0 != recentComments?size>
                         <ul class="comments" id="comments">
                             <#list recentComments as comment>
-                                <li id="${comment.oId}">
+                                <li id="${comment.id}">
                                     <div>
                                         <div class="avatar tooltipped tooltipped-n" aria-label="${comment.commentName}"
-                                             style="background-image: url(${comment.commentThumbnailURL})"></div>
+                                             style="background-image: url(${comment.commentThumbnailUrl})"></div>
                                         <main>
                                             <div class="fn-clear">
-                                                <#if "http://" == comment.commentURL>
+                                                <#if "http://" == comment.commentUrl>
                                                     ${comment.commentName}
                                                     <#else>
-                                                        <a class="user-name" href="${comment.commentURL}" target="_blank">${comment.commentName}</a>
+                                                        <a class="user-name" href="${comment.commentUrl}" target="_blank">${comment.commentName}</a>
                                                 </#if>
                                                 <time class="ft-gray">${comment.commentDate?string("yyyy-MM-dd HH:mm")}</time>
-                                                <a class="reply-btn" href="${servePath}${comment.commentSharpURL}">${viewLabel}»</a>
+                                                <a class="reply-btn" href="${request.contextPath}${comment.commentSharpUrl}">浏览»</a>
                                             </div>
                                             <div class="content-reset">
                                                 ${comment.commentContent}

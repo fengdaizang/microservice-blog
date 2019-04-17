@@ -10,9 +10,9 @@
 </footer>
 <div class="icon-up" onclick="Util.goTop()"></div>
 
-<script type="text/javascript" src="${request.contextPath}/static/js/lib/jquery/jquery.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${request.contextPath}/static/js/common.js" charset="utf-8"></script>
-<script type="text/javascript" src="${request.contextPath}/static/91PHP/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/lib/jquery/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/91PHP/js/common.js" charset="utf-8"></script>
 <script type="text/javascript">
     var latkeConfig = {
         "servePath": "${request.contextPath}",

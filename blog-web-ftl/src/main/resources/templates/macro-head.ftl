@@ -9,9 +9,9 @@
 <meta name="revised" content="${blogTitle?html}" />
 <meta name="copyright" content="B3log" />
 <meta http-equiv="Window-target" content="_top" />
-<link type="text/css" rel="stylesheet" href="${request.contextPath}/static/91PHP/css/base.css" charset="utf-8" />
+<link type="text/css" rel="stylesheet" href="/91PHP/css/base.css" charset="utf-8" />
 <link href="/blog-articles-rss.do" title="RSS" type="application/rss+xml" rel="alternate" />
-<link rel="icon" type="image/png" href="${request.contextPath}/static/favicon.png" />
-<link rel="manifest" href="${request.contextPath}/static/manifest.json">
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="manifest" href="/manifest.json">
 ${htmlHead}
 </#macro>

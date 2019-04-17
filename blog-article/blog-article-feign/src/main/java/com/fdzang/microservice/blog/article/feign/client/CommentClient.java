@@ -15,4 +15,7 @@ public interface CommentClient {
 
     @GetMapping("/zuul/comment/getCommentByArticleId")
     ApiResult getCommentByArticleId(@RequestParam("id")String id);
+
+    @GetMapping("/zuul/comment/getRecentComments")
+    ApiResult getRecentComments();
 }

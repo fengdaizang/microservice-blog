@@ -1,48 +1,48 @@
 <#macro comments commentList article>
-<header class='title'><h2>${commentLabel}</h2></header>
+<header class='title'><h2>评论</h2></header>
 <ul class="comments" id="comments">
     <#list commentList as comment>
         <#include 'common-comment.ftl'/>
     </#list>
 </ul>
-<#if article.commentable>
-    <header class='title'><h2>${postCommentsLabel}</h2></header>
+<#if article.articleCommentable = '1'>
+    <header class='title'><h2>发表评论</h2></header>
         <table id="commentForm" class="form">
             <tbody>
                 <#if !isLoggedIn>
                 <tr>
                     <td>
-                        <input placeholder="${commentNameLabel}" type="text" class="normalInput" id="commentName"/>
+                        <input placeholder="姓名" type="text" class="normalInput" id="commentName"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input placeholder="${commentEmailLabel}" type="email" class="normalInput" id="commentEmail"/>
+                        <input placeholder="邮箱" type="email" class="normalInput" id="commentEmail"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input placeholder="${commentURLLabel}" type="url" id="commentURL"/>
+                        <input placeholder="URL" type="url" id="commentURL"/>
                     </td>
                 </tr>
                 </#if>
                 <tr>
                     <td id="emotions" class="emotions">
-                        <span class="em00" title="${em00Label}"></span>
-                        <span class="em01" title="${em01Label}"></span>
-                        <span class="em02" title="${em02Label}"></span>
-                        <span class="em03" title="${em03Label}"></span>
-                        <span class="em04" title="${em04Label}"></span>
-                        <span class="em05" title="${em05Label}"></span>
-                        <span class="em06" title="${em06Label}"></span>
-                        <span class="em07" title="${em07Label}"></span>
-                        <span class="em08" title="${em08Label}"></span>
-                        <span class="em09" title="${em09Label}"></span>
-                        <span class="em10" title="${em10Label}"></span>
-                        <span class="em11" title="${em11Label}"></span>
-                        <span class="em12" title="${em12Label}"></span>
-                        <span class="em13" title="${em13Label}"></span>
-                        <span class="em14" title="${em14Label}"></span>
+                        <span class="em00" title=":smile:"></span>
+                        <span class="em01" title=":joy:"></span>
+                        <span class="em02" title=":stuck_out_tongue_winking_eye:"></span>
+                        <span class="em03" title=":persevere:"></span>
+                        <span class="em04" title=":sob:"></span>
+                        <span class="em05" title=":cold_sweat:"></span>
+                        <span class="em06" title=":rage:"></span>
+                        <span class="em07" title=":triumph:"></span>
+                        <span class="em08" title=":eyes:"></span>
+                        <span class="em09" title=":scream:"></span>
+                        <span class="em10" title=":sunglasses:"></span>
+                        <span class="em11" title=":yum:"></span>
+                        <span class="em12" title=":heart:"></span>
+                        <span class="em13" title=":broken_heart:"></span>
+                        <span class="em14" title=":smiling_imp:"></span>
                     </td>
                 </tr>
                 <tr>
@@ -53,15 +53,15 @@
                 <#if !isLoggedIn>
                 <tr>
                     <td>
-                        <input style="width:50%" placeholder="${captchaLabel}" type="text" class="normalInput" id="commentValidate"/>
-                        <img class="captcha" id="captcha" alt="validate" src="${servePath}/captcha.do" />
+                        <input style="width:50%" placeholder="验证码" type="text" class="normalInput" id="commentValidate"/>
+                        <img class="captcha" id="captcha" alt="validate" src="${request.contextPath}/captcha.do" />
                     </td>
                 </tr>
                 </#if>
                 <tr>
                     <td colspan="2" align="right">
                         <span class="error-msg" id="commentErrorTip"></span>
-                        <button id="submitCommentButton" onclick="page.submitComment();">${submmitCommentLabel}</button>
+                        <button id="submitCommentButton" onclick="page.submitComment();">提交评论</button>
                     </td>
                 </tr>
             </tbody>
@@ -69,21 +69,21 @@
 </#if>
 </#macro>
 
-<#macro comment_script oId>
-<script type="text/javascript" src="${staticServePath}/js/page${miniPostfix}.js?${staticResourceVersion}" charset="utf-8"></script>
+<#macro comment_script id>
+<script type="text/javascript" src="/js/page.js" charset="utf-8"></script>
 <script type="text/javascript">
                         var page = new Page({
-                            "nameTooLongLabel": "${nameTooLongLabel}",
-                            "mailCannotEmptyLabel": "${mailCannotEmptyLabel}",
-                            "mailInvalidLabel": "${mailInvalidLabel}",
-                            "commentContentCannotEmptyLabel": "${commentContentCannotEmptyLabel}",
-                            "captchaCannotEmptyLabel": "${captchaCannotEmptyLabel}",
-                            "loadingLabel": "${loadingLabel}",
-                            "oId": "${oId}",
-                            "skinDirName": "${skinDirName}",
-                            "blogHost": "${blogHost}",
-                            "randomArticles1Label": "${randomArticles1Label}",
-                            "externalRelevantArticles1Label": "${externalRelevantArticles1Label}"
+                            "nameTooLongLabel": "姓名只能为 2 到 20 个字符！",
+                            "mailCannotEmptyLabel": "邮箱不能为空！",
+                            "mailInvalidLabel": "邮箱格式不正确！",
+                            "commentContentCannotEmptyLabel": "评论内容只能为 2 到 500 个字符！",
+                            "captchaCannotEmptyLabel": "验证码不能为空！",
+                            "loadingLabel": "载入中....",
+                            "oId": "${id}",
+                            "skinDirName": "91PHP",
+                            "blogHost": "localhost",
+                            "randomArticles1Label": "随机阅读：",
+                            "externalRelevantArticles1Label": "相关站外阅读："
                         });
                         var replyTo = function (id) {
                             var commentFormHTML = "<table class='form comment-reply' id='replyForm'>";
@@ -91,7 +91,7 @@
                         };
                         (function () {
                             page.load();
-                            Skin.initArticle("${tocLabel}", "${siteViewLabel}");
+                            Skin.initArticle("文章目录", "站点概要");
                             // emotions
                             page.replaceCommentsEm("#comments .content-reset");
                             <#nested>

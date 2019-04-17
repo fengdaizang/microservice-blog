@@ -26,4 +26,9 @@ public class CommentController extends BaseController {
         return ok(commentService.getCommentByArticleId(id));
     }
 
+    @GetMapping("/getRecentComments")
+    public ApiResult getRecentComments(){
+        return ok(commentService.getRecentComments());
+    }
+
 }

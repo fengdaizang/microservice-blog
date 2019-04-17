@@ -19,4 +19,7 @@ import java.util.List;
 public interface CommentClient {
     @RequestMapping(value = "/zuul/comment/getCommentByArticleId",method = RequestMethod.GET)
     ApiResult<List<CommentDTO>> getCommentByArticleId(@RequestParam("id") String id);
+
+    @RequestMapping(value = "/zuul/comment/getRecentComments",method = RequestMethod.GET)
+    ApiResult<List<CommentDTO>> getRecentComments();
 }

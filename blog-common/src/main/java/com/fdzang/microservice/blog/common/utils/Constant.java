@@ -42,6 +42,8 @@ public class Constant {
         public static final String ONLINEVISITORCOUNT = "onlineVisitorCount";
         public static final String ARCHIVEDATES = "archiveDates";
         public static final String ARCHIVEDATE = "archiveDate";
+        public static final String RECENTCOMMENTS = "recentComments";
+        public static final String LINKS = "links";
 
 
     }
@@ -52,6 +54,7 @@ public class Constant {
 
     public class Html{
         public static final String INDEX = "index";
+        public static final String LINKS = "links";
         public static final String SEARCH = "search";
         public static final String REGISTER = "register";
         public static final String LOGIN = "login";

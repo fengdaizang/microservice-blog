@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface CommentService {
     List<CommentDTO> getCommentByArticleId(String id);
+
+    List<CommentDTO> getRecentComments();
 }

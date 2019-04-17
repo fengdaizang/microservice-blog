@@ -20,6 +20,11 @@ public class CommentHystrix implements FallbackFactory<CommentClient> {
             public ApiResult getCommentByArticleId(String id) {
                 return null;
             }
+
+            @Override
+            public ApiResult getRecentComments() {
+                return null;
+            }
         };
     }
 }

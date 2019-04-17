@@ -45,4 +45,27 @@ public class CommentServiceImpl implements CommentService {
         }
         return null;
     }
+
+    @Override
+    public List<CommentDTO> getRecentComments() {
+        CommentDOExample example=new CommentDOExample();
+        example.setOrderByClause(" comment_date desc ");
+        List<CommentDOWithBLOBs> commentDOS=commentMapper.selectByExampleWithBLOBs(example);
+        if(CollectionUtils.isNotEmpty(commentDOS)){
+            List<CommentDTO> commentDTOS=new ArrayList<>();
+            for (CommentDOWithBLOBs comment:commentDOS) {
+                CommentDTO commentDTO=new CommentDTO();
+                BeanUtils.copyProperties(comment,commentDTO);
+                if(comment.getCommentOriginalCommentId()!=null
+                        &&!comment.getCommentOriginalCommentId().equals("")){
+                    commentDTO.setReplyFlag(true);
+                }else{
+                    commentDTO.setReplyFlag(false);
+                }
+                commentDTOS.add(commentDTO);
+            }
+            return commentDTOS;
+        }
+        return null;
+    }
 }
