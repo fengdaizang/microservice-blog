@@ -2,10 +2,10 @@ package com.fdzang.microservice.blog.web.filter;
 
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
+import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
+import com.fdzang.microservice.blog.article.feign.client.CommentClient;
 import com.fdzang.microservice.blog.common.utils.Constant;
-import com.fdzang.microservice.blog.web.feign.article.ArticleClient;
-import com.fdzang.microservice.blog.web.feign.article.CommentClient;
-import com.fdzang.microservice.blog.web.utils.CoventUtils;
+import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

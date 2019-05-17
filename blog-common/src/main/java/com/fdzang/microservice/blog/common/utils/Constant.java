@@ -44,6 +44,7 @@ public class Constant {
         public static final String ARCHIVEDATE = "archiveDate";
         public static final String RECENTCOMMENTS = "recentComments";
         public static final String LINKS = "links";
+        public static final String USER = "user";
 
 
     }
@@ -56,8 +57,8 @@ public class Constant {
         public static final String INDEX = "index";
         public static final String LINKS = "links";
         public static final String SEARCH = "search";
-        public static final String REGISTER = "register";
-        public static final String LOGIN = "login";
+        public static final String REGISTER = "admin/register";
+        public static final String LOGIN = "admin/login";
         public static final String TAGS = "tags";
         public static final String DYNAMIC = "dynamic";
         public static final String ARTICLE = "article";
@@ -66,12 +67,18 @@ public class Constant {
         public static final String ARCHIVE_ARTICLES = "archive-articles";
     }
 
-    public class AdminRole{
-        public static final String ADMIN = "admin";
-        public static final String DEPT = "dept";
+    public class UserRole{
+        public static final String ADMIN = "adminRole";
+        public static final String DEFAULT = "defaultRole";
+        public static final String VISITOR = "visitorRole";
     }
     public class UserSource{
         public static final String REGISTER = "register";
         public static final String UCENTER = "ucenter";
+    }
+
+    public class Static{
+        public static final String MSG = "msg";
+        public static final String DEFAULT_AVATAR = "https://secure.gravatar.com/avatar/a6acd9a25c699aab72bb9e60d1eba97f?s=128";
     }
 }

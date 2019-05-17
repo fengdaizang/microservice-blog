@@ -28,30 +28,32 @@ public class ArticleController extends BaseController {
         return ok(articleService.getArticleByPermalink(permalink));
     }
 
-    @RequestMapping(value = "/addArticleViewCount",method = RequestMethod.POST)
+    @GetMapping(value = "/addArticleViewCount")
     public ApiResult addArticleViewCount(@RequestParam("id") String id){
         return ok(articleService.addArticleViewCount(id));
     }
 
-    @RequestMapping(value = "/getMostCommentArticles",method = RequestMethod.GET)
+    @GetMapping(value = "/getMostCommentArticles")
     public ApiResult getMostCommentArticles(){
         return ok(articleService.getMostCommentArticles());
     }
 
-    @RequestMapping(value = "/getMostViewCountArticles",method = RequestMethod.GET)
+    @GetMapping(value = "/getMostViewCountArticles")
     public ApiResult getMostViewCountArticles(){
         return ok(articleService.getMostViewCountArticles());
     }
 
-    @RequestMapping(value = "/getArticlesByTagId",method = RequestMethod.GET)
+    @GetMapping(value = "/getArticlesByTagId")
     public ApiResult getArticlesByTagId(@RequestParam("tagId") String tagId,
-                                        @RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize){
+                                        @RequestParam("pageNo")Integer pageNo,
+                                        @RequestParam("pageSize")Integer pageSize){
         return ok(articleService.getArticlesByTagId(tagId,pageNo,pageSize));
     }
 
-    @RequestMapping(value = "/getArticlesByArchiveId",method = RequestMethod.GET)
+    @GetMapping(value = "/getArticlesByArchiveId")
     public ApiResult getArticlesByArchiveId(@RequestParam("archiveId") String archiveId,
-                                            @RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize){
+                                            @RequestParam("pageNo")Integer pageNo,
+                                            @RequestParam("pageSize")Integer pageSize){
         return ok(articleService.getArticlesByArchiveId(archiveId,pageNo,pageSize));
     }
 }

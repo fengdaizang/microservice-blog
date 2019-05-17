@@ -1,14 +1,12 @@
 package com.fdzang.microservice.blog.web.controller;
 
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
+import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.common.entity.PageDTO;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.utils.Constant;
-import com.fdzang.microservice.blog.web.feign.article.ArticleClient;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -58,15 +56,13 @@ public class IndexController {
         return Constant.Html.SEARCH;
     }
 
-    @RequestMapping("register")
+    @RequestMapping("/register")
     public String showRegister(){
-
         return Constant.Html.REGISTER;
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login(){
-
         return Constant.Html.LOGIN;
     }
 }

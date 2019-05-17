@@ -1,7 +1,7 @@
 package com.fdzang.microservice.blog.web.controller;
 
+import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.common.utils.Constant;
-import com.fdzang.microservice.blog.web.feign.article.ArticleClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

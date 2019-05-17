@@ -1,10 +1,9 @@
 package com.fdzang.microservice.blog.web.controller;
 
-import com.fdzang.microservice.blog.article.common.dto.ArchivedateDTO;
 import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
+import com.fdzang.microservice.blog.article.feign.client.CommentClient;
 import com.fdzang.microservice.blog.common.utils.Constant;
-import com.fdzang.microservice.blog.web.feign.article.CommentClient;
-import com.fdzang.microservice.blog.web.utils.CoventUtils;
+import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -6,6 +6,5 @@ import lombok.Data;
 public class ApiResult<T> {
     private Long code;
     private String msg;
-    private String message;
     private T data;
 }

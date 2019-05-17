@@ -1,9 +1,9 @@
 package com.fdzang.microservice.blog.web.controller;
 
 import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.ucenter.common.dto.LinkDTO;
-import com.fdzang.microservice.blog.web.feign.ucenter.LinkClient;
-import com.fdzang.microservice.blog.web.utils.CoventUtils;
+import com.fdzang.microservice.blog.ucenter.feign.client.LinkClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

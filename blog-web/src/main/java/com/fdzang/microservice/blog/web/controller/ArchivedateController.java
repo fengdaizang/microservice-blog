@@ -2,13 +2,12 @@ package com.fdzang.microservice.blog.web.controller;
 
 import com.fdzang.microservice.blog.article.common.dto.ArchivedateDTO;
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
+import com.fdzang.microservice.blog.article.feign.client.ArchivedateClient;
+import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.common.entity.PageDTO;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.utils.Constant;
-import com.fdzang.microservice.blog.web.feign.article.ArchivedateClient;
-import com.fdzang.microservice.blog.web.feign.article.ArticleClient;
-import com.fdzang.microservice.blog.web.utils.CoventUtils;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

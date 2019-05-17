@@ -13,12 +13,6 @@ public class CoventUtils {
         if(apiResult==null){
             throw new BlogException(ErrorCode.DATA_NULL_ERROR,"远程连接失败！");
         }
-        if(apiResult.getCode()!=ErrorCode.SUCCESS){
-            throw new BlogException(apiResult.getCode(),apiResult.getMsg());
-        }
-        if(apiResult.getData()==null){
-            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"远程连接失败！");
-        }
 
         return apiResult.getData();
     }

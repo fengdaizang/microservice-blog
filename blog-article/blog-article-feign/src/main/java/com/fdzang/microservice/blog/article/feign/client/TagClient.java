@@ -1,10 +1,12 @@
 package com.fdzang.microservice.blog.article.feign.client;
 
+import com.fdzang.microservice.blog.article.common.dto.TagDTO;
 import com.fdzang.microservice.blog.article.feign.client.impl.TagHystrix;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 /**
  * @author tanghu
@@ -12,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @FeignClient(value = "blog-article-v1",fallbackFactory = TagHystrix.class)
 public interface TagClient {
-    @RequestMapping(value = "/zuul/tag/getMostUsedTags",method = RequestMethod.GET)
-    ApiResult getMostUsedTags();
+    @GetMapping(value = "/zuul/tag/getMostUsedTags")
+    ApiResult<List<TagDTO>> getMostUsedTags();
 
-    @RequestMapping(value = "/zuul/tag/getTags",method = RequestMethod.GET)
-    ApiResult getTags();
+    @GetMapping(value = "/zuul/tag/getTags")
+    ApiResult<List<TagDTO>> getTags();
 
-    @RequestMapping(value = "/zuul/tag/getTagByTitle",method = RequestMethod.GET)
-    ApiResult getTagByTitle(String title);
+    @GetMapping(value = "/zuul/tag/getTagByTitle")
+    ApiResult<TagDTO> getTagByTitle(String title);
 }

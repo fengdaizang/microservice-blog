@@ -1,8 +1,0 @@
-eureka:
-  client:
-    registry-fetch-interval-seconds: 10 # 每10s获取一次service信息
-    service-url:
-      defaultZone: http://localhost:7003/eureka/
-  instance:
-    prefer-ip-address: true
-

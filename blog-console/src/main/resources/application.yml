@@ -1,8 +1,0 @@
-server:
-  port: 7006
-
-spring:
-  profiles:
-    active: local
-  application:
-    name: blog-console-v1

@@ -1,13 +1,15 @@
 package com.fdzang.microservice.blog.ucenter.api.controller;
 
+import com.fdzang.microservice.blog.common.exception.BlogException;
+import com.fdzang.microservice.blog.common.exception.ErrorCode;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.framework.BaseController;
 import com.fdzang.microservice.blog.ucenter.api.service.UserService;
+import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author tanghu
@@ -23,6 +25,24 @@ public class UserController extends BaseController {
     @GetMapping("/getUserByEmail")
     public ApiResult getUserByEmail(@RequestParam("email")String email){
         return ok(userService.getUserByEmail(email));
+    }
+
+    @GetMapping(value = "/userLogin")
+    public ApiResult userLogin(
+            @RequestParam("username") @NotBlank(message = "用户名不能为空") String username,
+            @RequestParam("password")  @NotBlank(message = "密码不能为空") String password) {
+
+        if (StringUtils.isEmpty(username)|| StringUtils.isEmpty(password)) {
+            throw new BlogException(ErrorCode.TOKEN_EXPIRE, "用户名和密码不能为空");
+        }
+        UserDTO user = userService.login(username, password);
+
+        return ok(user);
+    }
+
+    @PostMapping("/addUser")
+    public ApiResult addUser(@RequestBody UserDTO userDTO){
+        return ok(userService.addUser(userDTO));
     }
 
 }

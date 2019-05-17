@@ -2,15 +2,15 @@ package com.fdzang.microservice.blog.web.filter;
 
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.common.dto.TagDTO;
+import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
+import com.fdzang.microservice.blog.article.feign.client.TagClient;
 import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.ucenter.common.dto.OptionsDTO;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
-import com.fdzang.microservice.blog.web.feign.article.ArticleClient;
-import com.fdzang.microservice.blog.web.feign.article.TagClient;
-import com.fdzang.microservice.blog.web.feign.ucenter.OptionsClient;
-import com.fdzang.microservice.blog.web.feign.ucenter.UserClient;
+import com.fdzang.microservice.blog.ucenter.feign.client.OptionsClient;
+import com.fdzang.microservice.blog.ucenter.feign.client.UserClient;
 import com.fdzang.microservice.blog.web.listener.OnlineUserListener;
-import com.fdzang.microservice.blog.web.utils.CoventUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

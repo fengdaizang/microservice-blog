@@ -7,6 +7,8 @@ import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author tanghu
  * @Date: 2019/1/8 17:12
@@ -18,17 +20,17 @@ public class OptionsHystrix implements FallbackFactory<OptionsClient> {
     public OptionsClient create(Throwable throwable) {
         return new OptionsClient() {
             @Override
-            public ApiResult getAllOptions() {
+            public ApiResult<List<OptionsDTO>> getAllOptions() {
                 return null;
             }
 
             @Override
-            public ApiResult getOptionById(String id) {
+            public ApiResult<OptionsDTO> getOptionById(String id) {
                 return null;
             }
 
             @Override
-            public ApiResult updateOption(OptionsDTO option) {
+            public ApiResult<Boolean> updateOption(OptionsDTO option) {
                 return null;
             }
         };

@@ -1,10 +1,13 @@
 package com.fdzang.microservice.blog.article.feign.client.impl;
 
+import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
 import com.fdzang.microservice.blog.article.feign.client.CommentClient;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author tanghu
@@ -17,12 +20,12 @@ public class CommentHystrix implements FallbackFactory<CommentClient> {
     public CommentClient create(Throwable throwable) {
         return new CommentClient() {
             @Override
-            public ApiResult getCommentByArticleId(String id) {
+            public ApiResult<List<CommentDTO>> getCommentByArticleId(String id) {
                 return null;
             }
 
             @Override
-            public ApiResult getRecentComments() {
+            public ApiResult<List<CommentDTO>> getRecentComments() {
                 return null;
             }
         };

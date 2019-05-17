@@ -16,10 +16,10 @@
                         <i class="icon-logout"></i> 退出
                     </a>
                     <#else>
-                    <a href="${request.contextPath}/login">
+                    <a href="${request.contextPath}/login.html">
                         <i class="icon-login"></i> 登录
                     </a>
-                    <a href="${request.contextPath}/register">
+                    <a href="${request.contextPath}/register.html">
                         <i class="icon-register"></i> 注册
                     </a>
                 </#if>

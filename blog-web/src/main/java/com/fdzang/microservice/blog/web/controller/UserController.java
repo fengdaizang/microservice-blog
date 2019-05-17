@@ -2,7 +2,7 @@ package com.fdzang.microservice.blog.web.controller;
 
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
-import com.fdzang.microservice.blog.web.feign.console.ConsoleUserClient;
+import com.fdzang.microservice.blog.ucenter.feign.client.UserClient;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController extends BaseController {
 
     @Autowired
-    private ConsoleUserClient consoleUserClient;
+    private UserClient userClient;
 
     @Autowired
     private HttpServletRequest request;
@@ -29,7 +29,7 @@ public class UserController extends BaseController {
     public String userLogin(@RequestParam("username")String username,
             @RequestParam("password")String password){
 
-        ApiResult<UserDTO> result=consoleUserClient.userLogin(username, password);
+        ApiResult<UserDTO> result=userClient.userLogin(username, password);
         request.getSession().setAttribute("UserSession",result.getData());
 
         return "index";

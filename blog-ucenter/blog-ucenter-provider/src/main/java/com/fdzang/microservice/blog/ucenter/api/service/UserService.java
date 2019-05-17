@@ -8,4 +8,8 @@ import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
  */
 public interface UserService {
     UserDTO getUserByEmail(String email);
+
+    UserDTO login(String email,String password);
+
+    Boolean addUser(UserDTO userDTO);
 }
