@@ -45,7 +45,8 @@ public class Constant {
         public static final String RECENTCOMMENTS = "recentComments";
         public static final String LINKS = "links";
         public static final String USER = "user";
-        public static final String LINK_KEYWORD = "link_keyword";
+        public static final String USERS = "users";
+        public static final String KEYWORD = "keyword";
 
 
     }
@@ -70,6 +71,7 @@ public class Constant {
 
     public class AdminHtml {
         public static final String LINK = "admin/link";
+        public static final String USER = "admin/user";
     }
 
     public class UserRole{

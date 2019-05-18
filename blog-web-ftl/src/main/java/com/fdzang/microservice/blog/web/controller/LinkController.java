@@ -39,11 +39,11 @@ public class LinkController extends BaseController {
     public String linkMgr(HashMap<String,Object> map){
         List<LinkDTO> linkDTOS=null;
 
-        String keyword=(String)session.getAttribute(Constant.Session.LINK_KEYWORD);
+        String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
         if(StringUtils.isNotEmpty(keyword)){
             linkDTOS=(List<LinkDTO>) CoventUtils.getApiResultData(linkClient.getLinksByKeyword(keyword));
 
-            session.removeAttribute(Constant.Session.LINK_KEYWORD);
+            session.removeAttribute(Constant.Session.KEYWORD);
         }else{
             linkDTOS=(List<LinkDTO>) CoventUtils.getApiResultData(linkClient.getLinks());
         }
@@ -60,7 +60,7 @@ public class LinkController extends BaseController {
         List<LinkDTO> linkDTOS=(List<LinkDTO>) CoventUtils.getApiResultData(linkClient.getLinksByKeyword(keyword));
 
         if(linkDTOS !=null){
-            session.setAttribute(Constant.Session.LINK_KEYWORD,keyword);
+            session.setAttribute(Constant.Session.KEYWORD,keyword);
 
             return true;
         }else{

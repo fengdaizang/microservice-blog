@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author tanghu
  * @Date: 2019/1/8 9:42
@@ -27,7 +29,7 @@ public class UserController extends BaseController {
         return ok(userService.getUserByEmail(email));
     }
 
-    @GetMapping(value = "/userLogin")
+    @GetMapping("/userLogin")
     public ApiResult userLogin(
             @RequestParam("username") @NotBlank(message = "用户名不能为空") String username,
             @RequestParam("password")  @NotBlank(message = "密码不能为空") String password) {
@@ -45,4 +47,33 @@ public class UserController extends BaseController {
         return ok(userService.addUser(userDTO));
     }
 
+    @GetMapping("/getAllUser")
+    public ApiResult getAllUser(){
+        return ok(userService.getUsers());
+    }
+
+    @GetMapping("/getUserByKeyWord")
+    public ApiResult getUserByKeyWord(@RequestParam("keyword") String keyword){
+        return ok(userService.getUserByKeyWord(keyword));
+    }
+
+    @GetMapping("/getUserById")
+    public ApiResult getUserById(@RequestParam("id") String id){
+        return ok(userService.getUserById(id));
+    }
+
+    @PostMapping("/updateUser")
+    public ApiResult updateUser(@RequestBody UserDTO userDTO){
+        return ok(userService.updateUser(userDTO));
+    }
+
+    @GetMapping("/deleteUser")
+    public ApiResult deleteUser(@RequestParam("id") String id){
+        return ok(userService.deleteUser(id));
+    }
+
+    @GetMapping("/changeRole")
+    public ApiResult changeRole(@RequestParam("id") String id){
+        return ok(userService.changeRole(id));
+    }
 }

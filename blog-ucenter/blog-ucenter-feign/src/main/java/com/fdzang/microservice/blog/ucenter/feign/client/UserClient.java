@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author tanghu
  * @Date: 2019/1/8 17:09
@@ -22,4 +24,22 @@ public interface UserClient {
 
     @PostMapping(value = "/zuul/user/addUser")
     ApiResult<Boolean> addUser(@RequestBody UserDTO userDTO);
+
+    @GetMapping(value = "/zuul/user/getAllUser")
+    ApiResult<List<UserDTO>> getAllUser();
+
+    @GetMapping(value = "/zuul/user/getUserByKeyWord")
+    ApiResult<List<UserDTO>> getUserByKeyWord(@RequestParam("keyword") String keyword);
+
+    @GetMapping(value = "/zuul/user/getUserById")
+    ApiResult<UserDTO> getUserById(@RequestParam("id") String id);
+
+    @PostMapping(value = "/zuul/user/updateUser")
+    ApiResult<Boolean> updateUser(@RequestBody UserDTO userDTO);
+
+    @GetMapping(value = "/zuul/user/deleteUser")
+    ApiResult<Boolean> deleteUser(@RequestParam("id") String id);
+
+    @GetMapping(value = "/zuul/user/changeRole")
+    ApiResult<Boolean> changeRole(@RequestParam("id") String id);
 }

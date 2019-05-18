@@ -6,13 +6,15 @@ import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import com.fdzang.microservice.blog.ucenter.feign.client.UserClient;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author tanghu
@@ -27,7 +29,7 @@ public class UserController extends BaseController {
     private UserClient userClient;
 
     @Autowired
-    private HttpServletRequest request;
+    private HttpSession session;
 
     @RequestMapping("/login")
     public String userLogin(@RequestParam("username")String username,
@@ -40,7 +42,7 @@ public class UserController extends BaseController {
 
             return Constant.IndexHtml.LOGIN;
         }else{
-            request.getSession().setAttribute(Constant.Session.USER,result.getData());
+            session.setAttribute(Constant.Session.USER,result.getData());
 
             UserDTO userDTO=(UserDTO) CoventUtils.getApiResultData(result);
 
@@ -80,7 +82,7 @@ public class UserController extends BaseController {
         ApiResult<Boolean> result=userClient.addUser(userDTO);
         Boolean bool=(Boolean)CoventUtils.getApiResultData(result);
         if(result.getCode()!= ErrorCode.SUCCESS){
-            request.getSession().setAttribute(Constant.Static.MSG,result.getMsg());
+            session.setAttribute(Constant.Static.MSG,result.getMsg());
 
             return Constant.IndexHtml.REGISTER;
         }else{
@@ -90,5 +92,78 @@ public class UserController extends BaseController {
                 return Constant.IndexHtml.REGISTER;
             }
         }
+    }
+
+    @GetMapping("/mgr")
+    public String userMgr(HashMap<String,Object> map){
+        List<UserDTO> userDTOS=null;
+
+        String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
+        if(StringUtils.isNotEmpty(keyword)){
+            userDTOS =(List<UserDTO>) CoventUtils.getApiResultData(userClient.getUserByKeyWord(keyword));
+
+            session.removeAttribute(Constant.Session.KEYWORD);
+        }else{
+            userDTOS=(List<UserDTO>) CoventUtils.getApiResultData(userClient.getAllUser());
+        }
+
+        map.put(Constant.Session.USERS,userDTOS);
+
+        return Constant.AdminHtml.USER;
+    }
+
+    @ResponseBody
+    @GetMapping("/search")
+    public Boolean userSearch(@RequestParam("keyword")String keyword,
+                              HashMap<String,Object> map){
+        List<UserDTO> userDTOS=(List<UserDTO>) CoventUtils.getApiResultData(userClient.getUserByKeyWord(keyword));
+
+        if(userDTOS !=null){
+            session.setAttribute(Constant.Session.KEYWORD,keyword);
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/add")
+    public Boolean userAdd(@ModelAttribute UserDTO userDTO){
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(userClient.addUser(userDTO));
+
+        return bool;
+    }
+
+    @ResponseBody
+    @GetMapping("/getUserById")
+    public UserDTO getUserById(@RequestParam("id") String id){
+        UserDTO userDTO=(UserDTO) CoventUtils.getApiResultData(userClient.getUserById(id));
+
+        return userDTO;
+    }
+
+    @ResponseBody
+    @PostMapping("/update")
+    public Boolean userUpdate(@ModelAttribute UserDTO userDTO){
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(userClient.updateUser(userDTO));
+
+        return bool;
+    }
+
+    @ResponseBody
+    @GetMapping("/delete")
+    public Boolean userDelete(@RequestParam("id") String id){
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(userClient.deleteUser(id));
+
+        return bool;
+    }
+
+    @ResponseBody
+    @GetMapping("/changeRole")
+    public Boolean changeRole(@RequestParam("id") String id){
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(userClient.changeRole(id));
+
+        return bool;
     }
 }

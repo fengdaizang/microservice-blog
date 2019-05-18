@@ -7,6 +7,8 @@ import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author tanghu
  * @Date: 2019/1/8 10:13
@@ -29,6 +31,36 @@ public class UserHystrix implements FallbackFactory<UserClient> {
 
             @Override
             public ApiResult<Boolean> addUser(UserDTO userDTO) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<List<UserDTO>> getAllUser() {
+                return null;
+            }
+
+            @Override
+            public ApiResult<List<UserDTO>> getUserByKeyWord(String keyword) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<UserDTO> getUserById(String id) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> updateUser(UserDTO userDTO) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> deleteUser(String id) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> changeRole(String id) {
                 return null;
             }
         };

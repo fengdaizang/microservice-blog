@@ -17,14 +17,14 @@
     function search()
     {
         var keyword=$("#keyword").val();
-        $.post("${request.contextPath}/user/search",{"keyword":keyword}, function(data){
+        $.get("${request.contextPath}/user/search",{"keyword":keyword}, function(data){
             if(data)
             {
                 window.location.reload();
             }
             else
             {
-                alert("查找失败！");
+                alert("未查找到数据！");
                 window.location.reload();
             }
         });
@@ -65,15 +65,15 @@
             {
                 $("#edit_id").val(data.id);
                 $("#edit_avatar").val(data.userAvatar);
-                $("#edit_url").val(data.userURL);
+                $("#edit_url").val(data.userUrl);
                 $("#edit_email").val(data.userEmail);
-                $("#edit_password").val(data.password);
+                $("#edit_password").val("");
                 $("#edit_username").val(data.userName);
             }
         });
     }
 
-    function updateLink()
+    function updateUser()
     {
         $.post("${request.contextPath}/user/update",$("#edit_link_form").serialize(),function(data){
             if(data){
@@ -88,12 +88,12 @@
 
     function deleteUser(id){
         if(confirm('确实要删除该用户吗?')){
-            $.post("${request.contextPath}/user/delete",{"id":id}, function(data){
+            $.get("${request.contextPath}/user/delete",{"id":id}, function(data){
                 if(data){
                     alert("用户删除成功！");
                     window.location.reload();
                 }else{
-                    alert("用户司机失败！");
+                    alert("用户删除失败！");
                     window.location.reload();
                 }
             });
@@ -102,13 +102,13 @@
 
     function changeUser(id)
     {
-        $.post("${request.contextPath}/user/change",{"id":id}, function(data){
+        $.get("${request.contextPath}/user/changeRole",{"id":id}, function(data){
             if(data){
                 alert("角色修改成功！");
                 window.location.reload();
             }else{
                 alert("角色修改失败！");
-
+                window.location.reload();
             }
         });
     }
@@ -120,29 +120,45 @@
         <div class="content-inner">
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">首页</h2>
+                    <h2 class="no-margin-bottom">用户管理</h2>
                 </div>
             </header>
-            <section class="updates no-padding-top">
+            <!-- Breadcrumb-->
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="${request.contextPath}/admin/index.html">首页</a></li>
+                    <li class="breadcrumb-item active">工具</li>
+                    <li class="breadcrumb-item active">用户管理</li>
+                </ul>
+            </div>
+            <section class="tables">
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- Recent Updates-->
                         <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">搜索</div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h3 class="h4">关键词搜索</h3>
                                 </div>
-                                <div class="card-body">
-                                    <div class="form-group form-inline">
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control input-full" id="keyword" name="keyword" placeholder="关键字">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <button class="btn btn-success" onclick="search()">搜索</button>
-                                        </div>
+                                <div class="card-body form-inline">
+                                    <div class="form-group">
+                                        <label for="keyword" class="mr-4">关键字: </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keyword" class="sr-only">关键字:</label>
+                                        <input id="keyword" type="text" name="keyword"
+                                               placeholder="关键字" class="mr-5 form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success" onclick="search()">搜索</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Recent Updates-->
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
                                     <a href="#" class="btn btn-primary" data-toggle="modal"
@@ -164,7 +180,7 @@
                                             <tbody>
                                                 <#list users as user>
                                                     <tr>
-                                                        <td scope="row">${user_index}</td>
+                                                        <td scope="row">${user_index+1}</td>
                                                         <td>${user.userName }</td>
                                                         <td>${user.userEmail }</td>
                                                         <td>
@@ -185,10 +201,10 @@
                                                                 <a href="#" class="btn btn-primary btn-xs"
                                                                    data-toggle="modal" data-target="#editUserDialog"
                                                                    onclick="editUser(${user.id})">修改</a>
+                                                                <a href="#" class="btn btn-info btn-xs"
+                                                                    onclick="changeUser(${user.id})">改变角色</a>
                                                                 <a href="#" class="btn btn-danger btn-xs"
                                                                    onclick="deleteUser(${user.id})">删除</a>
-                                                                <a href="#" class="btn btn-danger btn-xs"
-                                                                    onclick="changeUser(${user.id})">删除</a>
                                                             </#if>
                                                         </td>
                                                     </tr>
@@ -216,7 +232,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" method="post" id="new_user_form" enctype="multipart/form-data">
+                    <form class="form-validate" method="post" id="new_user_form">
                         <div class="form-group form-inline">
                             <label for="new_username" class="col-sm-4 control-label">
                                 姓名
@@ -231,7 +247,7 @@
                                 邮箱
                             </label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="new_email" placeholder="姓名"
+                                <input type="email" class="form-control" id="new_email" placeholder="邮箱"
                                        required data-msg="请输入合法的邮箱地址" name="userEmail" />
                             </div>
                         </div>
@@ -240,8 +256,7 @@
                                 链接
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="new_url" placeholder="URL"
-                                       required data-msg="请输入链接" name="userUrl" />
+                                <input type="text" class="form-control" id="new_url" placeholder="URL" name="userUrl" />
                             </div>
                         </div>
                         <div class="form-group form-inline">
@@ -249,7 +264,7 @@
                                 密码
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="new_password" placeholder="链接描述"
+                                <input type="text" class="form-control" id="new_password" placeholder="密码"
                                        required data-msg="请输入密码" name="password" />
                             </div>
                         </div>
@@ -258,7 +273,7 @@
                                 头像
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="new_avatar" placeholder="链接描述" name="userAvatar" />
+                                <input type="text" class="form-control" id="new_avatar" placeholder="头像" name="userAvatar" />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -286,21 +301,20 @@
                     <form class="form-horizontal" id="edit_link_form">
                         <input type="hidden" id="edit_id" name="id"/>
                         <div class="form-group form-inline">
+                            <label for="edit_email" class="col-sm-4 control-label">
+                                邮箱
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="email" readonly="readonly" class="form-control" id="edit_email"  name="userEmail" />
+                            </div>
+                        </div>
+                        <div class="form-group form-inline">
                             <label for="edit_username" class="col-sm-4 control-label">
                                 姓名
                             </label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="edit_username" placeholder="姓名"
                                        required data-msg="请输入用户名" name="userName" />
-                            </div>
-                        </div>
-                        <div class="form-group form-inline">
-                            <label for="edit_email" class="col-sm-4 control-label">
-                                邮箱
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" id="edit_email" placeholder="姓名"
-                                       required data-msg="请输入合法的邮箱地址" name="userEmail" />
                             </div>
                         </div>
                         <div class="form-group form-inline">
@@ -317,8 +331,7 @@
                                 密码
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="edit_password" placeholder="链接描述"
-                                       required data-msg="请输入密码" name="password" />
+                                <input type="text" class="form-control" id="edit_password" placeholder="不更改则置空！" name="password" />
                             </div>
                         </div>
                         <div class="form-group form-inline">
@@ -326,7 +339,7 @@
                                 头像
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="edit_avatar" placeholder="链接描述" name="userAvatar" />
+                                <input type="text" class="form-control" id="edit_avatar" placeholder="头像地址" name="userAvatar" />
                             </div>
                         </div>
                     </form>
