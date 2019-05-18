@@ -41,7 +41,7 @@ public class TagController {
 
         session.setAttribute(Constant.Session.TAGS,tags);
 
-        return Constant.Html.TAGS;
+        return Constant.IndexHtml.TAGS;
     }
 
     @GetMapping("/tags/{title}")
@@ -69,6 +69,6 @@ public class TagController {
         session.setAttribute(Constant.Session.PAGINATIONCURRENTPAGENUM,data.getPageNo());
         session.setAttribute(Constant.Session.PAGINATIONNEXTPAGENUM,data.getNext());
 
-        return Constant.Html.TAG_ARTICLES;
+        return Constant.IndexHtml.TAG_ARTICLES;
     }
 }

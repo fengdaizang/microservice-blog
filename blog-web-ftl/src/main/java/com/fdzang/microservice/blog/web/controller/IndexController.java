@@ -39,7 +39,7 @@ public class IndexController {
         session.setAttribute(Constant.Session.PAGINATIONCURRENTPAGENUM,data.getPageNo());
         session.setAttribute(Constant.Session.PAGINATIONNEXTPAGENUM,data.getNext());
 
-        return Constant.Html.INDEX;
+        return Constant.IndexHtml.INDEX;
     }
 
     @RequestMapping("/search")
@@ -53,16 +53,16 @@ public class IndexController {
         session.setAttribute(Constant.Session.ARTICLES,articles);
         session.setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
 
-        return Constant.Html.SEARCH;
+        return Constant.IndexHtml.SEARCH;
     }
 
     @RequestMapping("/register")
     public String showRegister(){
-        return Constant.Html.REGISTER;
+        return Constant.IndexHtml.REGISTER;
     }
 
     @RequestMapping("/login")
     public String login(){
-        return Constant.Html.LOGIN;
+        return Constant.IndexHtml.LOGIN;
     }
 }

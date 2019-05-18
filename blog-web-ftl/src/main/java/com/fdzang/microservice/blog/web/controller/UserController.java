@@ -38,7 +38,7 @@ public class UserController extends BaseController {
         if(result.getCode()!= ErrorCode.SUCCESS){
             map.put(Constant.Static.MSG,result.getMsg());
 
-            return Constant.Html.LOGIN;
+            return Constant.IndexHtml.LOGIN;
         }else{
             request.getSession().setAttribute(Constant.Session.USER,result.getData());
 
@@ -78,17 +78,16 @@ public class UserController extends BaseController {
         userDTO.setPassword(password);
 
         ApiResult<Boolean> result=userClient.addUser(userDTO);
+        Boolean bool=(Boolean)CoventUtils.getApiResultData(result);
         if(result.getCode()!= ErrorCode.SUCCESS){
             request.getSession().setAttribute(Constant.Static.MSG,result.getMsg());
 
-            return Constant.Html.REGISTER;
+            return Constant.IndexHtml.REGISTER;
         }else{
-            Boolean success=(Boolean) CoventUtils.getApiResultData(result);
-
-            if(success){
-                return Constant.Html.LOGIN;
+            if(bool){
+                return Constant.IndexHtml.LOGIN;
             }else{
-                return Constant.Html.REGISTER;
+                return Constant.IndexHtml.REGISTER;
             }
         }
     }

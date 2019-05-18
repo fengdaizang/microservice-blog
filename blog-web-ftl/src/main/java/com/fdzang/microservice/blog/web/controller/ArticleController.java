@@ -24,7 +24,7 @@ public class ArticleController extends BaseController {
     @GetMapping("/article")
     public String article(){
 
-        return Constant.Html.ARTICLE;
+        return Constant.IndexHtml.ARTICLE;
     }
 
 }

@@ -101,7 +101,7 @@
                                     <label for="register-repassword" class="label-material">确认密码</label>
                                 </div>
                                 <div class="form-group">
-                                    <button id="regidter" type="submit" name="registerSubmit" class="btn btn-primary">
+                                    <button id="regidter" type="submit" class="btn btn-primary">
                                         注册
                                     </button>
                                 </div>

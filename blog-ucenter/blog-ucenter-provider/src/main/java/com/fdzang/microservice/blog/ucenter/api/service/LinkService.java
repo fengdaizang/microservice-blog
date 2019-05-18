@@ -10,4 +10,9 @@ import java.util.List;
  */
 public interface LinkService {
     List<LinkDTO> getLinks();
+    List<LinkDTO> getLinksByKeyWord(String keyword);
+    Boolean addLink(LinkDTO link);
+    LinkDTO getLinkById(String id);
+    Boolean updateLink(LinkDTO link);
+    Boolean deleteLink(String id);
 }

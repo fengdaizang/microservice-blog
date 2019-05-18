@@ -30,6 +30,6 @@ public class CommentController extends BaseController {
 
         session.setAttribute(Constant.Session.RECENTCOMMENTS,recentcomments);
 
-        return Constant.Html.DYNAMIC;
+        return Constant.IndexHtml.DYNAMIC;
     }
 }

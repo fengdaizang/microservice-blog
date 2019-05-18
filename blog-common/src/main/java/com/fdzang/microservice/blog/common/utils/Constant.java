@@ -45,6 +45,7 @@ public class Constant {
         public static final String RECENTCOMMENTS = "recentComments";
         public static final String LINKS = "links";
         public static final String USER = "user";
+        public static final String LINK_KEYWORD = "link_keyword";
 
 
     }
@@ -53,7 +54,7 @@ public class Constant {
         public static final int PAGESIZE = 10;
     }
 
-    public class Html{
+    public class IndexHtml {
         public static final String INDEX = "index";
         public static final String LINKS = "links";
         public static final String SEARCH = "search";
@@ -67,14 +68,14 @@ public class Constant {
         public static final String ARCHIVE_ARTICLES = "archive-articles";
     }
 
+    public class AdminHtml {
+        public static final String LINK = "admin/link";
+    }
+
     public class UserRole{
         public static final String ADMIN = "adminRole";
         public static final String DEFAULT = "defaultRole";
         public static final String VISITOR = "visitorRole";
-    }
-    public class UserSource{
-        public static final String REGISTER = "register";
-        public static final String UCENTER = "ucenter";
     }
 
     public class Static{

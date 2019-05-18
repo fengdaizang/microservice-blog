@@ -40,7 +40,7 @@ public class ArchivedateController extends BaseController {
         session.setAttribute(Constant.Session.ARCHIVEDATES,archives);
 
         System.out.println(archives);
-        return Constant.Html.ARCHIVES;
+        return Constant.IndexHtml.ARCHIVES;
     }
 
     @GetMapping("/archives/{year}/{month}")
@@ -64,7 +64,7 @@ public class ArchivedateController extends BaseController {
         session.setAttribute(Constant.Session.ARTICLES,articles);
         session.setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
 
-        return Constant.Html.ARCHIVE_ARTICLES;
+        return Constant.IndexHtml.ARCHIVE_ARTICLES;
     }
 
 }

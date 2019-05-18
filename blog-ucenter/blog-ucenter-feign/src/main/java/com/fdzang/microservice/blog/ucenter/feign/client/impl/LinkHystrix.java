@@ -24,6 +24,31 @@ public class LinkHystrix implements FallbackFactory<LinkClient> {
             public ApiResult<List<LinkDTO>> getLinks() {
                 return null;
             }
+
+            @Override
+            public ApiResult<List<LinkDTO>> getLinksByKeyword(String keyword) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> addLink(LinkDTO link) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<LinkDTO> getLinksById(String id) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> updateLink(LinkDTO link) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> deleteLink(String id) {
+                return null;
+            }
         };
     }
 }

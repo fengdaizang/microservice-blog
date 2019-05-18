@@ -1,4 +1,4 @@
-package com.fdzang.microservice.blog.article.api.utils;
+package com.fdzang.microservice.blog.common.utils;
 
 import java.sql.Timestamp;
 import java.time.Instant;

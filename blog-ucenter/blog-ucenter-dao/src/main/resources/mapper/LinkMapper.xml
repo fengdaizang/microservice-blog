@@ -97,9 +97,9 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into link (link_address, link_description, link_order, 
+    insert into link (id, link_address, link_description, link_order,
       link_title)
-    values (#{linkAddress,jdbcType=VARCHAR}, #{linkDescription,jdbcType=VARCHAR}, #{linkOrder,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{linkAddress,jdbcType=VARCHAR}, #{linkDescription,jdbcType=VARCHAR}, #{linkOrder,jdbcType=INTEGER},
       #{linkTitle,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fdzang.microservice.blog.ucenter.dao.domain.LinkDO">

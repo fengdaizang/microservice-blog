@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean addUser(UserDTO userDTO) {
+        UserDTO user=getUserByEmail(userDTO.getUserEmail());
+        if (user != null) {
+            throw new BlogException(ErrorCode.LOGIN_ERROR, "用户 " + userDTO.getUserEmail() + " 已存在错误");
+        }
+
         PasswordEncoder pe = new BCryptPasswordEncoder();
 
         UserDO userDO=new UserDO();

@@ -40,7 +40,7 @@ public class TagController {
 
         session.setAttribute(Constant.Session.TAGS,tags);
 
-        return Constant.Html.TAGS;
+        return Constant.IndexHtml.TAGS;
     }
 
     @GetMapping("/tags/{title}")
@@ -63,6 +63,6 @@ public class TagController {
         session.setAttribute(Constant.Session.ARTICLES,articles);
         session.setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
 
-        return Constant.Html.TAG_ARTICLES;
+        return Constant.IndexHtml.TAG_ARTICLES;
     }
 }
