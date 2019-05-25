@@ -96,9 +96,9 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into archivedate (archivedate_article_count, archivedate_published_article_count, 
+    insert into archivedate (id, archivedate_article_count, archivedate_published_article_count,
       archive_time)
-    values (#{archivedateArticleCount,jdbcType=INTEGER}, #{archivedatePublishedArticleCount,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{archivedateArticleCount,jdbcType=INTEGER}, #{archivedatePublishedArticleCount,jdbcType=INTEGER},
       #{archiveTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.fdzang.microservice.blog.article.dao.domain.ArchivedateDO">

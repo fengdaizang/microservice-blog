@@ -28,6 +28,21 @@ public class CommentHystrix implements FallbackFactory<CommentClient> {
             public ApiResult<List<CommentDTO>> getRecentComments() {
                 return null;
             }
+
+            @Override
+            public ApiResult<List<CommentDTO>> getCommentsByUserEmail(String userEmail) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<List<CommentDTO>> getComments() {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> deleteComment(String id) {
+                return null;
+            }
         };
     }
 }

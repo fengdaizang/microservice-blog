@@ -1,6 +1,7 @@
 package com.fdzang.microservice.blog.article.api.controller;
 
 import com.fdzang.microservice.blog.article.api.service.ArticleService;
+import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.framework.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,10 @@ public class ArticleController extends BaseController {
                                             @RequestParam("pageNo")Integer pageNo,
                                             @RequestParam("pageSize")Integer pageSize){
         return ok(articleService.getArticlesByArchiveId(archiveId,pageNo,pageSize));
+    }
+
+    @PostMapping(value = "/addArticle")
+    public ApiResult addArticle(@RequestBody ArticleDTO article){
+        return ok(articleService.addArticle(article));
     }
 }

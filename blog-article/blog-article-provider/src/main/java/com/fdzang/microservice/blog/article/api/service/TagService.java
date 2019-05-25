@@ -14,4 +14,6 @@ public interface TagService {
     List<TagDTO> getTags();
 
     TagDTO getTagByTitle(String title);
+
+    Boolean addArticleAndTag(String tags,String id, Boolean isPush);
 }

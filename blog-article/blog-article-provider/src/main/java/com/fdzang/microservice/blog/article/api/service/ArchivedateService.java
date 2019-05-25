@@ -12,4 +12,6 @@ public interface ArchivedateService {
     List<ArchivedateDTO> getArchives();
 
     ArchivedateDTO getArchiveByTime(Integer year,Integer month);
+
+    Boolean addArticleAndArchive(String id,Boolean isPush);
 }

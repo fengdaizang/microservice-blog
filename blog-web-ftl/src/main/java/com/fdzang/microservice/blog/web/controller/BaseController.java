@@ -3,12 +3,14 @@ package com.fdzang.microservice.blog.web.controller;
 import com.fdzang.microservice.blog.common.exception.BlogException;
 import com.fdzang.microservice.blog.common.exception.ErrorCode;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
+import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import com.google.common.base.Joiner;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
@@ -19,9 +21,9 @@ import java.util.Set;
 public abstract class BaseController {
     
     private static final String TOKEN_HEADER = "X-G7-Altair-User-Console-Token";
-    
+
 	@Autowired
-	private HttpServletRequest request;
+	private HttpSession session;
 
 	protected ApiResult ok(long code, String msg, Object data) {
 		ApiResult vo = new ApiResult();
@@ -81,21 +83,13 @@ public abstract class BaseController {
 		return fail("参数错误！" + message);
 	}
 
-//	protected UserDTO getCurrentUser() {
-//	    String token = request.getHeader(TOKEN_HEADER);
-//	    UserDTO user = tokenService.checkToken(token);
-//		if(user==null){
-//			throw new BlogException(ErrorCode.TOKEN_EXPIRE, "请重新登录");
-//		}
-//		if(user.getId() == null || user.getId() == 0){//沙箱环境第一使用用户缓存信息
-//			tokenService.refreshToken(token,user.getUsername());
-//			user = tokenService.checkToken(token);
-//		}
-//		return user;
-//	}
-//
-//	protected String getToken() {
-//        String token = request.getHeader(TOKEN_HEADER);
-//        return token;
-//    }
+	protected UserDTO getCurrentUser() {
+	    UserDTO user = (UserDTO)session.getAttribute(Constant.Session.USER);
+		if(user==null){
+			throw new BlogException(ErrorCode.TOKEN_EXPIRE, "请重新登录");
+		}
+
+		return user;
+	}
+
 }

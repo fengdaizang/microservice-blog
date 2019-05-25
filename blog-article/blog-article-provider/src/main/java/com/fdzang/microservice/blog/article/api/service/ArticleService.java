@@ -25,4 +25,6 @@ public interface ArticleService {
     PageDTO<ArticleDTO> getArticlesByArchiveId(String archiveId, Integer pageNo, Integer pageSize);
 
     ArticleDTO getArticleById(String id);
+
+    Boolean addArticle(ArticleDTO article);
 }

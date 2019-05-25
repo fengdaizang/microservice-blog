@@ -1,9 +1,11 @@
 package com.fdzang.microservice.blog.article.api.service.impl;
 
 import com.fdzang.microservice.blog.article.api.service.CommentService;
+import com.fdzang.microservice.blog.article.api.utils.ConvertUtils;
+import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
-import com.fdzang.microservice.blog.article.dao.domain.CommentDOExample;
-import com.fdzang.microservice.blog.article.dao.domain.CommentDOWithBLOBs;
+import com.fdzang.microservice.blog.article.dao.domain.*;
+import com.fdzang.microservice.blog.article.dao.mapper.ArticleMapper;
 import com.fdzang.microservice.blog.article.dao.mapper.CommentMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author tanghu
@@ -23,25 +26,16 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private ArticleMapper articleMapper;
+
     @Override
     public List<CommentDTO> getCommentByArticleId(String id) {
         CommentDOExample example=new CommentDOExample();
         example.createCriteria().andCommentArticleIdEqualTo(id);
         List<CommentDOWithBLOBs> commentDOS=commentMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(commentDOS)){
-            List<CommentDTO> commentDTOS=new ArrayList<>();
-            for (CommentDOWithBLOBs comment:commentDOS) {
-                CommentDTO commentDTO=new CommentDTO();
-                BeanUtils.copyProperties(comment,commentDTO);
-                if(comment.getCommentOriginalCommentId()!=null
-                        &&!comment.getCommentOriginalCommentId().equals("")){
-                    commentDTO.setReplyFlag(true);
-                }else{
-                    commentDTO.setReplyFlag(false);
-                }
-                commentDTOS.add(commentDTO);
-            }
-            return commentDTOS;
+            return ConvertUtils.convertCommentList(commentDOS);
         }
         return null;
     }
@@ -52,20 +46,67 @@ public class CommentServiceImpl implements CommentService {
         example.setOrderByClause(" comment_date desc ");
         List<CommentDOWithBLOBs> commentDOS=commentMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(commentDOS)){
-            List<CommentDTO> commentDTOS=new ArrayList<>();
-            for (CommentDOWithBLOBs comment:commentDOS) {
-                CommentDTO commentDTO=new CommentDTO();
-                BeanUtils.copyProperties(comment,commentDTO);
-                if(comment.getCommentOriginalCommentId()!=null
-                        &&!comment.getCommentOriginalCommentId().equals("")){
-                    commentDTO.setReplyFlag(true);
-                }else{
-                    commentDTO.setReplyFlag(false);
+            return ConvertUtils.convertCommentList(commentDOS);
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<CommentDTO> getCommentsByUserEmail(String userEmail) {
+        ArticleDOExample example=new ArticleDOExample();
+        example.createCriteria().andArticleAuthorEmailEqualTo(userEmail);
+        List<ArticleDO> articleDOS=articleMapper.selectByExample(example);
+
+        if(CollectionUtils.isNotEmpty(articleDOS)){
+            CommentDOExample commentDOExample=new CommentDOExample();
+            commentDOExample.createCriteria().andCommentArticleIdIn(
+                    articleDOS.stream().map(ArticleDO::getId).collect(Collectors.toList()));
+
+            List<CommentDOWithBLOBs> commentDOS=commentMapper.selectByExampleWithBLOBs(commentDOExample);
+            if(CollectionUtils.isNotEmpty(commentDOS)){
+                List<CommentDTO> commentDTOS=new ArrayList<>();
+                for (CommentDOWithBLOBs commentDO:commentDOS) {
+                    CommentDTO commentDTO=ConvertUtils.convertComment(commentDO);
+                    ArticleDO articleDO=articleMapper.selectByPrimaryKey(commentDO.getCommentArticleId());
+                    ArticleDTO articleDTO=ConvertUtils.convertArticle(articleDO);
+                    commentDTO.setArticle(articleDTO);
+
+                    commentDTOS.add(commentDTO);
                 }
+
+                return commentDTOS;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<CommentDTO> getComments() {
+        List<CommentDOWithBLOBs> commentDOS=commentMapper.selectByExampleWithBLOBs(null);
+        if(CollectionUtils.isNotEmpty(commentDOS)){
+            List<CommentDTO> commentDTOS=new ArrayList<>();
+            for (CommentDOWithBLOBs commentDO:commentDOS) {
+                CommentDTO commentDTO=ConvertUtils.convertComment(commentDO);
+                ArticleDO articleDO=articleMapper.selectByPrimaryKey(commentDO.getCommentArticleId());
+                ArticleDTO articleDTO=ConvertUtils.convertArticle(articleDO);
+                commentDTO.setArticle(articleDTO);
+
                 commentDTOS.add(commentDTO);
             }
+
             return commentDTOS;
         }
         return null;
     }
+
+    @Override
+    public Boolean deleteComment(String id) {
+        int count=commentMapper.deleteByPrimaryKey(id);
+
+        return count>0;
+    }
+
+
 }

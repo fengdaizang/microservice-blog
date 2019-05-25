@@ -47,6 +47,7 @@ public class Constant {
         public static final String USER = "user";
         public static final String USERS = "users";
         public static final String KEYWORD = "keyword";
+        public static final String COMMENTS = "comments";
 
 
     }
@@ -72,6 +73,8 @@ public class Constant {
     public class AdminHtml {
         public static final String LINK = "admin/link";
         public static final String USER = "admin/user";
+        public static final String COMMENT = "admin/comment";
+        public static final String ADD_ARTICLE = "admin/addArticle";
     }
 
     public class UserRole{
@@ -83,5 +86,10 @@ public class Constant {
     public class Static{
         public static final String MSG = "msg";
         public static final String DEFAULT_AVATAR = "https://secure.gravatar.com/avatar/a6acd9a25c699aab72bb9e60d1eba97f?s=128";
+    }
+
+    public class Article{
+        public static final String PUSH = "1";
+        public static final String DRAFT = "0";
     }
 }

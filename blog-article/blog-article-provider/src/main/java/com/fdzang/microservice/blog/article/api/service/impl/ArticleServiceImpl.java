@@ -1,6 +1,7 @@
 package com.fdzang.microservice.blog.article.api.service.impl;
 
 import com.fdzang.microservice.blog.article.api.service.ArticleService;
+import com.fdzang.microservice.blog.article.api.utils.ConvertUtils;
 import com.fdzang.microservice.blog.article.api.utils.MarkDown2HtmlUtils;
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.dao.domain.*;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,14 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
         example.setPageSize(pageSize);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
-            List<ArticleDTO> articleDTOS=new ArrayList<>();
-            for (ArticleDOWithBLOBs article: articleDOWithBLOBs) {
-                ArticleDTO articleDTO=new ArticleDTO();
-                BeanUtils.copyProperties(article,articleDTO);
-                articleDTO.setArticleAbstract(
-                        MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleAbstract()));
-                articleDTOS.add(articleDTO);
-            }
+            List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
             pageDTO.setResult(articleDTOS);
             pageDTO.setTotalCount(articleDTOS.size());
             return pageDTO;
@@ -92,11 +87,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
-            ArticleDTO articleDTO=new ArticleDTO();
-            BeanUtils.copyProperties(articleDOWithBLOBs.get(0),articleDTO);
-            articleDTO.setArticleAbstract(
-                    MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleAbstract()));
-            return articleDTO;
+            return ConvertUtils.convertArticle(articleDOWithBLOBs.get(0));
         }
         return null;
     }
@@ -116,12 +107,7 @@ public class ArticleServiceImpl implements ArticleService {
         example.setPageSize(Constant.Page.PAGESIZE);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
-            List<ArticleDTO> articleDTOS=new ArrayList<>();
-            for (ArticleDOWithBLOBs article: articleDOWithBLOBs) {
-                ArticleDTO articleDTO=new ArticleDTO();
-                BeanUtils.copyProperties(article,articleDTO);
-                articleDTOS.add(articleDTO);
-            }
+            List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
 
             return articleDTOS;
         }
@@ -136,12 +122,7 @@ public class ArticleServiceImpl implements ArticleService {
         example.setPageSize(Constant.Page.PAGESIZE);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
-            List<ArticleDTO> articleDTOS=new ArrayList<>();
-            for (ArticleDOWithBLOBs article: articleDOWithBLOBs) {
-                ArticleDTO articleDTO=new ArticleDTO();
-                BeanUtils.copyProperties(article,articleDTO);
-                articleDTOS.add(articleDTO);
-            }
+            List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
 
             return articleDTOS;
         }
@@ -185,14 +166,7 @@ public class ArticleServiceImpl implements ArticleService {
             example1.setPageSize(pageSize);
             List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example1);
             if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)) {
-                List<ArticleDTO> articleDTOS = new ArrayList<>();
-                for (ArticleDOWithBLOBs article : articleDOWithBLOBs) {
-                    ArticleDTO articleDTO = new ArticleDTO();
-                    BeanUtils.copyProperties(article, articleDTO);
-                    articleDTO.setArticleAbstract(
-                            MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleAbstract()));
-                    articleDTOS.add(articleDTO);
-                }
+                List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
                 pageDTO.setResult(articleDTOS);
                 pageDTO.setTotalCount(articleDTOS.size());
                 return pageDTO;
@@ -249,19 +223,34 @@ public class ArticleServiceImpl implements ArticleService {
             example1.setPageSize(pageSize);
             List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example1);
             if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
-                List<ArticleDTO> articleDTOS=new ArrayList<>();
-                for (ArticleDOWithBLOBs article: articleDOWithBLOBs) {
-                    ArticleDTO articleDTO=new ArticleDTO();
-                    BeanUtils.copyProperties(article,articleDTO);
-                    articleDTO.setArticleAbstract(
-                            MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleAbstract()));
-                    articleDTOS.add(articleDTO);
-                }
+                List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
                 pageDTO.setResult(articleDTOS);
                 pageDTO.setTotalCount(articleDTOS.size());
                 return pageDTO;
             }
         }
         return null;
+    }
+
+    @Override
+    public Boolean addArticle(ArticleDTO article) {
+        ArticleDOWithBLOBs articleDO = new ArticleDOWithBLOBs();
+        BeanUtils.copyProperties(article,articleDO);
+
+        articleDO.setArticleViewCount(0);
+        articleDO.setArticleCommentCount(0);
+        articleDO.setArticleCreateDate(new Date());
+        articleDO.setArticleCommentable("1");
+        articleDO.setArticleEditorType("CodeMirror-Markdown");
+        articleDO.setArticleHadBeenPublished(Constant.Article.DRAFT);
+        articleDO.setArticlePutTop(Constant.Article.DRAFT);
+        articleDO.setArticleSignId("");
+        articleDO.setArticleUpdateDate(new Date());
+        articleDO.setArticleViewPwd("");
+        articleDO.setArticleRandomDouble(5D);
+
+        int count=articleMapper.insert(articleDO);
+
+        return count>0;
     }
 }

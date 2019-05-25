@@ -22,4 +22,7 @@ public interface ArchivedateClient {
     @GetMapping("/zuul/archivedate/getArchiveByTime")
     ApiResult<ArchivedateDTO> getArchiveByTime(@RequestParam("year")Integer year, @RequestParam("month")Integer month);
 
+    @GetMapping("/zuul/archivedate/addArticleAndArchive")
+    ApiResult<Boolean> addArticleAndArchive(@RequestParam("id")String id, @RequestParam("isPush") Boolean isPush);
+
 }

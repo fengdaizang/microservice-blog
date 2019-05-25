@@ -30,6 +30,11 @@ public class TagHystrix implements FallbackFactory<TagClient> {
             public ApiResult getTagByTitle(String title) {
                 return null;
             }
+
+            @Override
+            public ApiResult addArticleAndTag(String tags, String id, Boolean isPush) {
+                return null;
+            }
         };
     }
 }

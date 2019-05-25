@@ -140,12 +140,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into comment (comment_date, comment_email, comment_name, 
+    insert into comment (id, comment_date, comment_email, comment_name,
       comment_article_id, comment_sharp_url, comment_url, 
       comment_original_comment_id, comment_original_comment_name, 
       comment_content, comment_thumbnail_url
       )
-    values (#{commentDate,jdbcType=TIMESTAMP}, #{commentEmail,jdbcType=VARCHAR}, #{commentName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP}, #{commentEmail,jdbcType=VARCHAR}, #{commentName,jdbcType=VARCHAR},
       #{commentArticleId,jdbcType=VARCHAR}, #{commentSharpUrl,jdbcType=VARCHAR}, #{commentUrl,jdbcType=VARCHAR}, 
       #{commentOriginalCommentId,jdbcType=VARCHAR}, #{commentOriginalCommentName,jdbcType=VARCHAR}, 
       #{commentContent,jdbcType=LONGVARCHAR}, #{commentThumbnailUrl,jdbcType=LONGVARCHAR}

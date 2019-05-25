@@ -31,4 +31,19 @@ public class CommentController extends BaseController {
         return ok(commentService.getRecentComments());
     }
 
+    @GetMapping("/getCommentsByUserEmail")
+    public ApiResult getCommentsByUserEmail(String userEmail){
+        return ok(commentService.getCommentsByUserEmail(userEmail));
+    }
+
+    @GetMapping("/getComments")
+    public ApiResult getComments(){
+        return ok(commentService.getComments());
+    }
+
+    @GetMapping("/deleteComment")
+    public ApiResult deleteComment(@RequestParam("id")String id){
+        return ok(commentService.deleteComment(id));
+    }
+
 }

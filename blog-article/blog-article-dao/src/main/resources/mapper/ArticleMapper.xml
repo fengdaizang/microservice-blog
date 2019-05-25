@@ -156,7 +156,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into article (article_title, article_author_email, 
+    insert into article (id, article_title, article_author_email,
       article_comment_count, article_view_count, 
       article_permalink, article_had_been_published, 
       article_is_published, article_put_top, article_create_date, 
@@ -164,7 +164,7 @@
       article_sign_id, article_commentable, article_view_pwd, 
       article_editor_type, article_abstract, 
       article_tags, article_content)
-    values (#{articleTitle,jdbcType=VARCHAR}, #{articleAuthorEmail,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{articleTitle,jdbcType=VARCHAR}, #{articleAuthorEmail,jdbcType=VARCHAR},
       #{articleCommentCount,jdbcType=INTEGER}, #{articleViewCount,jdbcType=INTEGER}, 
       #{articlePermalink,jdbcType=VARCHAR}, #{articleHadBeenPublished,jdbcType=CHAR}, 
       #{articleIsPublished,jdbcType=CHAR}, #{articlePutTop,jdbcType=CHAR}, #{articleCreateDate,jdbcType=TIMESTAMP}, 

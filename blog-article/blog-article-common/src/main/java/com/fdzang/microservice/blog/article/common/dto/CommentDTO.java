@@ -34,4 +34,6 @@ public class CommentDTO {
 
     private boolean replyFlag;
 
+    private ArticleDTO article;
+
 }

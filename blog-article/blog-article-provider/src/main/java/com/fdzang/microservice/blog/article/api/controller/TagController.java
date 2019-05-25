@@ -35,4 +35,10 @@ public class TagController extends BaseController {
     public ApiResult getTagByTitle(@RequestParam("title") String title){
         return ok(tagService.getTagByTitle(title));
     }
+
+    @GetMapping(value = "/addArticleAndTag")
+    public ApiResult addArticleAndTag(@RequestParam("tags") String tags,
+            @RequestParam("id") String id,@RequestParam("isPush") Boolean isPush){
+        return ok(tagService.addArticleAndTag(tags,id,isPush));
+    }
 }

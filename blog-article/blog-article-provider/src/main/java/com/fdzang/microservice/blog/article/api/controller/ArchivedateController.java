@@ -29,4 +29,9 @@ public class ArchivedateController extends BaseController {
         return ok(archivedateService.getArchiveByTime(year, month));
     }
 
+    @GetMapping("/addArticleAndArchive")
+    public ApiResult addArticleAndArchive(@RequestParam("id")String id, @RequestParam("isPush") Boolean isPush){
+        return ok(archivedateService.addArticleAndArchive(id, isPush));
+    }
+
 }

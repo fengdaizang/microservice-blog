@@ -21,4 +21,13 @@ public interface CommentClient {
 
     @GetMapping("/zuul/comment/getRecentComments")
     ApiResult<List<CommentDTO>> getRecentComments();
+
+    @GetMapping("/zuul/comment/getCommentsByUserEmail")
+    ApiResult<List<CommentDTO>> getCommentsByUserEmail(@RequestParam("userEmail")String userEmail);
+
+    @GetMapping("/zuul/comment/getComments")
+    ApiResult<List<CommentDTO>> getComments();
+
+    @GetMapping("/zuul/comment/deleteComment")
+    ApiResult<Boolean> deleteComment(@RequestParam("id")String id);
 }

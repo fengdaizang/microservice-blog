@@ -12,4 +12,10 @@ public interface CommentService {
     List<CommentDTO> getCommentByArticleId(String id);
 
     List<CommentDTO> getRecentComments();
+
+    List<CommentDTO> getCommentsByUserEmail(String userEmail);
+
+    List<CommentDTO> getComments();
+
+    Boolean deleteComment(String id);
 }

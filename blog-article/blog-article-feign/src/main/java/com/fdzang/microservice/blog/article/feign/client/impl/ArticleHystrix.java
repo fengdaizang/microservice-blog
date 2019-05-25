@@ -54,6 +54,11 @@ public class ArticleHystrix implements FallbackFactory<ArticleClient> {
             public ApiResult<PageDTO<ArticleDTO>> getArticlesByArchiveId(String archiveId, Integer pageNo, Integer pageSize) {
                 return null;
             }
+
+            @Override
+            public ApiResult<Boolean> addArticle(ArticleDTO article) {
+                return null;
+            }
         };
     }
 }

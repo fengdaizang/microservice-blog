@@ -12,55 +12,112 @@
   </@head>
 </head>
 <body>
+<!-- 编写js代码 -->
+<script type="text/javascript">
+    function search() {
+        var keyword = $("#keyword").val();
+        $.get("${request.contextPath}/link/search", {"keyword": keyword}, function (data) {
+            if (data) {
+                window.location.href="${request.contextPath}/link/search";
+            }
+            else {
+                alert("发布失败，请重试！");
+                window.location.reload();
+            }
+        });
+    }
+
+    function push() {
+        $.post("${request.contextPath}/article/push", $("#new_article_form").serialize(), function (data) {
+            if (data) {
+                alert("发布成功！");
+                window.location.href="${request.contextPath}/link/search";
+            }
+            else {
+                alert("发布失败，请重试！");
+                window.location.reload();
+            }
+        });
+    }
+
+    function draft() {
+        $.post("${request.contextPath}/article/draft", $("#new_article_form").serialize(), function (data) {
+            if (data) {
+                alert("发布成功！");
+                window.location.href="${request.contextPath}/link/search";
+            }
+            else {
+                alert("发布失败，请重试！");
+                window.location.reload();
+            }
+        });
+    }
+</script>
 <div class="page">
     <#include "header.ftl">
     <div class="page-content d-flex align-items-stretch">
         <#include "side.ftl">
         <div class="content-inner">
+            <!-- Page Header-->
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">首页</h2>
+                    <h2 class="no-margin-bottom">新增文章</h2>
                 </div>
             </header>
-            <section class="dashboard-counts no-padding-bottom">
-                <div class="container-fluid">
-                    <div class="row bg-white has-shadow">
-                        <div class="col-xl-6 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="title">
-                     	            <span>您好， ${user.userName }<br> 欢迎您使用本风险评估系统！</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="number">
-                                    <strong>当前时间： ${.now?string["yyyy-MM-dd HH:mm:ss"]}</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <br/>
-            <section class="updates no-padding-top">
+            <!-- Breadcrumb-->
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="${request.contextPath}/admin/index.html">首页</a></li>
+                    <li class="breadcrumb-item active">文章管理</li>
+                    <li class="breadcrumb-item active">新增文章</li>
+                </ul>
+            </div>
+            <!-- Forms Section-->
+            <section class="forms">
                 <div class="container-fluid">
                     <div class="row">
+                        <!-- Basic Form-->
                         <div class="col-lg-12">
-                            <div class="articles card">
+                            <div class="card">
                                 <div class="card-header d-flex align-items-center">
-                                    <h2 class="h3">酒店安全风险评估系统</h2>
-                                    <div class="badge badge-rounded bg-green">介绍</div>
+                                    <h3 class="h4">填写文章内容</h3>
                                 </div>
-                                <div class="card-body no-padding">
-                                    <div class="item d-flex align-items-center">
-                                        <div class="text">
-                                            <h3 class="h5">酒店管理人员可以根据系统所提供的可视化的酒店安全检查体系</h3><br/>
-                                            <h3 class="h5">用户可以根据自身实际情况进行检查后将自己的完成情况进行检查并将检查结果通过选择的方式输入到系统中</h3><br/>
-                                            <h3 class="h5">系统根据每一项目的赋值比例通过算法计算出整体的得分，并评级别</h3><br/>
-                                            <h3 class="h5">并对于现在所有模块的风险大小进行排序</h3><br/>
+                                <div class="card-body">
+                                    <p>注意：正文和摘要均支持markdown格式</p>
+                                    <form method="post" id="new_article_form">
+                                        <div class="form-group">
+                                            <label for="articleTitle" class="form-control-label">标题</label>
+                                            <input type="text" name="articleTitle" id="articleTitle" placeholder="文章的标题" class="form-control">
                                         </div>
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="articleContent" class="form-control-label">正文</label>
+                                            <textarea name="articleContent" class="form-control" id="articleContent" rows="8"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="articleTags" class="form-control-label">标签</label>
+                                            <input type="text" name="articleTags" class="form-control" id="articleTags"
+                                                   placeholder="文章的标签，多个标签使用英文半角逗号分隔">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="articleAbstract" class="form-control-label">摘要</label>
+                                            <textarea name="articleAbstract" class="form-control" id="articleAbstract" rows="6"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="articlePermalink" class="form-control-label">链接</label>
+                                            <input type="text" name="articlePermalink" id="articlePermalink"
+                                                   placeholder="自定义链接，不填则自动生成" class="form-control">
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="form-group row">
+                                            <label for="keyword" class="col-sm-8"></label>
+                                            <label for="submit" class="col-sm-2 form-control-label">
+                                                <input type="button" value="保存为草稿" onclick="draft()" class="btn btn-primary form-control">
+                                            </label>
+                                            <label for="submit" class="col-sm-2 form-control-label">
+                                                <input type="button" value="发布" onclick="push()" class="btn btn-success form-control">
+                                            </label>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

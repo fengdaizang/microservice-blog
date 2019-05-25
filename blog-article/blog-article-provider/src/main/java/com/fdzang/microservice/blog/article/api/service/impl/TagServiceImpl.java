@@ -1,17 +1,20 @@
 package com.fdzang.microservice.blog.article.api.service.impl;
 
 import com.fdzang.microservice.blog.article.api.service.TagService;
+import com.fdzang.microservice.blog.article.api.utils.ConvertUtils;
 import com.fdzang.microservice.blog.article.common.dto.TagDTO;
+import com.fdzang.microservice.blog.article.dao.domain.TagArticleDO;
 import com.fdzang.microservice.blog.article.dao.domain.TagDO;
 import com.fdzang.microservice.blog.article.dao.domain.TagDOExample;
+import com.fdzang.microservice.blog.article.dao.mapper.TagArticleMapper;
 import com.fdzang.microservice.blog.article.dao.mapper.TagMapper;
 import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.common.utils.TimeUtils;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +27,9 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private TagMapper tagMapper;
 
+    @Autowired
+    private TagArticleMapper tagArticleMapper;
+
     @Override
     public List<TagDTO> getMostUsedTags() {
         TagDOExample example=new TagDOExample();
@@ -33,13 +39,7 @@ public class TagServiceImpl implements TagService {
 
         List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){
-            List<TagDTO> tagDTOS=new ArrayList<>();
-            for (TagDO tag:tagDOS) {
-                TagDTO tagDTO=new TagDTO();
-                BeanUtils.copyProperties(tag,tagDTO);
-                tagDTOS.add(tagDTO);
-            }
-            return tagDTOS;
+            return ConvertUtils.convertTagList(tagDOS);
         }
         return null;
 
@@ -49,13 +49,7 @@ public class TagServiceImpl implements TagService {
     public List<TagDTO> getTags() {
         List<TagDO> tagDOS=tagMapper.selectByExample(null);
         if(CollectionUtils.isNotEmpty(tagDOS)){
-            List<TagDTO> tagDTOS=new ArrayList<>();
-            for (TagDO tag:tagDOS) {
-                TagDTO tagDTO=new TagDTO();
-                BeanUtils.copyProperties(tag,tagDTO);
-                tagDTOS.add(tagDTO);
-            }
-            return tagDTOS;
+            return ConvertUtils.convertTagList(tagDOS);
         }
         return null;
     }
@@ -67,11 +61,59 @@ public class TagServiceImpl implements TagService {
 
         List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){
-            TagDTO tagDTO=new TagDTO();
             TagDO tagDO=tagDOS.get(0);
-            BeanUtils.copyProperties(tagDO,tagDTO);
-            return tagDTO;
+            return ConvertUtils.convertTag(tagDO);
         }
         return null;
+    }
+
+    @Override
+    public Boolean addArticleAndTag(String tags, String id, Boolean isPush) {
+        try {
+            String[] tag=tags.split(",");
+            for (String t:tag) {
+                if(StringUtils.isEmpty(t)){
+                    continue;
+                }
+
+                TagDOExample example=new TagDOExample();
+                example.createCriteria().andTagTitleEqualTo(t);
+                List<TagDO> tagDOS=tagMapper.selectByExample(example);
+
+                TagDO tagDO=new TagDO();
+                if(CollectionUtils.isNotEmpty(tagDOS)){
+                    tagDO=tagDOS.get(0);
+
+                    //更新标签信息
+                    tagDO.setTagReferenceCount(tagDO.getTagReferenceCount()+1);
+                    if(isPush){
+                        tagDO.setTagPublishedRefCount(tagDO.getTagPublishedRefCount()+1);
+                    }
+                    tagMapper.updateByPrimaryKey(tagDO);
+                }else{
+                    //先创建标签
+                    tagDO.setId(TimeUtils.getTimestamp());
+                    tagDO.setTagReferenceCount(1);
+                    if(isPush){
+                        tagDO.setTagPublishedRefCount(1);
+                    }else{
+                        tagDO.setTagPublishedRefCount(0);
+                    }
+                    tagDO.setTagTitle(t);
+                    tagMapper.insert(tagDO);
+                }
+
+                //关联文章与标签
+                TagArticleDO tagArticleDO=new TagArticleDO();
+                tagArticleDO.setId(TimeUtils.getTimestamp());
+                tagArticleDO.setArticleId(id);
+                tagArticleDO.setTagId(tagDO.getId());
+                tagArticleMapper.insert(tagArticleDO);
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 }

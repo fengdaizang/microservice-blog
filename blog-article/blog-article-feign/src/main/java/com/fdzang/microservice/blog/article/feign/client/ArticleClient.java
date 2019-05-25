@@ -41,4 +41,7 @@ public interface ArticleClient {
                                      @RequestParam("pageNo")Integer pageNo,
                                      @RequestParam("pageSize")Integer pageSize);
 
+    @PostMapping(value = "/zuul/article/addArticle")
+    ApiResult<Boolean> addArticle(@RequestBody ArticleDTO article);
+
 }

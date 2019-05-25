@@ -28,6 +28,11 @@ public class ArchivedateHystrix implements FallbackFactory<ArchivedateClient> {
             public ApiResult<ArchivedateDTO> getArchiveByTime(Integer year, Integer month) {
                 return null;
             }
+
+            @Override
+            public ApiResult<Boolean> addArticleAndArchive(String id, Boolean isPush) {
+                return null;
+            }
         };
     }
 }

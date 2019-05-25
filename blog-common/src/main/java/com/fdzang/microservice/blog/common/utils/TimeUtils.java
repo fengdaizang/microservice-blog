@@ -1,6 +1,8 @@
 package com.fdzang.microservice.blog.common.utils;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +16,11 @@ import java.util.Date;
  */
 public class TimeUtils {
 
+    /**
+     * 通过时间戳得到LocalDate
+     * @param timeStamp
+     * @return
+     */
     public static LocalDate getByTimeStamp(Long timeStamp){
         Date date=new Date(timeStamp);
         Instant instant=date.toInstant();
@@ -23,6 +30,12 @@ public class TimeUtils {
         return localDate;
     }
 
+    /**
+     * 得到某年某月第一天的时间戳
+     * @param year
+     * @param month
+     * @return
+     */
     public static Long getTimeStamp(Integer year,Integer month){
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date=null;
@@ -36,7 +49,26 @@ public class TimeUtils {
         return timestamp.getTime();
     }
 
+    /**
+     * 得到当前月份的存档
+     * @return
+     */
+    public static Long getCurrentArchivedate(){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+        String date=sdf.format(new Date());
+        date+="-01 00:00:00";
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime time=LocalDateTime.parse(date,df);
+        Timestamp timestamp = Timestamp.valueOf(time);
+        return timestamp.getTime();
+    }
+
+    /**
+     * 得到当前时间戳，加上同步锁，用于生成id
+     * @return
+     */
     synchronized public static String getTimestamp(){
-        return System.currentTimeMillis()+"";
+        return String.valueOf(System.currentTimeMillis());
     }
 }
