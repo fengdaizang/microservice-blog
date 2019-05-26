@@ -25,4 +25,8 @@ public interface OptionsClient {
 
     @PostMapping(value = "/zuul/options/updateOption")
     ApiResult<Boolean> updateOption(@RequestBody OptionsDTO option);
+
+    @PostMapping(value = "/zuul/options/updateOptionByKV")
+    ApiResult<Boolean> updateOptionByKV(@RequestParam("id") String id,
+                                        @RequestParam("value") String value);
 }

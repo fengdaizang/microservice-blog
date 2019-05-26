@@ -14,4 +14,6 @@ public interface OptionsService {
     OptionsDTO getOptionById(String id);
 
     Boolean updateOption(OptionsDTO option);
+
+    Boolean updateOption(String id,String value);
 }

@@ -107,13 +107,13 @@ public class ArticleController extends BaseController {
             newPush=true;
         }
 
-        Boolean articleBool=(Boolean) CoventUtils.getApiResultData(articleClient.updateArticle(article));
-
         Boolean tagBool=true;
         if(!articleDTO.getArticleTags().equals(article.getArticleTags())){
             tagBool=(Boolean) CoventUtils.getApiResultData(
                     tagClient.updateArticleAndTag(article.getArticleTags(),article.getId(),oldPush,newPush));
         }
+
+        Boolean articleBool=(Boolean) CoventUtils.getApiResultData(articleClient.updateArticle(article));
 
         Boolean archivedateBool=(Boolean) CoventUtils.getApiResultData(
                 archivedateClient.updateArticleAndArchive(article.getId(),oldPush,newPush));
@@ -175,9 +175,12 @@ public class ArticleController extends BaseController {
         return Constant.AdminHtml.ARTICLE;
     }
 
-    @GetMapping("/search")
-    public void userSearch(@RequestParam("keyword")String keyword){
+    @ResponseBody
+    @GetMapping("/article/search")
+    public String userSearch(@RequestParam("keyword")String keyword){
         session.setAttribute(Constant.Session.KEYWORD,keyword);
+
+        return keyword;
     }
 
     @GetMapping("/article/draft/mgr")
@@ -185,15 +188,18 @@ public class ArticleController extends BaseController {
                            @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
                              Map<String,Object> map){
         UserDTO userDTO=getCurrentUser();
-        Object articles=null;
+        PageDTO<ArticleDTO>  articles=null;
 
         String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
+        if(StringUtils.isEmpty(keyword)){
+            keyword="";
+        }
         if(Constant.UserRole.DEFAULT.equals(userDTO.getUserRole())){
-            articles=CoventUtils.getApiResultData(
+            articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(
                     articleClient.getDraftsByUserEmail(
                             userDTO.getUserEmail(),keyword,pageNO,pageSize));
         }else{
-            articles=CoventUtils.getApiResultData(
+            articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(
                     articleClient.getDrafts(keyword,pageNO,pageSize));
         }
 

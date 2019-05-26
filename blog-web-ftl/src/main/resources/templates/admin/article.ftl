@@ -114,6 +114,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                <#if page??>
                                                 <#list page.result as article>
                                                     <tr>
                                                         <td scope="row">${article_index+1}</td>
@@ -127,6 +128,8 @@
                                                         <td>${article.articleCreateDate?string["yyyy-MM-dd HH:mm:ss"] }</td>
                                                         <td><a href="${request.contextPath}/article/edit?id=${article.id}"
                                                                class="btn btn-primary btn-xs">更新</a>
+                                                            <a href="#" class="btn btn-danger btn-xs"
+                                                               onclick="deleteArticle(${article.id})">删除</a>
                                                             <#if article.articlePutTop == '0' >
                                                                 <a href="#" class="btn btn-success btn-xs"
                                                                    onclick="pushTop(${article.id},1)">置顶</a>
@@ -134,14 +137,14 @@
                                                                 <a href="#" class="btn btn-success btn-xs"
                                                                    onclick="pushTop(${article.id},0)">取消置顶</a>
                                                             </#if>
-
-                                                            <a href="#" class="btn btn-danger btn-xs"
-                                                               onclick="deleteArticle(${article.id})">删除</a>
-                                                            <a href="#" class="btn btn-info btn-xs"
-                                                               onclick="deleteArticle(${article.id})">评论</a>
                                                         </td>
                                                     </tr>
                                                 </#list>
+                                                <#else>
+                                                    <tr>
+                                                        <td colspan="7">该列表很懒，什么都没有留下。。。</td>
+                                                    </tr>
+                                                </#if>
                                             </tbody>
                                         </table>
                                     </div>
@@ -149,8 +152,8 @@
                             </div>
                         </div>
                     </div>
+                    <#if page??>
                     <div class="row clearfix">
-                        <#if 0 != page.totalPage>
                         <div class="fn-clear">
                             <nav class="pagination fn-right">
                                 <#if 1 != page.pages?first>
@@ -172,6 +175,7 @@
                                 </#if>
                             </nav>
                         </div>
+                    </div>
                     </#if>
                 </div>
             </section>

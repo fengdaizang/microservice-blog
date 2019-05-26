@@ -56,4 +56,13 @@ public class OptionsServiceImpl implements OptionsService {
         }
         return count>0;
     }
+
+    @Override
+    public Boolean updateOption(String id, String value) {
+        OptionsDO optionsDO=optionsMapper.selectByPrimaryKey(id);
+        optionsDO.setOptionValue(value);
+        int count=optionsMapper.updateByPrimaryKey(optionsDO);
+
+        return count>0;
+    }
 }

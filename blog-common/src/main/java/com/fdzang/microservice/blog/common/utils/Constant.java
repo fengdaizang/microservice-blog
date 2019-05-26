@@ -79,6 +79,7 @@ public class Constant {
         public static final String EDIT_ARTICLE = "admin/updateArticle";
         public static final String ARTICLE = "admin/article";
         public static final String DRAFT = "admin/draft";
+        public static final String OPTIONS = "admin/options";
     }
 
     public class UserRole{

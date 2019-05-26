@@ -33,6 +33,11 @@ public class OptionsHystrix implements FallbackFactory<OptionsClient> {
             public ApiResult<Boolean> updateOption(OptionsDTO option) {
                 return null;
             }
+
+            @Override
+            public ApiResult<Boolean> updateOptionByKV(String id, String value) {
+                return null;
+            }
         };
     }
 }

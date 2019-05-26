@@ -30,10 +30,13 @@ public class OptionsController extends BaseController {
 
     @PostMapping(value = "/updateOption")
     public ApiResult updateOption(@RequestBody OptionsDTO option){
-        if(optionsService.updateOption(option)){
-            return ok();
-        }else{
-            return fail("更新失败！");
-        }
+        return ok(optionsService.updateOption(option));
+    }
+
+    @PostMapping(value = "/updateOptionByKV")
+    public ApiResult updateOptionByKV(@RequestParam("id") String id,
+                                  @RequestParam("value") String value){
+
+        return ok(optionsService.updateOption(id, value));
     }
 }

@@ -51,7 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         long count=articleMapper.countByExample(example);
         if(count<1){
-            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+            return null;
         }
 
         if(pageNo==null){
@@ -95,7 +95,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         long count=articleMapper.countByExample(example);
         if(count<1){
-            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+            return null;
         }
 
         if(pageNo==null){
@@ -189,7 +189,7 @@ public class ArticleServiceImpl implements ArticleService {
                     tagArticleDOS.stream().map(TagArticleDO::getArticleId).collect(Collectors.toList()));
             long count=articleMapper.countByExample(example1);
             if(count<1){
-                throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+                return null;
             }
 
             if(pageNo==null){
@@ -244,7 +244,7 @@ public class ArticleServiceImpl implements ArticleService {
                     archivedateArticleDOS.stream().map(ArchivedateArticleDO::getArticleId).collect(Collectors.toList()));
             long count=articleMapper.countByExample(example1);
             if(count<1){
-                throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+                return null;
             }
 
             if(pageNo==null){
@@ -323,7 +323,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleDO.setArticleUpdateDate(new Date());
         articleDO.setArticleHadBeenPublished(Constant.Article.PUSH);
 
-        int count = articleMapper.updateByPrimaryKey(articleDO);
+        int count = articleMapper.updateByPrimaryKeyWithBLOBs(articleDO);
 
         return count>0;
     }
@@ -356,7 +356,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         long count=articleMapper.countByExample(example);
         if(count<1){
-            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+            return null;
         }
 
         if(pageNo==null){
@@ -400,7 +400,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         long count=articleMapper.countByExample(example);
         if(count<1){
-            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+            return null;
         }
 
         if(pageNo==null){

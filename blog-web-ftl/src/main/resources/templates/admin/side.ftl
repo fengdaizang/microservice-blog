@@ -21,7 +21,7 @@
             <ul id="tools" class="collapse list-unstyled ">
                 <li><a href="${request.contextPath}/link/mgr.html">链接管理</a></li>
                 <li><a href="${request.contextPath}/user/mgr.html">用户管理</a></li>
-                <li><a href="#">全局配置</a></li>
+                <li><a href="${request.contextPath}/options/mgr.html">全局配置</a></li>
                 <li><a href="#">其他</a></li>
             </ul>
         </li>
