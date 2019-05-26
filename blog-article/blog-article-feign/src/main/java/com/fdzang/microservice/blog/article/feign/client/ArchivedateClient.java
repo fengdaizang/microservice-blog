@@ -20,9 +20,20 @@ public interface ArchivedateClient {
     ApiResult<List<ArchivedateDTO>> getArchives();
 
     @GetMapping("/zuul/archivedate/getArchiveByTime")
-    ApiResult<ArchivedateDTO> getArchiveByTime(@RequestParam("year")Integer year, @RequestParam("month")Integer month);
+    ApiResult<ArchivedateDTO> getArchiveByTime(@RequestParam("year")Integer year,
+                                               @RequestParam("month")Integer month);
 
     @GetMapping("/zuul/archivedate/addArticleAndArchive")
-    ApiResult<Boolean> addArticleAndArchive(@RequestParam("id")String id, @RequestParam("isPush") Boolean isPush);
+    ApiResult<Boolean> addArticleAndArchive(@RequestParam("id")String id,
+                                            @RequestParam("isPush") Boolean isPush);
 
+
+    @GetMapping("/zuul/archivedate/updateArticleAndArchive")
+    ApiResult<Boolean> updateArticleAndArchive(@RequestParam("id")String id,
+                                               @RequestParam("oldPush") Boolean oldPush,
+                                               @RequestParam("newPush") Boolean newPush);
+
+    @GetMapping("/zuul/archivedate/deleteArticleAndArchive")
+    ApiResult deleteArticleAndArchive(@RequestParam("id")String id,
+                                      @RequestParam("isPush") Boolean isPush);
 }

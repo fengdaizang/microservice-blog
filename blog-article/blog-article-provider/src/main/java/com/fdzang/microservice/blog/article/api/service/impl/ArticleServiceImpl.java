@@ -12,6 +12,7 @@ import com.fdzang.microservice.blog.common.entity.PageDTO;
 import com.fdzang.microservice.blog.common.exception.BlogException;
 import com.fdzang.microservice.blog.common.exception.ErrorCode;
 import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.common.utils.TimeUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -42,9 +43,55 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public PageDTO<ArticleDTO> getArticles(String keyword, Integer pageNo, Integer pageSize) {
         ArticleDOExample example=new ArticleDOExample();
+        ArticleDOExample.Criteria criteria=example.createCriteria();
+        criteria.andArticleIsPublishedEqualTo(Constant.Article.PUSH);
         example.setOrderByClause("article_create_date desc");
         if(StringUtils.isNotEmpty(keyword)){
-            example.createCriteria().andArticleTitleLike("%"+keyword+"%");
+            criteria.andArticleTitleLike("%"+keyword+"%");
+        }
+        long count=articleMapper.countByExample(example);
+        if(count<1){
+            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+        }
+
+        if(pageNo==null){
+            pageNo=1;
+        }
+        if(pageSize==null){
+            pageSize=10;
+        }
+        PageDTO<ArticleDTO> pageDTO=new PageDTO<>(pageNo,pageSize,count);
+        int total_page=pageDTO.getTotalPage();
+        if(pageNo<1){
+            pageNo=1;
+        }
+        if(pageNo>total_page){
+            pageNo=total_page;
+        }
+        pageDTO.setPageNo(pageNo);
+        pageDTO.setPageSize(pageSize);
+
+        example.setStartPos(pageDTO.getStartPos());
+        example.setPageSize(pageSize);
+        List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
+        if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
+            List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
+            pageDTO.setResult(articleDTOS);
+            pageDTO.setTotalCount(articleDTOS.size());
+            return pageDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public PageDTO<ArticleDTO> getArticlesByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize) {
+        ArticleDOExample example=new ArticleDOExample();
+        ArticleDOExample.Criteria criteria=example.createCriteria();
+        criteria.andArticleAuthorEmailEqualTo(userEmail)
+                .andArticleIsPublishedEqualTo(Constant.Article.PUSH);
+        example.setOrderByClause("article_create_date desc");
+        if(StringUtils.isNotEmpty(keyword)){
+            criteria.andArticleTitleLike("%"+keyword+"%");
         }
         long count=articleMapper.countByExample(example);
         if(count<1){
@@ -181,8 +228,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         ArticleDTO articleDTO=new ArticleDTO();
         BeanUtils.copyProperties(articleDOWithBLOBs,articleDTO);
-        articleDTO.setArticleAbstract(
-                MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleAbstract()));
 
         return articleDTO;
     }
@@ -237,6 +282,15 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOWithBLOBs articleDO = new ArticleDOWithBLOBs();
         BeanUtils.copyProperties(article,articleDO);
 
+        if(StringUtils.isNotEmpty(article.getArticlePermalink())){
+            if(article.getArticlePermalink().startsWith("/")){
+                articleDO.setArticlePermalink(article.getArticlePermalink());
+            }else{
+                articleDO.setArticlePermalink("/"+article.getArticlePermalink());
+            }
+        }else{
+            articleDO.setArticlePermalink(TimeUtils.getArticleLink());
+        }
         articleDO.setArticleViewCount(0);
         articleDO.setArticleCommentCount(0);
         articleDO.setArticleCreateDate(new Date());
@@ -252,5 +306,129 @@ public class ArticleServiceImpl implements ArticleService {
         int count=articleMapper.insert(articleDO);
 
         return count>0;
+    }
+
+    @Override
+    public Boolean updateArticle(ArticleDTO article) {
+        ArticleDOWithBLOBs articleDO = articleMapper.selectByPrimaryKey(article.getId());
+
+        articleDO.setArticleAbstract(article.getArticleAbstract());
+        articleDO.setArticleTitle(article.getArticleTitle());
+        if(StringUtils.isNotEmpty(article.getArticlePermalink())){
+            articleDO.setArticlePermalink(article.getArticlePermalink());
+        }
+        articleDO.setArticleTags(article.getArticleTags());
+        articleDO.setArticleIsPublished(article.getArticleIsPublished());
+        articleDO.setArticleContent(article.getArticleContent());
+        articleDO.setArticleUpdateDate(new Date());
+        articleDO.setArticleHadBeenPublished(Constant.Article.PUSH);
+
+        int count = articleMapper.updateByPrimaryKey(articleDO);
+
+        return count>0;
+    }
+
+    @Override
+    public Boolean pushTop(String id, String isTop) {
+        ArticleDOWithBLOBs articleDO = articleMapper.selectByPrimaryKey(id);
+        articleDO.setArticlePutTop(isTop);
+        int count = articleMapper.updateByPrimaryKey(articleDO);
+
+        return count>0;
+    }
+
+    @Override
+    public Boolean deleteArticle(String id) {
+        int count = articleMapper.deleteByPrimaryKey(id);
+
+        return count>0;
+    }
+
+
+    @Override
+    public PageDTO<ArticleDTO> getDrafts(String keyword, Integer pageNo, Integer pageSize) {
+        ArticleDOExample example=new ArticleDOExample();
+        ArticleDOExample.Criteria criteria=example.createCriteria();
+        criteria.andArticleIsPublishedEqualTo(Constant.Article.DRAFT);
+        example.setOrderByClause("article_create_date desc");
+        if(StringUtils.isNotEmpty(keyword)){
+            criteria.andArticleTitleLike("%"+keyword+"%");
+        }
+        long count=articleMapper.countByExample(example);
+        if(count<1){
+            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+        }
+
+        if(pageNo==null){
+            pageNo=1;
+        }
+        if(pageSize==null){
+            pageSize=10;
+        }
+        PageDTO<ArticleDTO> pageDTO=new PageDTO<>(pageNo,pageSize,count);
+        int total_page=pageDTO.getTotalPage();
+        if(pageNo<1){
+            pageNo=1;
+        }
+        if(pageNo>total_page){
+            pageNo=total_page;
+        }
+        pageDTO.setPageNo(pageNo);
+        pageDTO.setPageSize(pageSize);
+
+        example.setStartPos(pageDTO.getStartPos());
+        example.setPageSize(pageSize);
+        List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
+        if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
+            List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
+            pageDTO.setResult(articleDTOS);
+            pageDTO.setTotalCount(articleDTOS.size());
+            return pageDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public PageDTO<ArticleDTO> getDraftsByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize) {
+        ArticleDOExample example=new ArticleDOExample();
+        ArticleDOExample.Criteria criteria=example.createCriteria();
+        criteria.andArticleAuthorEmailEqualTo(userEmail)
+                .andArticleIsPublishedEqualTo(Constant.Article.DRAFT);
+        example.setOrderByClause("article_create_date desc");
+        if(StringUtils.isNotEmpty(keyword)){
+            criteria.andArticleTitleLike("%"+keyword+"%");
+        }
+        long count=articleMapper.countByExample(example);
+        if(count<1){
+            throw new BlogException(ErrorCode.DATA_NULL_ERROR,"未查询到数据，请重新输入条件！");
+        }
+
+        if(pageNo==null){
+            pageNo=1;
+        }
+        if(pageSize==null){
+            pageSize=10;
+        }
+        PageDTO<ArticleDTO> pageDTO=new PageDTO<>(pageNo,pageSize,count);
+        int total_page=pageDTO.getTotalPage();
+        if(pageNo<1){
+            pageNo=1;
+        }
+        if(pageNo>total_page){
+            pageNo=total_page;
+        }
+        pageDTO.setPageNo(pageNo);
+        pageDTO.setPageSize(pageSize);
+
+        example.setStartPos(pageDTO.getStartPos());
+        example.setPageSize(pageSize);
+        List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
+        if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
+            List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
+            pageDTO.setResult(articleDTOS);
+            pageDTO.setTotalCount(articleDTOS.size());
+            return pageDTO;
+        }
+        return null;
     }
 }

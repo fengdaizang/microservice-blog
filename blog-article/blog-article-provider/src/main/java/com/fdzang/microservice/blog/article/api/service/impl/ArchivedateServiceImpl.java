@@ -4,6 +4,7 @@ import com.fdzang.microservice.blog.article.api.service.ArchivedateService;
 import com.fdzang.microservice.blog.article.api.utils.ConvertUtils;
 import com.fdzang.microservice.blog.article.common.dto.ArchivedateDTO;
 import com.fdzang.microservice.blog.article.dao.domain.ArchivedateArticleDO;
+import com.fdzang.microservice.blog.article.dao.domain.ArchivedateArticleDOExample;
 import com.fdzang.microservice.blog.article.dao.domain.ArchivedateDO;
 import com.fdzang.microservice.blog.article.dao.domain.ArchivedateDOExample;
 import com.fdzang.microservice.blog.article.dao.mapper.ArchivedateArticleMapper;
@@ -85,6 +86,59 @@ public class ArchivedateServiceImpl implements ArchivedateService {
             archivedateArticleDO.setArchivedateId(archivedateDO.getId());
             archivedateArticleMapper.insert(archivedateArticleDO);
         } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean updateArticleAndArchive(String id, Boolean oldPush, Boolean newPush) {
+        ArchivedateArticleDOExample example=new ArchivedateArticleDOExample();
+        example.createCriteria().andArticleIdEqualTo(id);
+        List<ArchivedateArticleDO> archivedateArticleDOS=
+                archivedateArticleMapper.selectByExample(example);
+        if(CollectionUtils.isNotEmpty(archivedateArticleDOS)){
+            ArchivedateDO archivedateDO=
+                    archivedateMapper.selectByPrimaryKey(
+                            archivedateArticleDOS.get(0).getArchivedateId());
+
+            if(oldPush){
+                archivedateDO.setArchivedateArticleCount(
+                        archivedateDO.getArchivedateArticleCount()-1);
+            }
+            if(newPush){
+                archivedateDO.setArchivedateArticleCount(
+                        archivedateDO.getArchivedateArticleCount()+1);
+            }
+
+            archivedateMapper.updateByPrimaryKey(archivedateDO);
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean deleteArticleAndArchive(String id, Boolean isPush) {
+        ArchivedateArticleDOExample example=new ArchivedateArticleDOExample();
+        example.createCriteria().andArticleIdEqualTo(id);
+        List<ArchivedateArticleDO> archivedateArticleDOS=
+                archivedateArticleMapper.selectByExample(example);
+        if(CollectionUtils.isNotEmpty(archivedateArticleDOS)){
+            archivedateArticleMapper.deleteByPrimaryKey(archivedateArticleDOS.get(0).getId());
+
+            ArchivedateDO archivedateDO=
+                    archivedateMapper.selectByPrimaryKey(
+                            archivedateArticleDOS.get(0).getArchivedateId());
+
+            if(isPush){
+                archivedateDO.setArchivedateArticleCount(
+                        archivedateDO.getArchivedateArticleCount()-1);
+            }
+            archivedateMapper.updateByPrimaryKey(archivedateDO);
+        }else{
             return false;
         }
 

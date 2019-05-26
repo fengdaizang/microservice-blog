@@ -46,4 +46,9 @@ public class CommentController extends BaseController {
         return ok(commentService.deleteComment(id));
     }
 
+    @GetMapping("/deleteArticleComments")
+    public ApiResult deleteArticleComments(@RequestParam("id")String id){
+        return ok(commentService.deleteArticleComments(id));
+    }
+
 }

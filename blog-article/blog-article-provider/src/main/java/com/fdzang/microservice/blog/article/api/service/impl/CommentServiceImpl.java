@@ -108,5 +108,15 @@ public class CommentServiceImpl implements CommentService {
         return count>0;
     }
 
+    @Override
+    public Boolean deleteArticleComments(String id) {
+        CommentDOExample example=new CommentDOExample();
+        example.createCriteria().andCommentArticleIdEqualTo(id);
+        List<CommentDO> commentDOS=commentMapper.selectByExample(example);
+        for (CommentDO comment:commentDOS) {
+            commentMapper.deleteByPrimaryKey(comment.getId());
+        }
 
+        return true;
+    }
 }

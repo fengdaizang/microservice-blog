@@ -33,6 +33,16 @@ public class ArchivedateHystrix implements FallbackFactory<ArchivedateClient> {
             public ApiResult<Boolean> addArticleAndArchive(String id, Boolean isPush) {
                 return null;
             }
+
+            @Override
+            public ApiResult<Boolean> updateArticleAndArchive(String id, Boolean oldPush, Boolean newPush) {
+                return null;
+            }
+
+            @Override
+            public ApiResult deleteArticleAndArchive(String id, Boolean isPush) {
+                return null;
+            }
         };
     }
 }

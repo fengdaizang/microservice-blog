@@ -24,6 +24,12 @@ public class ArticleController extends BaseController {
         return ok(articleService.getArticles(keyword, pageNo, pageSize));
     }
 
+    @GetMapping("/getArticlesByUserEmail")
+    public ApiResult getArticles(@RequestParam("userEmail")String userEmail,@RequestParam("keyword")String keyword,
+                                 @RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize){
+        return ok(articleService.getArticlesByUserEmail(userEmail, keyword, pageNo, pageSize));
+    }
+
     @GetMapping("/getArticleByPermalink")
     public ApiResult getArticleByPermalink(@RequestParam("permalink")String permalink){
         return ok(articleService.getArticleByPermalink(permalink));
@@ -58,8 +64,42 @@ public class ArticleController extends BaseController {
         return ok(articleService.getArticlesByArchiveId(archiveId,pageNo,pageSize));
     }
 
+    @GetMapping("/getArticleById")
+    public ApiResult getArticleById(@RequestParam("id")String id){
+        return ok(articleService.getArticleById(id));
+    }
+
     @PostMapping(value = "/addArticle")
     public ApiResult addArticle(@RequestBody ArticleDTO article){
         return ok(articleService.addArticle(article));
+    }
+
+    @PostMapping(value = "/updateArticle")
+    public ApiResult updateArticle(@RequestBody ArticleDTO article){
+        return ok(articleService.updateArticle(article));
+    }
+
+    @GetMapping(value = "/pushTop")
+    public ApiResult pushTop(@RequestParam("id") String id,
+                             @RequestParam("isTop") String isTop){
+        return ok(articleService.pushTop(id, isTop));
+    }
+
+    @GetMapping(value = "/deleteArticle")
+    public ApiResult deleteArticle(@RequestParam("id") String id){
+        return ok(articleService.deleteArticle(id));
+    }
+
+
+    @GetMapping("/getDrafts")
+    public ApiResult getDrafts(@RequestParam("keyword")String keyword,
+                               @RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize){
+        return ok(articleService.getDrafts(keyword, pageNo, pageSize));
+    }
+
+    @GetMapping("/getDraftsByUserEmail")
+    public ApiResult getDraftsByUserEmail(@RequestParam("userEmail")String userEmail,@RequestParam("keyword")String keyword,
+                                 @RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize){
+        return ok(articleService.getDraftsByUserEmail(userEmail, keyword, pageNo, pageSize));
     }
 }

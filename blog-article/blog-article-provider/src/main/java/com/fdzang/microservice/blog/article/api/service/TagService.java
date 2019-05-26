@@ -16,4 +16,8 @@ public interface TagService {
     TagDTO getTagByTitle(String title);
 
     Boolean addArticleAndTag(String tags,String id, Boolean isPush);
+
+    Boolean updateArticleAndTag(String tags,String id, Boolean oldPush, Boolean newPush);
+
+    Boolean deleteArticleAndTag(String id,Boolean isPush);
 }

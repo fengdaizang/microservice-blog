@@ -30,4 +30,7 @@ public interface CommentClient {
 
     @GetMapping("/zuul/comment/deleteComment")
     ApiResult<Boolean> deleteComment(@RequestParam("id")String id);
+
+    @GetMapping("/zuul/comment/deleteArticleComments")
+    ApiResult<Boolean> deleteArticleComments(@RequestParam("id")String id);
 }

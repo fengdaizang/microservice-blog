@@ -70,7 +70,7 @@ public class PageDTO<T> {
         }
     }
 
-    @JsonIgnore
+    @JsonProperty("pages")
     public List<Long> getPages() {
         pages = new ArrayList<>();
         totalCount=getTotalPage();
@@ -93,7 +93,7 @@ public class PageDTO<T> {
         return pages;
     }
 
-    @JsonIgnore
+    @JsonProperty("previous")
     public Integer getPrevious() {
         previous = 0;
         if(pageNo>1){
@@ -101,8 +101,8 @@ public class PageDTO<T> {
         }
         return previous;
     }
-    
-    @JsonIgnore
+
+    @JsonProperty("next")
     public Integer getNext() {
         next=pageNo;
         if(pageNo+1<=getTotalPage()){

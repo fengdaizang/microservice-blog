@@ -71,4 +71,20 @@ public class TimeUtils {
     synchronized public static String getTimestamp(){
         return String.valueOf(System.currentTimeMillis());
     }
+
+    /**
+     * 得到文章默认链接
+     * @return
+     */
+    public static String getArticleLink(){
+        String link="/article/";
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
+        String date=sdf.format(new Date());
+
+        link+=date+"/"+getTimestamp()+".html";
+
+
+        return link;
+    }
 }

@@ -34,4 +34,18 @@ public class ArchivedateController extends BaseController {
         return ok(archivedateService.addArticleAndArchive(id, isPush));
     }
 
+    @GetMapping("/updateArticleAndArchive")
+    public ApiResult updateArticleAndArchive(@RequestParam("id")String id,
+                                             @RequestParam("oldPush") Boolean oldPush,
+                                             @RequestParam("newPush") Boolean newPush){
+        return ok(archivedateService.updateArticleAndArchive(id, oldPush, newPush));
+    }
+
+    @GetMapping("/deleteArticleAndArchive")
+    public ApiResult deleteArticleAndArchive(@RequestParam("id")String id,
+                                             @RequestParam("isPush") Boolean isPush){
+        return ok(archivedateService.deleteArticleAndArchive(id, isPush));
+    }
+
+
 }

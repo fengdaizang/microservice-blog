@@ -48,6 +48,7 @@ public class Constant {
         public static final String USERS = "users";
         public static final String KEYWORD = "keyword";
         public static final String COMMENTS = "comments";
+        public static final String PAGE = "page";
 
 
     }
@@ -75,6 +76,9 @@ public class Constant {
         public static final String USER = "admin/user";
         public static final String COMMENT = "admin/comment";
         public static final String ADD_ARTICLE = "admin/addArticle";
+        public static final String EDIT_ARTICLE = "admin/updateArticle";
+        public static final String ARTICLE = "admin/article";
+        public static final String DRAFT = "admin/draft";
     }
 
     public class UserRole{
@@ -91,5 +95,7 @@ public class Constant {
     public class Article{
         public static final String PUSH = "1";
         public static final String DRAFT = "0";
+        public static final String ARTICLE = "article";
+        public static final String ARTICLES = "articles";
     }
 }

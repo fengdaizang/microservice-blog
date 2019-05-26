@@ -59,6 +59,41 @@ public class ArticleHystrix implements FallbackFactory<ArticleClient> {
             public ApiResult<Boolean> addArticle(ArticleDTO article) {
                 return null;
             }
+
+            @Override
+            public ApiResult<PageDTO<ArticleDTO>> getArticlesByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<ArticleDTO> getArticleById(String id) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> updateArticle(ArticleDTO article) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> pushTop(String id, String isTop) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> deleteArticle(String id) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<PageDTO<ArticleDTO>> getDrafts(String keyword, Integer pageNo, Integer pageSize) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<PageDTO<ArticleDTO>> getDraftsByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize) {
+                return null;
+            }
         };
     }
 }

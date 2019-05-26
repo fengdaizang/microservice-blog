@@ -11,9 +11,9 @@
         <li class="active"><a href="${request.contextPath}/admin/index.html"> <i class="icon-home"></i>后台首页</a></li>
         <li><a href="#article" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>文章</a>
             <ul id="article" class="collapse list-unstyled ">
-                <li><a href="${request.contextPath}/article/add">发布文章</a></li>
-                <li><a href="#">文章管理</a></li>
-                <li><a href="#">草稿夹</a></li>
+                <li><a href="${request.contextPath}/article/add.html">发布文章</a></li>
+                <li><a href="${request.contextPath}/article/mgr.html">文章管理</a></li>
+                <li><a href="${request.contextPath}/article/draft/mgr.html">草稿夹</a></li>
             </ul>
         </li>
         <li><a href="${request.contextPath}/comment/mgr.html"> <i class="icon-grid"></i>评论管理</a></li>

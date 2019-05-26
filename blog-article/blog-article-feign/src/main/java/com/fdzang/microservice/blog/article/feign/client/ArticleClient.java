@@ -21,27 +21,57 @@ public interface ArticleClient {
                                                @RequestParam("pageNo")Integer pageNo,
                                                @RequestParam("pageSize")Integer pageSize);
 
+    @GetMapping("/zuul/article/getArticlesByUserEmail")
+    ApiResult<PageDTO<ArticleDTO>> getArticlesByUserEmail(@RequestParam("userEmail")String userEmail,
+                                                          @RequestParam("keyword")String keyword,
+                                                          @RequestParam("pageNo")Integer pageNo,
+                                                          @RequestParam("pageSize")Integer pageSize);
+
     @GetMapping("/zuul/article/getArticleByPermalink")
     ApiResult<ArticleDTO> getArticleByPermalink(@RequestParam("permalink")String permalink);
 
-    @GetMapping(value = "/zuul/article/addArticleViewCount")
+    @GetMapping("/zuul/article/addArticleViewCount")
     ApiResult<Boolean> addArticleViewCount(@RequestParam("id")String id);
 
-    @GetMapping(value = "/zuul/article/getMostCommentArticles")
+    @GetMapping("/zuul/article/getMostCommentArticles")
     ApiResult<List<ArticleDTO>> getMostCommentArticles();
 
-    @GetMapping(value = "/zuul/article/getMostViewCountArticles")
+    @GetMapping("/zuul/article/getMostViewCountArticles")
     ApiResult<List<ArticleDTO>> getMostViewCountArticles();
 
-    @GetMapping(value = "/zuul/article/getArticlesByTagId")
+    @GetMapping("/zuul/article/getArticlesByTagId")
     ApiResult<PageDTO<ArticleDTO>> getArticlesByTagId(String tagId);
 
-    @GetMapping(value = "/zuul/article/getArticlesByArchiveId")
+    @GetMapping("/zuul/article/getArticlesByArchiveId")
     ApiResult<PageDTO<ArticleDTO>> getArticlesByArchiveId(@RequestParam("archiveId") String archiveId,
-                                     @RequestParam("pageNo")Integer pageNo,
-                                     @RequestParam("pageSize")Integer pageSize);
+                                                          @RequestParam("pageNo")Integer pageNo,
+                                                          @RequestParam("pageSize")Integer pageSize);
 
-    @PostMapping(value = "/zuul/article/addArticle")
+    @PostMapping("/zuul/article/addArticle")
     ApiResult<Boolean> addArticle(@RequestBody ArticleDTO article);
+
+    @GetMapping("/zuul/article/getArticleById")
+    ApiResult<ArticleDTO> getArticleById(@RequestParam("id")String id);
+
+    @PostMapping("/zuul/article/updateArticle")
+    ApiResult<Boolean> updateArticle(@RequestBody ArticleDTO article);
+
+    @GetMapping("/zuul/article/pushTop")
+    ApiResult<Boolean> pushTop(@RequestParam("id") String id,
+            @RequestParam("isTop") String isTop);
+
+    @GetMapping("/zuul/article/deleteArticle")
+    ApiResult<Boolean> deleteArticle(@RequestParam("id") String id);
+
+    @GetMapping("/zuul/article/getDrafts")
+    ApiResult<PageDTO<ArticleDTO>> getDrafts(@RequestParam("keyword")String keyword,
+                                             @RequestParam("pageNo")Integer pageNo,
+                                             @RequestParam("pageSize")Integer pageSize);
+
+    @GetMapping("/zuul/article/getDraftsByUserEmail")
+    ApiResult<PageDTO<ArticleDTO>> getDraftsByUserEmail(@RequestParam("userEmail")String userEmail,
+                                                        @RequestParam("keyword")String keyword,
+                                                        @RequestParam("pageNo")Integer pageNo,
+                                                        @RequestParam("pageSize")Integer pageSize);
 
 }

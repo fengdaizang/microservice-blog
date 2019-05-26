@@ -12,6 +12,8 @@ import java.util.List;
 public interface ArticleService {
     PageDTO<ArticleDTO> getArticles(String keyword, Integer pageNo, Integer pageSize);
 
+    PageDTO<ArticleDTO> getArticlesByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize);
+
     ArticleDTO getArticleByPermalink(String permalink);
 
     Boolean addArticleViewCount(String id);
@@ -27,4 +29,14 @@ public interface ArticleService {
     ArticleDTO getArticleById(String id);
 
     Boolean addArticle(ArticleDTO article);
+
+    Boolean updateArticle(ArticleDTO article);
+
+    Boolean pushTop(String id, String isTop);
+
+    Boolean deleteArticle(String id);
+
+    PageDTO<ArticleDTO> getDrafts(String keyword, Integer pageNo, Integer pageSize);
+
+    PageDTO<ArticleDTO> getDraftsByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize);
 }

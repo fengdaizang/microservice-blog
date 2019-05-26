@@ -15,16 +15,27 @@ import java.util.List;
  */
 @FeignClient(value = "blog-article-v1",fallbackFactory = TagHystrix.class)
 public interface TagClient {
-    @GetMapping(value = "/zuul/tag/getMostUsedTags")
+    @GetMapping("/zuul/tag/getMostUsedTags")
     ApiResult<List<TagDTO>> getMostUsedTags();
 
-    @GetMapping(value = "/zuul/tag/getTags")
+    @GetMapping("/zuul/tag/getTags")
     ApiResult<List<TagDTO>> getTags();
 
-    @GetMapping(value = "/zuul/tag/getTagByTitle")
+    @GetMapping("/zuul/tag/getTagByTitle")
     ApiResult<TagDTO> getTagByTitle(String title);
 
-    @GetMapping(value = "/zuul/tag/addArticleAndTag")
-    ApiResult<Boolean> addArticleAndTag(@RequestParam("tags") String tags,@RequestParam("id") String id,
-                               @RequestParam("isPush") Boolean isPush);
+    @GetMapping("/zuul/tag/addArticleAndTag")
+    ApiResult<Boolean> addArticleAndTag(@RequestParam("tags") String tags,
+                                        @RequestParam("id") String id,
+                                        @RequestParam("isPush") Boolean isPush);
+
+    @GetMapping("/zuul/tag/updateArticleAndTag")
+    ApiResult<Boolean> updateArticleAndTag(@RequestParam("tags") String tags,
+                                           @RequestParam("id") String id,
+                                           @RequestParam("oldPush") Boolean oldPush,
+                                           @RequestParam("newPush") Boolean newPush);
+
+    @GetMapping("/zuul/tag/deleteArticleAndTag")
+    ApiResult<Boolean> deleteArticleAndTag(@RequestParam("id") String id,
+                        @RequestParam("isPush") Boolean isPush);
 }

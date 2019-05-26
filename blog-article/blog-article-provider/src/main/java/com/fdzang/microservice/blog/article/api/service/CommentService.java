@@ -18,4 +18,6 @@ public interface CommentService {
     List<CommentDTO> getComments();
 
     Boolean deleteComment(String id);
+
+    Boolean deleteArticleComments(String id);
 }
