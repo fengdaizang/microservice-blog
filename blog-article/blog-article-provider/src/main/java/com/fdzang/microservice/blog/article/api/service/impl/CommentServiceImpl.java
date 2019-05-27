@@ -7,12 +7,16 @@ import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
 import com.fdzang.microservice.blog.article.dao.domain.*;
 import com.fdzang.microservice.blog.article.dao.mapper.ArticleMapper;
 import com.fdzang.microservice.blog.article.dao.mapper.CommentMapper;
+import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.common.utils.TimeUtils;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -118,5 +122,54 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return true;
+    }
+
+    @Override
+    public Boolean addComment(CommentDTO comment) {
+        ArticleDO articleDO=articleMapper.selectByPrimaryKey(comment.getCommentArticleId());
+        articleDO.setArticleCommentCount(articleDO.getArticleCommentCount()+1);
+        articleMapper.updateByPrimaryKey(articleDO);
+
+        CommentDOWithBLOBs commentDO=new CommentDOWithBLOBs();
+        BeanUtils.copyProperties(comment,commentDO);
+
+        String id = TimeUtils.getTimestamp();
+        commentDO.setId(id);
+        if(StringUtils.isEmpty(comment.getCommentThumbnailUrl())){
+            commentDO.setCommentThumbnailUrl(Constant.Static.DEFAULT_AVATAR);
+        }
+        commentDO.setCommentDate(new Date());
+        commentDO.setCommentSharpUrl(articleDO.getArticlePermalink()+"#"+id);
+
+        int count=commentMapper.insert(commentDO);
+
+        return count>0;
+    }
+
+    @Override
+    public Boolean replyComment(CommentDTO comment) {
+        CommentDOWithBLOBs commentDO=commentMapper.selectByPrimaryKey(
+                comment.getCommentOriginalCommentId());
+        ArticleDO articleDO=articleMapper.selectByPrimaryKey(commentDO.getCommentArticleId());
+        articleDO.setArticleCommentCount(articleDO.getArticleCommentCount()+1);
+        articleMapper.updateByPrimaryKey(articleDO);
+
+
+        CommentDOWithBLOBs comm=new CommentDOWithBLOBs();
+        BeanUtils.copyProperties(comment,comm);
+
+        String id = TimeUtils.getTimestamp();
+        comm.setId(id);
+        if(StringUtils.isEmpty(comment.getCommentThumbnailUrl())){
+            comm.setCommentThumbnailUrl(Constant.Static.DEFAULT_AVATAR);
+        }
+        comm.setCommentDate(new Date());
+        comm.setCommentSharpUrl(articleDO.getArticlePermalink()+"#"+id);
+        comm.setCommentOriginalCommentName(commentDO.getCommentName());
+        comm.setCommentArticleId(articleDO.getId());
+
+        int count=commentMapper.insert(comm);
+
+        return count>0;
     }
 }

@@ -20,4 +20,9 @@ public interface CommentService {
     Boolean deleteComment(String id);
 
     Boolean deleteArticleComments(String id);
+
+    Boolean addComment(CommentDTO comment);
+
+    Boolean replyComment(CommentDTO comment);
+
 }

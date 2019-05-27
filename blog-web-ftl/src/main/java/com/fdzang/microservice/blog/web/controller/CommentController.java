@@ -8,6 +8,7 @@ import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -59,5 +60,107 @@ public class CommentController extends BaseController {
         Boolean bool = (Boolean)CoventUtils.getApiResultData(commentClient.deleteComment(id));
 
         return bool;
+    }
+
+    @ResponseBody
+    @GetMapping("/comment/submitNoLogin")
+    public String commentSubmitNoLogin(@RequestParam("articleId")String articleId,
+                                        @RequestParam("commentName")String commentName,
+                                        @RequestParam("commentEmail")String commentEmail,
+                                        @RequestParam("commentValidate")String commentValidate,
+                                        @RequestParam("commentURL")String commentURL,
+                                        @RequestParam("comment")String comment){
+        String captcha=(String) session.getAttribute(Constant.Session.CAPTCHA);
+        if(!captcha.equalsIgnoreCase(commentValidate)){
+            return "验证码不正确";
+        }
+        CommentDTO commentDTO=new CommentDTO();
+        commentDTO.setCommentArticleId(articleId);
+        commentDTO.setCommentUrl(commentURL);
+        commentDTO.setCommentName(commentName);
+        commentDTO.setCommentContent(comment);
+        commentDTO.setCommentEmail(commentEmail);
+
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.addComment(commentDTO));
+
+        if(bool){
+            return "ok";
+        }else{
+            return "回复失败！";
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/comment/submit")
+    public String commentSubmit(@RequestParam("articleId")String articleId,
+                                       @RequestParam("comment")String comment){
+        UserDTO userDTO=getCurrentUser();
+
+        CommentDTO commentDTO=new CommentDTO();
+        commentDTO.setCommentArticleId(articleId);
+        commentDTO.setCommentUrl(userDTO.getUserUrl());
+        commentDTO.setCommentName(userDTO.getUserName());
+        commentDTO.setCommentContent(comment);
+        commentDTO.setCommentEmail(userDTO.getUserEmail());
+        commentDTO.setCommentThumbnailUrl(userDTO.getUserAvatar());
+
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.addComment(commentDTO));
+
+        if(bool){
+            return "ok";
+        }else{
+            return "回复失败！";
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/comment/reply")
+    public String commentReply(@RequestParam("commentId")String commentId,
+                                @RequestParam("comment")String comment){
+        UserDTO userDTO=getCurrentUser();
+
+        CommentDTO commentDTO=new CommentDTO();
+        commentDTO.setCommentOriginalCommentId(commentId);
+        commentDTO.setCommentUrl(userDTO.getUserUrl());
+        commentDTO.setCommentName(userDTO.getUserName());
+        commentDTO.setCommentContent(comment);
+        commentDTO.setCommentEmail(userDTO.getUserEmail());
+        commentDTO.setCommentThumbnailUrl(userDTO.getUserAvatar());
+
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.replyComment(commentDTO));
+
+        if(bool){
+            return "ok";
+        }else{
+            return "回复失败！";
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/comment/replyNoLogin")
+    public String commentReplyNoLogin(@RequestParam("commentId")String commentId,
+                                       @RequestParam("commentName")String commentName,
+                                       @RequestParam("commentEmail")String commentEmail,
+                                       @RequestParam("commentValidate")String commentValidate,
+                                       @RequestParam("commentURL")String commentURL,
+                                       @RequestParam("comment")String comment){
+        String captcha=(String) session.getAttribute(Constant.Session.REPLY_CAPTCHA);
+        if(!captcha.equalsIgnoreCase(commentValidate)){
+            return "验证码不正确";
+        }
+        CommentDTO commentDTO=new CommentDTO();
+        commentDTO.setCommentOriginalCommentId(commentId);
+        commentDTO.setCommentUrl(commentURL);
+        commentDTO.setCommentName(commentName);
+        commentDTO.setCommentContent(comment);
+        commentDTO.setCommentEmail(commentEmail);
+
+        Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.replyComment(commentDTO));
+
+        if(bool){
+            return "ok";
+        }else{
+            return "回复失败！";
+        }
     }
 }

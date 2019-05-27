@@ -149,7 +149,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         example.setOrderByClause("article_comment_count desc");
         example.setStartPos(0);
-        example.setPageSize(Constant.Page.PAGESIZE);
+        example.setPageSize(Constant.Page.MOSTSIZE);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
@@ -164,7 +164,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         example.setOrderByClause("article_view_count desc");
         example.setStartPos(0);
-        example.setPageSize(Constant.Page.PAGESIZE);
+        example.setPageSize(Constant.Page.MOSTSIZE);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);

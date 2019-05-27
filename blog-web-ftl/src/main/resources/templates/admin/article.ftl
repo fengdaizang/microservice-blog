@@ -157,8 +157,8 @@
                         <div class="fn-clear">
                             <nav class="pagination fn-right">
                                 <#if 1 != page.pages?first>
-                                <a href="${request.contextPath}/article/mgr?pageNo=${page.previous}" class="page-number">&laquo;</a>
-                                <a class="page-number" href="${request.contextPath}/article/mgr?pageNo=1">1</a>
+                                    <a href="${request.contextPath}/article/mgr?pageNo=${page.previous}" class="page-number">&laquo;</a>
+                                    <a class="page-number" href="${request.contextPath}/article/mgr?pageNo=1">1</a>
                                 <span class="page-number">...</span>
                                 </#if>
                                 <#list page.pages as pageNum>

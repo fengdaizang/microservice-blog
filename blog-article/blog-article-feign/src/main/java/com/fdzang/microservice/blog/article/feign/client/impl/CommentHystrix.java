@@ -48,6 +48,16 @@ public class CommentHystrix implements FallbackFactory<CommentClient> {
             public ApiResult<Boolean> deleteArticleComments(String id) {
                 return null;
             }
+
+            @Override
+            public ApiResult<Boolean> addComment(CommentDTO comment) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<Boolean> replyComment(CommentDTO comment) {
+                return null;
+            }
         };
     }
 }

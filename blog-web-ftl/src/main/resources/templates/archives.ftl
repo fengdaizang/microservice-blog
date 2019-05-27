@@ -20,7 +20,8 @@
                         <ul class="list">
                         <#list archiveDates as archiveDate>
                             <li>
-                                <a class="post-title" href="${request.contextPath}/archives/${archiveDate.archiveDateYear?c}/${archiveDate.archiveDateMonth}">
+                                <a class="post-title"
+                                   href="${request.contextPath}/archives/${archiveDate.archiveDateYear?c}/${archiveDate.archiveDateMonth}">
                                     ${archiveDate.archiveDateYear?c} 年 ${archiveDate.archiveDateMonth} 月(${archiveDate.archivedatePublishedArticleCount})
                                 </a>
                             </li>

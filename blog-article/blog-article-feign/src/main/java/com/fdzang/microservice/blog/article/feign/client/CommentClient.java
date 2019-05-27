@@ -5,6 +5,8 @@ import com.fdzang.microservice.blog.article.feign.client.impl.CommentHystrix;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -33,4 +35,10 @@ public interface CommentClient {
 
     @GetMapping("/zuul/comment/deleteArticleComments")
     ApiResult<Boolean> deleteArticleComments(@RequestParam("id")String id);
+
+    @PostMapping("/zuul/comment/addComment")
+    ApiResult<Boolean> addComment(@RequestBody CommentDTO comment);
+
+    @PostMapping("/zuul/comment/replyComment")
+    ApiResult<Boolean> replyComment(@RequestBody CommentDTO comment);
 }

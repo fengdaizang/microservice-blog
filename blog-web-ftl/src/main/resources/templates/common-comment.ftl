@@ -18,7 +18,7 @@
                 <time class="ft-gray">${comment.commentDate?string("yyyy-MM-dd HH:mm")}</time>
 
                 <#if article.articleCommentable = '1'>
-                    <a class="reply-btn" href="javascript:replyTo('${comment.id}')">回复</a>
+                    <a class="reply-btn" onclick="clearForm(${comment.id})">回复</a>
                 </#if>
             </div>
             <div class="content-reset">

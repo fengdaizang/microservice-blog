@@ -49,12 +49,15 @@ public class Constant {
         public static final String KEYWORD = "keyword";
         public static final String COMMENTS = "comments";
         public static final String PAGE = "page";
+        public static final String CAPTCHA = "captcha";
+        public static final String REPLY_CAPTCHA = "reply_captcha";
 
 
     }
 
     public class Page{
         public static final int PAGESIZE = 10;
+        public static final int MOSTSIZE = 5;
     }
 
     public class IndexHtml {

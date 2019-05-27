@@ -44,7 +44,7 @@
                                         置顶！
                                     </sup>
                                 </#if>
-                                <#if article.hasUpdated>
+                                <#if article.articleHadBeenPublished == '1'>
                                     <sup>
                                         有更新！
                                     </sup>
@@ -73,18 +73,14 @@
 
                         <div class="content-reset">
                             ${article.articleAbstract}
-                                <#--这儿是签名档，暂时不设置-->
-                            <#--<#if "" != article.articleSign.signHTML?trim>-->
-                                <#--<div>-->
-                                    <#--${article.articleSign.signHTML}-->
-                                <#--</div>-->
-                            <#--</#if>-->
                         </div>
 
                         <footer class="tags">
                             <#list article.articleTags?split(",") as articleTag>
-                                <a class="tag" rel="tag" href="${request.contextPath}/tags/${articleTag?url('UTF-8')}">
-                                    ${articleTag}</a>
+                                <a class="tag" rel="tag"
+                                   href="${request.contextPath}/tags/${articleTag?url('UTF-8')}">
+                                    ${articleTag}
+                                </a>
                             </#list>
 
                             <div class="rel fn-clear">
@@ -104,28 +100,12 @@
                                 </#if>
                             </div>
                         </footer>
-                        <@comments commentList=articleComments article=article></@comments>
-                        <div id="externalRelevantArticles" class="list"></div>
-                        <div id="relevantArticles" class="list"></div>
-                        <div id="randomArticles" class="list"></div>
+                        <@comments commentList=articleComments!'' article=article></@comments>
                     </article>
                 </main>
                 <#include "side.ftl">
             </div>
         </div>
         <#include "footer.ftl">
-        <@comment_script id=article.id>
-        page.tips.externalRelevantArticlesDisplayCount = "${externalRelevantArticlesDisplayCount}";
-        <#if 0 != randomArticlesDisplayCount>
-        page.loadRandomArticles();
-        </#if>
-        <#if 0 != externalRelevantArticlesDisplayCount>
-        page.loadExternalRelevantArticles("<#list article.articleTags?split(",") as articleTag>${articleTag}<#if articleTag_has_next>,</#if></#list>"
-            , "<header class='title'><h2>相关站外阅读</h2></header>");
-        </#if>
-        <#if 0 != relevantArticlesDisplayCount>
-        page.loadRelevantArticles('${article.id}', '<h4>相关阅读</h4>');
-        </#if>
-        </@comment_script>    
     </body>
 </html>

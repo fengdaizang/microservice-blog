@@ -14,7 +14,7 @@
                 <main class="other">
                     <div class="title">
                          <h2><i class="icon-link"></i>
-                             &nbsp;标签</h2>
+                             &nbsp;友链</h2>
                     </div>
                     <#if 0 != links?size>
                         <ul class="list">

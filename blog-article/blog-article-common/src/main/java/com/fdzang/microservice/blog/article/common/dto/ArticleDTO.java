@@ -50,7 +50,4 @@ public class ArticleDTO {
     private String articleTags;
 
     private String articleContent;
-
-    private boolean hasUpdated;
-
 }

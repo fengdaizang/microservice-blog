@@ -37,7 +37,7 @@ public class TagServiceImpl implements TagService {
         TagDOExample example=new TagDOExample();
         example.setOrderByClause("tag_published_ref_count desc");
         example.setStartPos(0);
-        example.setPageSize(Constant.Page.PAGESIZE);
+        example.setPageSize(Constant.Page.MOSTSIZE);
 
         List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){
