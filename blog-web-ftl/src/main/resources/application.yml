@@ -23,8 +23,16 @@ spring:
 
 #global ribbon config
 ribbon:
-  ConnectTimeout: 3000
-  ReadTimeout: 5000
+  ConnectTimeout: 10000
+  ReadTimeout: 15000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 15000
 
 feign:
   hystrix:

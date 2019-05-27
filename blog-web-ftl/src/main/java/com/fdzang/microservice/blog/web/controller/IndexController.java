@@ -5,6 +5,7 @@ import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.common.entity.PageDTO;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.utils.Constant;
+import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,16 @@ public class IndexController {
         return Constant.IndexHtml.INDEX;
     }
 
+    @RequestMapping("/admin/index")
+    public String adminIndex(){
+        UserDTO user = (UserDTO)session.getAttribute(Constant.Session.USER);
+        if(user==null){
+            return Constant.AdminHtml.LOGIN;
+        }else{
+            return Constant.AdminHtml.INDEX;
+        }
+    }
+
     @RequestMapping("/search")
     public String search(String keyword,Integer pageNO,Integer pageSize) throws Exception{
 
@@ -58,11 +69,11 @@ public class IndexController {
 
     @RequestMapping("/register")
     public String showRegister(){
-        return Constant.IndexHtml.REGISTER;
+        return Constant.AdminHtml.REGISTER;
     }
 
     @RequestMapping("/login")
     public String login(){
-        return Constant.IndexHtml.LOGIN;
+        return Constant.AdminHtml.LOGIN;
     }
 }

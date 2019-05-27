@@ -10,9 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +26,9 @@ public abstract class BaseController {
 
 	@Autowired
 	private HttpSession session;
+
+	@Autowired
+	private HttpServletResponse response;
 
 	protected ApiResult ok(long code, String msg, Object data) {
 		ApiResult vo = new ApiResult();
@@ -83,10 +88,14 @@ public abstract class BaseController {
 		return fail("参数错误！" + message);
 	}
 
-	protected UserDTO getCurrentUser() {
+	protected UserDTO getCurrentUser(){
 	    UserDTO user = (UserDTO)session.getAttribute(Constant.Session.USER);
 		if(user==null){
-			throw new BlogException(ErrorCode.TOKEN_EXPIRE, "请重新登录");
+			try {
+				response.sendRedirect("/login.html");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return user;

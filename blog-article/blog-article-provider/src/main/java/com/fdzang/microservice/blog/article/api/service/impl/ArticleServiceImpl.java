@@ -77,7 +77,6 @@ public class ArticleServiceImpl implements ArticleService {
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
             pageDTO.setResult(articleDTOS);
-            pageDTO.setTotalCount(articleDTOS.size());
             return pageDTO;
         }
         return null;
@@ -121,7 +120,6 @@ public class ArticleServiceImpl implements ArticleService {
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
             pageDTO.setResult(articleDTOS);
-            pageDTO.setTotalCount(articleDTOS.size());
             return pageDTO;
         }
         return null;
@@ -215,7 +213,6 @@ public class ArticleServiceImpl implements ArticleService {
             if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)) {
                 List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
                 pageDTO.setResult(articleDTOS);
-                pageDTO.setTotalCount(articleDTOS.size());
                 return pageDTO;
             }
         }
@@ -270,7 +267,6 @@ public class ArticleServiceImpl implements ArticleService {
             if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
                 List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
                 pageDTO.setResult(articleDTOS);
-                pageDTO.setTotalCount(articleDTOS.size());
                 return pageDTO;
             }
         }
@@ -382,7 +378,6 @@ public class ArticleServiceImpl implements ArticleService {
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
             pageDTO.setResult(articleDTOS);
-            pageDTO.setTotalCount(articleDTOS.size());
             return pageDTO;
         }
         return null;
@@ -426,7 +421,6 @@ public class ArticleServiceImpl implements ArticleService {
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
             pageDTO.setResult(articleDTOS);
-            pageDTO.setTotalCount(articleDTOS.size());
             return pageDTO;
         }
         return null;

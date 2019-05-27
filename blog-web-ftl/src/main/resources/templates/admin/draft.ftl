@@ -135,21 +135,21 @@
                         <div class="fn-clear">
                             <nav class="pagination fn-right">
                             <#if 1 != page.pages?first>
-                                <a href="${request.contextPath}${path}/${page.previous}" class="page-number">&laquo;</a>
-                                <a class="page-number" href="${request.contextPath}${path}/1">1</a>
+                                <a href="${request.contextPath}/article/draft/mgr?pageNo=${page.previous}" class="page-number">&laquo;</a>
+                                <a class="page-number" href="${request.contextPath}/article/draft/mgr?pageNo=1">1</a>
                                 <span class="page-number">...</span>
                             </#if>
                             <#list page.pages as pageNum>
                                 <#if pageNum == page.pageNo>
                                     <span class="page-number current">${pageNum}</span>
                                 <#else>
-                                    <a class="page-number" href="${request.contextPath}${path}/${pageNum}">${pageNum}</a>
+                                    <a class="page-number" href="${request.contextPath}/article/draft/mgr?pageNo=${pageNum}">${pageNum}</a>
                                 </#if>
                             </#list>
                             <#if page.pages?last != page.totalPage>
                                 <span class="page-number">...</span>
-                                <a href="${request.contextPath}${path}/${page.totalPage}" class="page-number">${page.totalPage}</a>
-                                <a href="${request.contextPath}${path}/${page.next}" class="page-number">&raquo;</a>
+                                <a href="${request.contextPath}/article/draft/mgr?pageNo=${page.totalPage}" class="page-number">${page.totalPage}</a>
+                                <a href="${request.contextPath}/article/draft/mgr?pageNo=${page.next}" class="page-number">&raquo;</a>
                             </#if>
                             </nav>
                         </div>

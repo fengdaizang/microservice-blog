@@ -3,7 +3,7 @@
         <div class="avatar"><img src="${user.userAvatar}" alt="..." class="img-fluid rounded-circle"></div>
         <div class="title">
             <h1 class="h4">${user.userName}</h1>
-            <p>${user.userRole}</p>
+            <p>角色：<#if user.userRole == 'adminRole'>个人博主<#else >一般用户</#if></p>
         </div>
     </div>
     <span class="heading">后台管理</span>
@@ -22,7 +22,7 @@
                 <li><a href="${request.contextPath}/link/mgr.html">链接管理</a></li>
                 <li><a href="${request.contextPath}/user/mgr.html">用户管理</a></li>
                 <li><a href="${request.contextPath}/options/mgr.html">全局配置</a></li>
-                <li><a href="#">其他</a></li>
+                <li><a href="${request.contextPath}/tag/mgr.html">其他</a></li>
             </ul>
         </li>
     </ul>

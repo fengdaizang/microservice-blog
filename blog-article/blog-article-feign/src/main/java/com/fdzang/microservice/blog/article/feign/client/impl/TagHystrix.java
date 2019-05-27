@@ -45,6 +45,11 @@ public class TagHystrix implements FallbackFactory<TagClient> {
             public ApiResult<Boolean> deleteArticleAndTag(String id, Boolean isPush) {
                 return null;
             }
+
+            @Override
+            public ApiResult<Integer> deleteNoUseTag() {
+                return null;
+            }
         };
     }
 }

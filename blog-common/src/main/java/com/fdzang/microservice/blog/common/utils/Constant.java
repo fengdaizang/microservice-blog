@@ -61,8 +61,6 @@ public class Constant {
         public static final String INDEX = "index";
         public static final String LINKS = "links";
         public static final String SEARCH = "search";
-        public static final String REGISTER = "admin/register";
-        public static final String LOGIN = "admin/login";
         public static final String TAGS = "tags";
         public static final String DYNAMIC = "dynamic";
         public static final String ARTICLE = "article";
@@ -72,6 +70,7 @@ public class Constant {
     }
 
     public class AdminHtml {
+        public static final String INDEX = "admin/index";
         public static final String LINK = "admin/link";
         public static final String USER = "admin/user";
         public static final String COMMENT = "admin/comment";
@@ -80,6 +79,9 @@ public class Constant {
         public static final String ARTICLE = "admin/article";
         public static final String DRAFT = "admin/draft";
         public static final String OPTIONS = "admin/options";
+        public static final String OTHERS = "admin/others";
+        public static final String REGISTER = "admin/register";
+        public static final String LOGIN = "admin/login";
     }
 
     public class UserRole{

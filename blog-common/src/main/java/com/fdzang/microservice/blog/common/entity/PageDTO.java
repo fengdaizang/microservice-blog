@@ -73,25 +73,25 @@ public class PageDTO<T> {
     @JsonProperty("pages")
     public List<Long> getPages() {
         pages = new ArrayList<>();
-        totalCount=getTotalPage();
+        //计算总页数
+        int totalPage=getTotalPage();
 
         long indexPage = 1;
-        if (totalCount - 2 <= 0){
+        if (pageNo - 2 <= 0){
             indexPage = 1;
-        }else if (pageNo - totalCount <= 2)
-        {
-            indexPage = pageNo - 4;
-        } else
-        {
-            indexPage = totalCount - 2;
+        }else if (totalPage - pageNo <= 2){
+            indexPage = totalPage - 4;
+        } else {
+            indexPage = pageNo - 2;
         }
-        for (int i = 1; i <= 5 && indexPage <= pageNo; indexPage++, i++)
+        for (int i = 1; i <= 5 && indexPage <= totalPage; indexPage++, i++)
         {
             pages.add(indexPage);
         }
 
         return pages;
     }
+
 
     @JsonProperty("previous")
     public Integer getPrevious() {

@@ -40,16 +40,16 @@ public class UserController extends BaseController {
         if(result.getCode()!= ErrorCode.SUCCESS){
             map.put(Constant.Static.MSG,result.getMsg());
 
-            return Constant.IndexHtml.LOGIN;
+            return Constant.AdminHtml.LOGIN;
         }else{
             session.setAttribute(Constant.Session.USER,result.getData());
 
             UserDTO userDTO=(UserDTO) CoventUtils.getApiResultData(result);
 
             if(Constant.UserRole.VISITOR.equals(userDTO.getUserRole())){
-                return "redirect:index.html";
+                return "redirect:../index.html";
             }else{
-                return "admin/index";
+                return "redirect:../admin/index.html";
             }
         }
     }
@@ -84,12 +84,12 @@ public class UserController extends BaseController {
         if(result.getCode()!= ErrorCode.SUCCESS){
             session.setAttribute(Constant.Static.MSG,result.getMsg());
 
-            return Constant.IndexHtml.REGISTER;
+            return Constant.AdminHtml.REGISTER;
         }else{
             if(bool){
-                return Constant.IndexHtml.LOGIN;
+                return Constant.AdminHtml.LOGIN;
             }else{
-                return Constant.IndexHtml.REGISTER;
+                return Constant.AdminHtml.REGISTER;
             }
         }
     }

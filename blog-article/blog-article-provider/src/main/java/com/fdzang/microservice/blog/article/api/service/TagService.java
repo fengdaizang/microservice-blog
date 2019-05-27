@@ -20,4 +20,6 @@ public interface TagService {
     Boolean updateArticleAndTag(String tags,String id, Boolean oldPush, Boolean newPush);
 
     Boolean deleteArticleAndTag(String id,Boolean isPush);
+
+    Integer deleteTagNoUse();
 }

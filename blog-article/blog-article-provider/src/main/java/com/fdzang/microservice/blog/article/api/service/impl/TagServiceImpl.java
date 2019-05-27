@@ -254,4 +254,21 @@ public class TagServiceImpl implements TagService {
 
         return true;
     }
+
+    @Override
+    public Integer deleteTagNoUse() {
+        TagDOExample example=new TagDOExample();
+        example.createCriteria().andTagReferenceCountEqualTo(0);
+
+        List<TagDO> tagDOS=tagMapper.selectByExample(example);
+        if(CollectionUtils.isNotEmpty(tagDOS)){
+            for (TagDO tag:tagDOS) {
+                tagMapper.deleteByPrimaryKey(tag.getId());
+            }
+
+            return tagDOS.size();
+        }
+
+        return 0;
+    }
 }

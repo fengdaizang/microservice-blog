@@ -57,5 +57,10 @@ public class TagController extends BaseController {
         return ok(tagService.deleteArticleAndTag(id,isPush));
     }
 
+    @GetMapping(value = "/deleteNoUseTag")
+    public ApiResult deleteNoUseTag(){
+        return ok(tagService.deleteTagNoUse());
+    }
+
 
 }

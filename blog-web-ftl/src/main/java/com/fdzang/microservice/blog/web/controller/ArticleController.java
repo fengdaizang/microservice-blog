@@ -151,7 +151,7 @@ public class ArticleController extends BaseController {
     }
 
     @GetMapping("/article/mgr")
-    public String articleMgr(@RequestParam(value = "pageNO",defaultValue = "1")Integer pageNO,
+    public String articleMgr(@RequestParam(value = "pageNo",defaultValue = "1")Integer pageNo,
                              @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
                              Map<String,Object> map){
         UserDTO userDTO=getCurrentUser();
@@ -164,10 +164,10 @@ public class ArticleController extends BaseController {
         if(Constant.UserRole.DEFAULT.equals(userDTO.getUserRole())){
             articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(
                     articleClient.getArticlesByUserEmail(
-                            userDTO.getUserEmail(),keyword,pageNO,pageSize));
+                            userDTO.getUserEmail(),keyword,pageNo,pageSize));
         }else{
             articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(
-                    articleClient.getArticles(keyword,pageNO,pageSize));
+                    articleClient.getArticles(keyword,pageNo,pageSize));
         }
 
         map.put(Constant.Session.PAGE,articles);
@@ -184,7 +184,7 @@ public class ArticleController extends BaseController {
     }
 
     @GetMapping("/article/draft/mgr")
-    public String draftMgr(@RequestParam(value = "pageNO",defaultValue = "1")Integer pageNO,
+    public String draftMgr(@RequestParam(value = "pageNo",defaultValue = "1")Integer pageNo,
                            @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
                              Map<String,Object> map){
         UserDTO userDTO=getCurrentUser();
@@ -197,10 +197,10 @@ public class ArticleController extends BaseController {
         if(Constant.UserRole.DEFAULT.equals(userDTO.getUserRole())){
             articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(
                     articleClient.getDraftsByUserEmail(
-                            userDTO.getUserEmail(),keyword,pageNO,pageSize));
+                            userDTO.getUserEmail(),keyword,pageNo,pageSize));
         }else{
             articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(
-                    articleClient.getDrafts(keyword,pageNO,pageSize));
+                    articleClient.getDrafts(keyword,pageNo,pageSize));
         }
 
         map.put(Constant.Session.PAGE,articles);

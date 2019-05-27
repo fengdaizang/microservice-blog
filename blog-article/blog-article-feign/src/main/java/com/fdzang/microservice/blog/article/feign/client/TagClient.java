@@ -38,4 +38,7 @@ public interface TagClient {
     @GetMapping("/zuul/tag/deleteArticleAndTag")
     ApiResult<Boolean> deleteArticleAndTag(@RequestParam("id") String id,
                         @RequestParam("isPush") Boolean isPush);
+
+    @GetMapping("/zuul/tag/deleteNoUseTag")
+    ApiResult<Integer> deleteNoUseTag();
 }

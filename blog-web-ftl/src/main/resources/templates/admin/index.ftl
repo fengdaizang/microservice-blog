@@ -28,7 +28,7 @@
                         <div class="col-xl-6 col-sm-6">
                             <div class="item d-flex align-items-center">
                                 <div class="title">
-                     	            <span>您好， ${user.userName }<br> 欢迎您使用本风险评估系统！</span>
+                     	            <span>您好， ${user.userName }<br> 欢迎您使用本个人博客系统！</span>
                                 </div>
                             </div>
                         </div>
@@ -49,16 +49,16 @@
                         <div class="col-lg-12">
                             <div class="articles card">
                                 <div class="card-header d-flex align-items-center">
-                                    <h2 class="h3">酒店安全风险评估系统</h2>
+                                    <h2 class="h3">个人博客系统系统</h2>
                                     <div class="badge badge-rounded bg-green">介绍</div>
                                 </div>
                                 <div class="card-body no-padding">
                                     <div class="item d-flex align-items-center">
                                         <div class="text">
-                                            <h3 class="h5">酒店管理人员可以根据系统所提供的可视化的酒店安全检查体系</h3><br/>
-                                            <h3 class="h5">用户可以根据自身实际情况进行检查后将自己的完成情况进行检查并将检查结果通过选择的方式输入到系统中</h3><br/>
-                                            <h3 class="h5">系统根据每一项目的赋值比例通过算法计算出整体的得分，并评级别</h3><br/>
-                                            <h3 class="h5">并对于现在所有模块的风险大小进行排序</h3><br/>
+                                            <h3 class="h5">本系统的用户有个人博主、一般用户、访客用户、游客。</h3><br/>
+                                            <h3 class="h5">游客和访客用户可以查看文章、评论文章、按标签或存档查找文章等</h3><br/>
+                                            <h3 class="h5">一般用户可以进入后台管理页面，发表文章，管理自己文章的评论</h3><br/>
+                                            <h3 class="h5">个人博主进入后台管理界面管理文章、管理评论、管理用户、管理友链以及其他系统管理</h3><br/>
                                         </div>
                                     </div>
                                 </div>
