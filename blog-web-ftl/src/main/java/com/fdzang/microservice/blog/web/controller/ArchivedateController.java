@@ -5,17 +5,17 @@ import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.feign.client.ArchivedateClient;
 import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.common.entity.PageDTO;
-import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author tanghu
@@ -30,39 +30,30 @@ public class ArchivedateController extends BaseController {
     @Autowired
     private ArticleClient articleClient;
 
-    @Autowired
-    private HttpSession session;
-
     @GetMapping("/archives")
-    public String archives(Map<String,Object> map){
+    public String archives(HashMap<String,Object> map){
         List<ArchivedateDTO> archives=(List<ArchivedateDTO>) CoventUtils.getApiResultData(archivedateClient.getArchives());
 
-        session.setAttribute(Constant.Session.ARCHIVEDATES,archives);
+        map.put(Constant.Session.ARCHIVEDATES,archives);
 
         System.out.println(archives);
         return Constant.IndexHtml.ARCHIVES;
     }
 
     @GetMapping("/archives/{year}/{month}")
-    public String tags(Integer pageNO,Integer pageSize,
+    public String tags(@RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+                       @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize,
                        @PathVariable("year") Integer year,
-                       @PathVariable("month") Integer month){
+                       @PathVariable("month") Integer month,
+                       HashMap<String,Object> map){
         ArchivedateDTO archive=(ArchivedateDTO) CoventUtils.getApiResultData(archivedateClient.getArchiveByTime(year, month));
-        session.setAttribute(Constant.Session.ARCHIVEDATE,archive);
+        map.put(Constant.Session.ARCHIVEDATE,archive);
 
-        if(pageNO==null){
-            pageNO=0;
-        }
-        if(pageSize==null){
-            pageSize=10;
-        }
-        ApiResult<PageDTO<ArticleDTO>> result=articleClient.getArticlesByArchiveId(archive.getId(),pageNO,pageSize);
-        PageDTO<ArticleDTO> data=result.getData();
-        int paginationPageCount=data.getTotalPage();
-        List<ArticleDTO> articles=data.getResult();
+        PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
+                articleClient.getArticlesByArchiveId(archive.getId(),pageNo,pageSize));
 
-        session.setAttribute(Constant.Session.ARTICLES,articles);
-        session.setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
+        map.put(Constant.Session.PAGE,pageDTO);
+        map.put(Constant.Session.PATH,"/archives/"+year+"/"+month+".html?pageNo=");
 
         return Constant.IndexHtml.ARCHIVE_ARTICLES;
     }

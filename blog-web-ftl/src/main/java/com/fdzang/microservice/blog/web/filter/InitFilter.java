@@ -82,9 +82,9 @@ public class InitFilter implements Filter {
             session.setAttribute(Constant.Session.SERVEPATH, "");
             session.setAttribute(Constant.Session.ISLOGGEDIN, false);
             session.setAttribute(Constant.Session.LOGINURL, "/login?goto=/admin-index.do#main");
-            session.setAttribute(Constant.Session.MOSTUSEDTAGS, mostUsedTags);
-            session.setAttribute(Constant.Session.MOSTCOMMENTARTICLES, mostCommentArticles);
-            session.setAttribute(Constant.Session.MOSTVIEWCOUNTARTICLES, mostViewCountArticles);
+            session.setAttribute(Constant.Tag.MOSTUSEDTAGS, mostUsedTags);
+            session.setAttribute(Constant.Article.MOSTCOMMENTARTICLES, mostCommentArticles);
+            session.setAttribute(Constant.Article.MOSTVIEWCOUNTARTICLES, mostViewCountArticles);
 
             session.setAttribute(Constant.Session.ISINITED, true);
         }

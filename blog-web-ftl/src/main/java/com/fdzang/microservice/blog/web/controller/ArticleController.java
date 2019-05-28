@@ -152,8 +152,8 @@ public class ArticleController extends BaseController {
 
     @GetMapping("/article/mgr")
     public String articleMgr(@RequestParam(value = "pageNo",defaultValue = "1")Integer pageNo,
-                             @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
-                             Map<String,Object> map){
+                             @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize,
+                             HashMap<String,Object> map){
         UserDTO userDTO=getCurrentUser();
         PageDTO<ArticleDTO> articles=null;
 
@@ -185,14 +185,16 @@ public class ArticleController extends BaseController {
 
     @GetMapping("/article/draft/mgr")
     public String draftMgr(@RequestParam(value = "pageNo",defaultValue = "1")Integer pageNo,
-                           @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
-                             Map<String,Object> map){
+                           @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize,
+                           HashMap<String,Object> map){
         UserDTO userDTO=getCurrentUser();
         PageDTO<ArticleDTO>  articles=null;
 
         String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
         if(StringUtils.isEmpty(keyword)){
             keyword="";
+        }else{
+            session.removeAttribute(Constant.Session.KEYWORD);
         }
         if(Constant.UserRole.DEFAULT.equals(userDTO.getUserRole())){
             articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(

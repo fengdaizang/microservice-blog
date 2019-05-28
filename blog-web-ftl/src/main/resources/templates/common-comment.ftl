@@ -10,7 +10,7 @@
                 <a class="user-name" href="${comment.commentUrl}" target="_blank">${comment.commentName}</a>
                 </#if>
                 <#if comment.replyFlag>
-                @<a class="user-name" href="${request.contextPath}${article.permalink}#${comment.commentOriginalCommentId}"
+                @<a class="user-name" href="${request.contextPath}${article.articlePermalink}#${comment.commentOriginalCommentId}"
                    onmouseover="page.showComment(this, '${comment.commentOriginalCommentId}', 23);"
                    onmouseout="page.hideComment('${comment.commentOriginalCommentId}')"
                 >${comment.commentOriginalCommentName}</a>

@@ -61,8 +61,7 @@ public class ArchivedateController extends BaseController {
         int paginationPageCount=data.getTotalPage();
         List<ArticleDTO> articles=data.getResult();
 
-        session.setAttribute(Constant.Session.ARTICLES,articles);
-        session.setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
+        session.setAttribute(Constant.Article.ARTICLES,articles);
 
         return Constant.IndexHtml.ARCHIVE_ARTICLES;
     }

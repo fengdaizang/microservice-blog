@@ -92,6 +92,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="startPos != null">
+      limit #{startPos},#{pageSize}
+    </if>
   </select>
   <select id="selectByExample" parameterType="com.fdzang.microservice.blog.article.dao.domain.CommentDOExample" resultMap="BaseResultMap">
     <!--
@@ -110,6 +113,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="startPos != null">
+      limit #{startPos},#{pageSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">

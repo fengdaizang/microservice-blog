@@ -30,7 +30,10 @@ public class ArchivedateServiceImpl implements ArchivedateService {
 
     @Override
     public List<ArchivedateDTO> getArchives() {
-        List<ArchivedateDO> archivedateDOS=archivedateMapper.selectByExample(null);
+        ArchivedateDOExample example=new ArchivedateDOExample();
+        example.createCriteria().andArchivedatePublishedArticleCountGreaterThan(0);
+
+        List<ArchivedateDO> archivedateDOS=archivedateMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(archivedateDOS)){
             return ConvertUtils.convertArchivedateList(archivedateDOS);
         }
@@ -41,7 +44,8 @@ public class ArchivedateServiceImpl implements ArchivedateService {
     public ArchivedateDTO getArchiveByTime(Integer year, Integer month) {
         Long timestamp= TimeUtils.getTimeStamp(year, month);
         ArchivedateDOExample example=new ArchivedateDOExample();
-        example.createCriteria().andArchiveTimeEqualTo(timestamp);
+        example.createCriteria().andArchiveTimeEqualTo(timestamp)
+                .andArchivedatePublishedArticleCountGreaterThan(0);;
         List<ArchivedateDO> archivedateDOS=archivedateMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(archivedateDOS)){
             return ConvertUtils.convertArchivedate(archivedateDOS.get(0));

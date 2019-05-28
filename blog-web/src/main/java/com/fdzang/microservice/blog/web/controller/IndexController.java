@@ -33,8 +33,7 @@ public class IndexController {
         int paginationPageCount=data.getTotalPage();
         List<ArticleDTO> articles=data.getResult();
 
-        request.getSession().setAttribute(Constant.Session.ARTICLES,articles);
-        request.getSession().setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
+        request.getSession().setAttribute(Constant.Article.ARTICLES,articles);
 
         return Constant.IndexHtml.INDEX;
     }
@@ -47,8 +46,7 @@ public class IndexController {
         int paginationPageCount=data.getTotalPage();
         List<ArticleDTO> articles=data.getResult();
 
-        request.getSession().setAttribute(Constant.Session.ARTICLES,articles);
-        request.getSession().setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
+        request.getSession().setAttribute(Constant.Article.ARTICLES,articles);
 
         return Constant.IndexHtml.SEARCH;
     }
@@ -56,12 +54,12 @@ public class IndexController {
     @RequestMapping("register")
     public String showRegister(){
 
-        return Constant.IndexHtml.REGISTER;
+        return Constant.AdminHtml.REGISTER;
     }
 
     @RequestMapping("login")
     public String login(){
 
-        return Constant.IndexHtml.LOGIN;
+        return Constant.AdminHtml.LOGIN;
     }
 }

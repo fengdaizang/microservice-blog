@@ -55,8 +55,7 @@ public class LinkController extends BaseController {
 
     @ResponseBody
     @GetMapping("/link/search")
-    public Boolean linkSearch(@RequestParam("keyword")String keyword,
-                             HashMap<String,Object> map){
+    public Boolean linkSearch(@RequestParam("keyword")String keyword){
         List<LinkDTO> linkDTOS=(List<LinkDTO>) CoventUtils.getApiResultData(linkClient.getLinksByKeyword(keyword));
 
         if(linkDTOS !=null){

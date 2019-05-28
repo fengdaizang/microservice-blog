@@ -4,11 +4,9 @@
     <head>
         <@head title="${tag.tagTitle} - ${blogTitle}">
         <meta name="keywords" content="${metaKeywords},${tag.tagTitle}"/>
-        <meta name="description" content="
-            <#list articles as article>
-                ${article.articleTitle}
-                <#if article_has_next>,</#if>
-            </#list>"/>
+        <#if page??>
+        <meta name="description" content="<#list page.result as article>${article.articleTitle}<#if article_has_next>,</#if></#list>"/>
+        </#if>
         </@head>
     </head>
     <body>
@@ -19,7 +17,7 @@
                     <div class="title">
                         <h2 class="tip"><i class="icon-tags"></i>
                             &nbsp;${tag.tagTitle}
-                            <small>${tagLabel}</small>
+                            <small>标签</small>
                     </div>
                     <#include "article-list.ftl">
                 </main>

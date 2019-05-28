@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -31,7 +32,8 @@ public class IndexController {
 
     @RequestMapping({"/index","","/"})
     public String index(@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
-                        @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) throws Exception{
+                        @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize,
+                        HashMap<String,Object> map){
         String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
         if(StringUtils.isEmpty(keyword)){
             keyword="";
@@ -39,7 +41,8 @@ public class IndexController {
         PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
                 articleClient.getArticles(keyword, pageNo, pageSize));
 
-        session.setAttribute(Constant.Session.PAGE,pageDTO);
+        map.put(Constant.Session.PAGE,pageDTO);
+        map.put(Constant.Session.PATH,"/index.html?pageNo=");
 
         return Constant.IndexHtml.INDEX;
     }
@@ -55,7 +58,7 @@ public class IndexController {
     }
 
     @RequestMapping("/search")
-    public String search(String keyword) throws Exception{
+    public String search(String keyword){
 
         session.setAttribute(Constant.Session.KEYWORD,keyword);
         return Constant.IndexHtml.SEARCH;
@@ -74,10 +77,9 @@ public class IndexController {
     /**
      * 获取验证码
      * @param response
-     * @param session
      */
     @RequestMapping("/captcha")
-    public void captcha(HttpServletResponse response, HttpSession session) {
+    public void captcha(HttpServletResponse response) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         String checkCodeValue = CaptchaUtils.drawImg(output);
         //将生成的验证码存入session
@@ -94,10 +96,9 @@ public class IndexController {
     /**
      * 获取验证码
      * @param response
-     * @param session
      */
     @RequestMapping("/replyCaptcha")
-    public void replyCaptcha(HttpServletResponse response, HttpSession session) {
+    public void replyCaptcha(HttpServletResponse response) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         String checkCodeValue = CaptchaUtils.drawImg(output);
         //将生成的验证码存入session

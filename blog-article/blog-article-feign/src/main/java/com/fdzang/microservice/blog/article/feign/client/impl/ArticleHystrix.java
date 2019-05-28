@@ -45,10 +45,6 @@ public class ArticleHystrix implements FallbackFactory<ArticleClient> {
                 return null;
             }
 
-            @Override
-            public ApiResult<PageDTO<ArticleDTO>> getArticlesByTagId(String tagId) {
-                return null;
-            }
 
             @Override
             public ApiResult<PageDTO<ArticleDTO>> getArticlesByArchiveId(String archiveId, Integer pageNo, Integer pageSize) {
@@ -92,6 +88,11 @@ public class ArticleHystrix implements FallbackFactory<ArticleClient> {
 
             @Override
             public ApiResult<PageDTO<ArticleDTO>> getDraftsByUserEmail(String userEmail, String keyword, Integer pageNo, Integer pageSize) {
+                return null;
+            }
+
+            @Override
+            public ApiResult<PageDTO<ArticleDTO>> getArticlesByTagId(String tagId, Integer pageNo, Integer pageSize) {
                 return null;
             }
         };

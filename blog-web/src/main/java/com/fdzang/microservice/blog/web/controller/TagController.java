@@ -38,7 +38,7 @@ public class TagController {
     public String tags(){
         List<TagDTO> tags=(List<TagDTO>) CoventUtils.getApiResultData(tagClient.getTags());
 
-        session.setAttribute(Constant.Session.TAGS,tags);
+        session.setAttribute(Constant.Tag.TAGS,tags);
 
         return Constant.IndexHtml.TAGS;
     }
@@ -47,7 +47,7 @@ public class TagController {
     public String tag(Integer pageNO,Integer pageSize,
                       @PathVariable("title") String title){
         TagDTO tag=(TagDTO) CoventUtils.getApiResultData(tagClient.getTagByTitle(title));
-        session.setAttribute(Constant.Session.TAG,tag);
+        session.setAttribute(Constant.Tag.TAG,tag);
 
         if(pageNO==null){
             pageNO=0;
@@ -60,8 +60,7 @@ public class TagController {
         int paginationPageCount=data.getTotalPage();
         List<ArticleDTO> articles=data.getResult();
 
-        session.setAttribute(Constant.Session.ARTICLES,articles);
-        session.setAttribute(Constant.Session.PAGINATIONPAGECOUNT,paginationPageCount);
+        session.setAttribute(Constant.Article.ARTICLES,articles);
 
         return Constant.IndexHtml.TAG_ARTICLES;
     }

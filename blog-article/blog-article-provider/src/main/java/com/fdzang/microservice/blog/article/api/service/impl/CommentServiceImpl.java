@@ -48,6 +48,8 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getRecentComments() {
         CommentDOExample example=new CommentDOExample();
         example.setOrderByClause(" comment_date desc ");
+        example.setStartPos(0);
+        example.setPageSize(Constant.Page.MAXSIZE);
         List<CommentDOWithBLOBs> commentDOS=commentMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(commentDOS)){
             return ConvertUtils.convertCommentList(commentDOS);
@@ -107,6 +109,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Boolean deleteComment(String id) {
+        CommentDO commentDO=commentMapper.selectByPrimaryKey(id);
+        ArticleDO articleDO=articleMapper.selectByPrimaryKey(commentDO.getCommentArticleId());
+        articleDO.setArticleCommentCount(articleDO.getArticleCommentCount()-1);
+        articleMapper.updateByPrimaryKey(articleDO);
+
         int count=commentMapper.deleteByPrimaryKey(id);
 
         return count>0;

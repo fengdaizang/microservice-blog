@@ -1,6 +1,7 @@
 package com.fdzang.microservice.blog.ucenter.feign.client;
 
 import com.fdzang.microservice.blog.common.framework.ApiResult;
+import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.ucenter.common.dto.OptionsDTO;
 import com.fdzang.microservice.blog.ucenter.feign.client.impl.OptionsHystrix;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author tanghu
  * @Date: 2019/1/8 17:11
  */
-@FeignClient(value = "blog-ucenter-v1",fallbackFactory = OptionsHystrix.class)
+@FeignClient(value = Constant.ServiceName.BLOG_UCENTER,fallbackFactory = OptionsHystrix.class)
 public interface OptionsClient {
     @GetMapping(value = "/zuul/options/getAllOptions")
     ApiResult<List<OptionsDTO>> getAllOptions();

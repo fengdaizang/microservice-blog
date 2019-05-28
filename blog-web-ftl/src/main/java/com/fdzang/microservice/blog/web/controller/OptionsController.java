@@ -35,7 +35,9 @@ public class OptionsController {
     @PostMapping("/options/update")
     public String archives(@RequestParam(required = false) Map<String,String> map){
         for (Map.Entry<String,String> option:map.entrySet()) {
-            optionsClient.updateOptionByKV(option.getKey(),option.getValue());
+            String id=option.getKey();
+            String value=option.getValue();
+            optionsClient.updateOptionByKV(id,value);
 
             session.setAttribute(option.getKey(),option.getValue());
         }

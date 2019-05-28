@@ -2,15 +2,12 @@ package com.fdzang.microservice.blog.article.api.service.impl;
 
 import com.fdzang.microservice.blog.article.api.service.ArticleService;
 import com.fdzang.microservice.blog.article.api.utils.ConvertUtils;
-import com.fdzang.microservice.blog.article.api.utils.MarkDown2HtmlUtils;
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.dao.domain.*;
 import com.fdzang.microservice.blog.article.dao.mapper.ArchivedateArticleMapper;
 import com.fdzang.microservice.blog.article.dao.mapper.ArticleMapper;
 import com.fdzang.microservice.blog.article.dao.mapper.TagArticleMapper;
 import com.fdzang.microservice.blog.common.entity.PageDTO;
-import com.fdzang.microservice.blog.common.exception.BlogException;
-import com.fdzang.microservice.blog.common.exception.ErrorCode;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.TimeUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -19,7 +16,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +41,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         ArticleDOExample.Criteria criteria=example.createCriteria();
         criteria.andArticleIsPublishedEqualTo(Constant.Article.PUSH);
-        example.setOrderByClause("article_create_date desc");
+        example.setOrderByClause(" article_put_top desc, article_create_date desc");
         if(StringUtils.isNotEmpty(keyword)){
             criteria.andArticleTitleLike("%"+keyword+"%");
         }
@@ -149,7 +145,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         example.setOrderByClause("article_comment_count desc");
         example.setStartPos(0);
-        example.setPageSize(Constant.Page.MOSTSIZE);
+        example.setPageSize(Constant.Page.DEFAULTSIZE);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);
@@ -164,7 +160,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         example.setOrderByClause("article_view_count desc");
         example.setStartPos(0);
-        example.setPageSize(Constant.Page.MOSTSIZE);
+        example.setPageSize(Constant.Page.DEFAULTSIZE);
         List<ArticleDOWithBLOBs> articleDOWithBLOBs=articleMapper.selectByExampleWithBLOBs(example);
         if(CollectionUtils.isNotEmpty(articleDOWithBLOBs)){
             List<ArticleDTO> articleDTOS=ConvertUtils.convertArticleList(articleDOWithBLOBs);

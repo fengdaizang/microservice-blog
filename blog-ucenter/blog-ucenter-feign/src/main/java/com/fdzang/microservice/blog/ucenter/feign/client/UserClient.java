@@ -1,6 +1,7 @@
 package com.fdzang.microservice.blog.ucenter.feign.client;
 
 import com.fdzang.microservice.blog.common.framework.ApiResult;
+import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import com.fdzang.microservice.blog.ucenter.feign.client.impl.UserHystrix;
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author tanghu
  * @Date: 2019/1/8 17:09
  */
-@FeignClient(value = "blog-ucenter-v1",fallbackFactory = UserHystrix.class)
+@FeignClient(value = Constant.ServiceName.BLOG_UCENTER,fallbackFactory = UserHystrix.class)
 public interface UserClient {
     @GetMapping(value = "/zuul/user/getUserByEmail")
     ApiResult<UserDTO> getUserByEmail(@RequestParam("email") String email);

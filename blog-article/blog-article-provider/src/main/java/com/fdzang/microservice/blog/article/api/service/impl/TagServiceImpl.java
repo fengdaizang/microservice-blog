@@ -35,9 +35,9 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<TagDTO> getMostUsedTags() {
         TagDOExample example=new TagDOExample();
-        example.setOrderByClause("tag_published_ref_count desc");
+        example.setOrderByClause(" tag_published_ref_count desc");
         example.setStartPos(0);
-        example.setPageSize(Constant.Page.MOSTSIZE);
+        example.setPageSize(Constant.Page.DEFAULTSIZE);
 
         List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){
@@ -49,7 +49,10 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagDTO> getTags() {
-        List<TagDO> tagDOS=tagMapper.selectByExample(null);
+        TagDOExample example=new TagDOExample();
+        example.createCriteria().andTagPublishedRefCountGreaterThan(0);
+
+        List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){
             return ConvertUtils.convertTagList(tagDOS);
         }
@@ -258,7 +261,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Integer deleteTagNoUse() {
         TagDOExample example=new TagDOExample();
-        example.createCriteria().andTagReferenceCountEqualTo(0);
+        example.createCriteria().andTagReferenceCountLessThan(1);
 
         List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){

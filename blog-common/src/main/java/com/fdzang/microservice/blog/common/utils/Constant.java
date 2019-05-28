@@ -2,64 +2,6 @@ package com.fdzang.microservice.blog.common.utils;
 
 public class Constant {
 
-    public class Cache{
-        public static final long CACHE_ONE_SECOND = 1L;
-        public static final long CACHE_ONE_MINUTE = 60L;
-        public static final long CACHE_TEN_MINUTE = 600L;
-        public static final long CACHE_ONE_HOUR = 3600L;
-        public static final long CACHE_ONE_DAY = 86400L;
-        public static final long CACHE_THREE_DAY = 259200L;
-        public static final long CACHE_FOREVER = -1L;
-    }
-
-    public class ServiceName{
-        public static final String BLOG_CONSOLE = "blog-console-v1";
-        public static final String BLOG_UCENTER = "blog-ucenter-v1";
-        public static final String BLOG_ARTICLE = "blog-article-v1";
-    }
-    public class Session{
-        public static final String ARTICLES = "articles";
-        public static final String PAGINATIONPAGECOUNT = "paginationPageCount";
-        public static final String PAGINATIONPAGENUMS = "paginationPageNums";
-        public static final String PAGINATIONPREVIOUSPAGENUM = "paginationPreviousPageNum";
-        public static final String PAGINATIONCURRENTPAGENUM = "paginationCurrentPageNum";
-        public static final String PAGINATIONNEXTPAGENUM = "paginationNextPageNum";
-        public static final String ARTICLECOMMENTS = "articleComments";
-        public static final String STATISTICBLOGVIEWCOUNT = "statisticBlogViewCount";
-        public static final String ADMINEMAIL = "adminEmail";
-        public static final String ADMINUSER = "adminUser";
-        public static final String USERNAME = "userName";
-        public static final String ISLOGGEDIN = "isLoggedIn";
-        public static final String ISINITED = "isInited";
-        public static final String MOSTVIEWCOUNTARTICLES = "mostViewCountArticles";
-        public static final String MOSTCOMMENTARTICLES = "mostCommentArticles";
-        public static final String MOSTUSEDTAGS = "mostUsedTags";
-        public static final String LOGINURL = "loginURL";
-        public static final String SERVEPATH = "servePath";
-        public static final String ARTICLE = "article";
-        public static final String TAGS = "tags";
-        public static final String TAG = "tag";
-        public static final String ONLINEVISITORCOUNT = "onlineVisitorCount";
-        public static final String ARCHIVEDATES = "archiveDates";
-        public static final String ARCHIVEDATE = "archiveDate";
-        public static final String RECENTCOMMENTS = "recentComments";
-        public static final String LINKS = "links";
-        public static final String USER = "user";
-        public static final String USERS = "users";
-        public static final String KEYWORD = "keyword";
-        public static final String COMMENTS = "comments";
-        public static final String PAGE = "page";
-        public static final String CAPTCHA = "captcha";
-        public static final String REPLY_CAPTCHA = "reply_captcha";
-
-
-    }
-
-    public class Page{
-        public static final int PAGESIZE = 10;
-        public static final int MOSTSIZE = 5;
-    }
-
     public class IndexHtml {
         public static final String INDEX = "index";
         public static final String LINKS = "links";
@@ -93,9 +35,44 @@ public class Constant {
         public static final String VISITOR = "visitorRole";
     }
 
-    public class Static{
-        public static final String MSG = "msg";
-        public static final String DEFAULT_AVATAR = "https://secure.gravatar.com/avatar/a6acd9a25c699aab72bb9e60d1eba97f?s=128";
+    public class Cache{
+        public static final long CACHE_ONE_SECOND = 1L;
+        public static final long CACHE_ONE_MINUTE = 60L;
+        public static final long CACHE_TEN_MINUTE = 600L;
+        public static final long CACHE_ONE_HOUR = 3600L;
+        public static final long CACHE_ONE_DAY = 86400L;
+        public static final long CACHE_THREE_DAY = 259200L;
+        public static final long CACHE_FOREVER = -1L;
+    }
+
+    public class ServiceName{
+        public static final String BLOG_UCENTER = "blog-ucenter-v1";
+        public static final String BLOG_ARTICLE = "blog-article-v1";
+    }
+    public class Session{
+        public static final String ARTICLECOMMENTS = "articleComments";
+        public static final String STATISTICBLOGVIEWCOUNT = "statisticBlogViewCount";
+        public static final String ADMINEMAIL = "adminEmail";
+        public static final String ADMINUSER = "adminUser";
+        public static final String USERNAME = "userName";
+        public static final String ISLOGGEDIN = "isLoggedIn";
+        public static final String ISINITED = "isInited";
+        public static final String LOGINURL = "loginURL";
+        public static final String SERVEPATH = "servePath";
+        public static final String ONLINEVISITORCOUNT = "onlineVisitorCount";
+        public static final String ARCHIVEDATES = "archiveDates";
+        public static final String ARCHIVEDATE = "archiveDate";
+        public static final String RECENTCOMMENTS = "recentComments";
+        public static final String LINKS = "links";
+        public static final String USER = "user";
+        public static final String USERS = "users";
+        public static final String KEYWORD = "keyword";
+        public static final String PAGE = "page";
+        public static final String CAPTCHA = "captcha";
+        public static final String REPLY_CAPTCHA = "reply_captcha";
+        public static final String PATH = "path";
+        public static final String TAG = "tag";
+
     }
 
     public class Article{
@@ -103,5 +80,32 @@ public class Constant {
         public static final String DRAFT = "0";
         public static final String ARTICLE = "article";
         public static final String ARTICLES = "articles";
+        public static final String MOSTVIEWCOUNTARTICLES = "mostViewCountArticles";
+        public static final String MOSTCOMMENTARTICLES = "mostCommentArticles";
     }
+
+    public class Tag{
+        public static final String TAGS = "tags";
+        public static final String TAG = "tag";
+        public static final String MOSTUSEDTAGS = "mostUsedTags";
+    }
+
+    public class Comment{
+        public static final String COMMENTS = "comments";
+        public static final String RECENTCOMMENTS = "recentComments";
+    }
+
+    public class Page{
+        public static final int MAXSIZE = 10;
+        public static final int DEFAULTSIZE = 5;
+    }
+
+
+
+    public class Static{
+        public static final String MSG = "msg";
+        public static final String DEFAULT_AVATAR = "https://secure.gravatar.com/avatar/a6acd9a25c699aab72bb9e60d1eba97f?s=128";
+    }
+
+
 }

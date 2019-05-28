@@ -29,10 +29,10 @@ public class CommentController extends BaseController {
     private CommentClient commentClient;
 
     @GetMapping("/dynamic")
-    public String dynamic(){
+    public String dynamic(HashMap<String,Object> map){
         List<CommentDTO> recentcomments=(List<CommentDTO>) CoventUtils.getApiResultData(commentClient.getRecentComments());
 
-        session.setAttribute(Constant.Session.RECENTCOMMENTS,recentcomments);
+        map.put(Constant.Comment.RECENTCOMMENTS,recentcomments);
 
         return Constant.IndexHtml.DYNAMIC;
     }
@@ -43,12 +43,12 @@ public class CommentController extends BaseController {
         if(Constant.UserRole.ADMIN.equals(userDTO.getUserRole())){
             List<CommentDTO> comments=(List<CommentDTO>) CoventUtils.getApiResultData(commentClient.getComments());
 
-            map.put(Constant.Session.COMMENTS,comments);
+            map.put(Constant.Comment.COMMENTS,comments);
         }else{
             List<CommentDTO> comments=(List<CommentDTO>) CoventUtils.getApiResultData(
                     commentClient.getCommentsByUserEmail(userDTO.getUserEmail()));
 
-            map.put(Constant.Session.COMMENTS,comments);
+            map.put(Constant.Comment.COMMENTS,comments);
         }
 
         return Constant.AdminHtml.COMMENT;

@@ -3,6 +3,7 @@ package com.fdzang.microservice.blog.article.feign.client;
 import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
 import com.fdzang.microservice.blog.article.feign.client.impl.CommentHystrix;
 import com.fdzang.microservice.blog.common.framework.ApiResult;
+import com.fdzang.microservice.blog.common.utils.Constant;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author tanghu
  * @Date: 2019/1/8 16:45
  */
-@FeignClient(value = "blog-article-v1",fallbackFactory = CommentHystrix.class)
+@FeignClient(value = Constant.ServiceName.BLOG_ARTICLE,fallbackFactory = CommentHystrix.class)
 public interface CommentClient {
 
     @GetMapping("/zuul/comment/getCommentByArticleId")
