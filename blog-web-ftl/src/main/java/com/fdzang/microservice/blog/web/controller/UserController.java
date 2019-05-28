@@ -42,8 +42,8 @@ public class UserController extends BaseController {
 
             return Constant.AdminHtml.LOGIN;
         }else{
-            session.setAttribute(Constant.Session.USER,result.getData());
-            session.setAttribute(Constant.Session.ISLOGGEDIN,true);
+            session.setAttribute(Constant.User.USER,result.getData());
+            session.setAttribute(Constant.User.ISLOGGEDIN,true);
             UserDTO userDTO=(UserDTO) CoventUtils.getApiResultData(result);
 
             if(Constant.UserRole.VISITOR.equals(userDTO.getUserRole())){
@@ -107,7 +107,7 @@ public class UserController extends BaseController {
             userDTOS=(List<UserDTO>) CoventUtils.getApiResultData(userClient.getAllUser());
         }
 
-        map.put(Constant.Session.USERS,userDTOS);
+        map.put(Constant.User.USERS,userDTOS);
 
         return Constant.AdminHtml.USER;
     }

@@ -40,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService {
     public PageDTO<ArticleDTO> getArticles(String keyword, Integer pageNo, Integer pageSize) {
         ArticleDOExample example=new ArticleDOExample();
         ArticleDOExample.Criteria criteria=example.createCriteria();
-        criteria.andArticleIsPublishedEqualTo(Constant.Article.PUSH);
+        criteria.andArticleIsPublishedEqualTo(Constant.Article.YES);
         example.setOrderByClause(" article_put_top desc, article_create_date desc");
         if(StringUtils.isNotEmpty(keyword)){
             criteria.andArticleTitleLike("%"+keyword+"%");
@@ -83,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         ArticleDOExample.Criteria criteria=example.createCriteria();
         criteria.andArticleAuthorEmailEqualTo(userEmail)
-                .andArticleIsPublishedEqualTo(Constant.Article.PUSH);
+                .andArticleIsPublishedEqualTo(Constant.Article.YES);
         example.setOrderByClause("article_create_date desc");
         if(StringUtils.isNotEmpty(keyword)){
             criteria.andArticleTitleLike("%"+keyword+"%");
@@ -288,8 +288,8 @@ public class ArticleServiceImpl implements ArticleService {
         articleDO.setArticleCreateDate(new Date());
         articleDO.setArticleCommentable("1");
         articleDO.setArticleEditorType("CodeMirror-Markdown");
-        articleDO.setArticleHadBeenPublished(Constant.Article.DRAFT);
-        articleDO.setArticlePutTop(Constant.Article.DRAFT);
+        articleDO.setArticleHadBeenPublished(Constant.Article.NO);
+        articleDO.setArticlePutTop(Constant.Article.NO);
         articleDO.setArticleSignId("");
         articleDO.setArticleUpdateDate(new Date());
         articleDO.setArticleViewPwd("");
@@ -313,7 +313,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleDO.setArticleIsPublished(article.getArticleIsPublished());
         articleDO.setArticleContent(article.getArticleContent());
         articleDO.setArticleUpdateDate(new Date());
-        articleDO.setArticleHadBeenPublished(Constant.Article.PUSH);
+        articleDO.setArticleHadBeenPublished(Constant.Article.YES);
 
         int count = articleMapper.updateByPrimaryKeyWithBLOBs(articleDO);
 
@@ -341,7 +341,7 @@ public class ArticleServiceImpl implements ArticleService {
     public PageDTO<ArticleDTO> getDrafts(String keyword, Integer pageNo, Integer pageSize) {
         ArticleDOExample example=new ArticleDOExample();
         ArticleDOExample.Criteria criteria=example.createCriteria();
-        criteria.andArticleIsPublishedEqualTo(Constant.Article.DRAFT);
+        criteria.andArticleIsPublishedEqualTo(Constant.Article.NO);
         example.setOrderByClause("article_create_date desc");
         if(StringUtils.isNotEmpty(keyword)){
             criteria.andArticleTitleLike("%"+keyword+"%");
@@ -384,7 +384,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDOExample example=new ArticleDOExample();
         ArticleDOExample.Criteria criteria=example.createCriteria();
         criteria.andArticleAuthorEmailEqualTo(userEmail)
-                .andArticleIsPublishedEqualTo(Constant.Article.DRAFT);
+                .andArticleIsPublishedEqualTo(Constant.Article.NO);
         example.setOrderByClause("article_create_date desc");
         if(StringUtils.isNotEmpty(keyword)){
             criteria.andArticleTitleLike("%"+keyword+"%");

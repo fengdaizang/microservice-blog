@@ -30,7 +30,7 @@ public class OptionsHystrix implements FallbackFactory<OptionsClient> {
             }
 
             @Override
-            public ApiResult<Boolean> updateOption(OptionsDTO option) {
+            public ApiResult<Boolean> incrementById(String id, Integer num) {
                 return null;
             }
 

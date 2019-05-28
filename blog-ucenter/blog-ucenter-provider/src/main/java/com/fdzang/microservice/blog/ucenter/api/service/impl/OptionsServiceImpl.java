@@ -47,22 +47,27 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public Boolean updateOption(OptionsDTO option) {
-        OptionsDO optionsDO=optionsMapper.selectByPrimaryKey(option.getId());
-        int count=0;
-        if(optionsDO!=null){
-            BeanUtils.copyProperties(option,optionsDO);
-            count=optionsMapper.updateByPrimaryKey(optionsDO);
-        }
+    public Boolean updateOption(String id, String value) {
+        OptionsDO optionsDO=optionsMapper.selectByPrimaryKey(id);
+        optionsDO.setOptionValue(value);
+        int count=optionsMapper.updateByPrimaryKeyWithBLOBs(optionsDO);
+
         return count>0;
     }
 
     @Override
-    public Boolean updateOption(String id, String value) {
+    public Boolean incrementById(String id,Integer num) {
         OptionsDO optionsDO=optionsMapper.selectByPrimaryKey(id);
-        optionsDO.setOptionValue(value);
-        int count=optionsMapper.updateByPrimaryKey(optionsDO);
+        int count = 0;
+        try {
+            count = Integer.parseInt(optionsDO.getOptionValue())+num;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        optionsDO.setOptionValue(String.valueOf(count));
 
-        return count>0;
+        count=optionsMapper.updateByPrimaryKeyWithBLOBs(optionsDO);
+
+        return  count>0;
     }
 }

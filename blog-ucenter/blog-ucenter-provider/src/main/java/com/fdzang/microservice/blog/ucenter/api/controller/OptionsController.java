@@ -28,12 +28,13 @@ public class OptionsController extends BaseController {
         return ok(optionsService.getOptionById(id));
     }
 
-    @PostMapping(value = "/updateOption")
-    public ApiResult updateOption(@RequestBody OptionsDTO option){
-        return ok(optionsService.updateOption(option));
+    @GetMapping("/incrementById")
+    public ApiResult incrementById(@RequestParam("id") String id,
+                                   @RequestParam("num") Integer num){
+        return ok(optionsService.incrementById(id,num));
     }
 
-    @PostMapping(value = "/updateOptionByKV")
+    @GetMapping(value = "/updateOptionByKV")
     public ApiResult updateOptionByKV(@RequestParam("id") String id,
                                   @RequestParam("value") String value){
 

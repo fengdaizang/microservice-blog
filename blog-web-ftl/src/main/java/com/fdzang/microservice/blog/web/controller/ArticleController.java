@@ -1,6 +1,7 @@
 package com.fdzang.microservice.blog.web.controller;
 
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
+import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
 import com.fdzang.microservice.blog.article.feign.client.ArchivedateClient;
 import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.article.feign.client.CommentClient;
@@ -10,6 +11,7 @@ import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.common.utils.TimeUtils;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
+import com.fdzang.microservice.blog.ucenter.feign.client.OptionsClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author tanghu
@@ -38,6 +39,9 @@ public class ArticleController extends BaseController {
 
     @Autowired
     private CommentClient commentClient;
+
+    @Autowired
+    private OptionsClient optionsClient;
 
     @Autowired
     private HttpSession session;
@@ -72,9 +76,12 @@ public class ArticleController extends BaseController {
         UserDTO user=getCurrentUser();
         String id= TimeUtils.getTimestamp();
 
+        optionsClient.incrementById(Constant.Static.BLOG_ARTICLE_COUNT,1);
+
         Boolean isPush=false;
-        if(Constant.Article.PUSH.equals(article.getArticleIsPublished())){
+        if(Constant.Article.YES.equals(article.getArticleIsPublished())){
             isPush=true;
+            optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,1);
         }
 
         article.setArticleAuthorEmail(user.getUserEmail());
@@ -100,11 +107,13 @@ public class ArticleController extends BaseController {
 
         Boolean oldPush=false;
         Boolean newPush=false;
-        if(Constant.Article.PUSH.equals(articleDTO.getArticleIsPublished())){
+        if(Constant.Article.YES.equals(articleDTO.getArticleIsPublished())){
             oldPush=true;
+            optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,-1);
         }
-        if(Constant.Article.PUSH.equals(article.getArticleIsPublished())){
+        if(Constant.Article.YES.equals(article.getArticleIsPublished())){
             newPush=true;
+            optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,1);
         }
 
         Boolean tagBool=true;
@@ -135,10 +144,15 @@ public class ArticleController extends BaseController {
     public Boolean articleDelete(@RequestParam("id") String id){
         ArticleDTO articleDTO=(ArticleDTO)CoventUtils.getApiResultData(
                 articleClient.getArticleById(id));
+        List<CommentDTO> articleComments=(List<CommentDTO> )
+                CoventUtils.getApiResultData(commentClient.getCommentByArticleId(id));
 
+        optionsClient.incrementById(Constant.Static.BLOG_ARTICLE_COUNT,-1);
+        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,articleComments.size());
         Boolean isPush=false;
-        if(Constant.Article.PUSH.equals(articleDTO.getArticleIsPublished())){
+        if(Constant.Article.YES.equals(articleDTO.getArticleIsPublished())){
             isPush=true;
+            optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,-1);
         }
 
         Boolean articleBool=(Boolean) CoventUtils.getApiResultData(articleClient.deleteArticle(id));
@@ -170,7 +184,8 @@ public class ArticleController extends BaseController {
                     articleClient.getArticles(keyword,pageNo,pageSize));
         }
 
-        map.put(Constant.Session.PAGE,articles);
+        map.put(Constant.Page.PAGE,articles);
+        map.put(Constant.Session.PATH,"/article/mgr?pageNo=");
 
         return Constant.AdminHtml.ARTICLE;
     }
@@ -205,7 +220,8 @@ public class ArticleController extends BaseController {
                     articleClient.getDrafts(keyword,pageNo,pageSize));
         }
 
-        map.put(Constant.Session.PAGE,articles);
+        map.put(Constant.Page.PAGE,articles);
+        map.put(Constant.Session.PATH,"/article/draft/mgr?pageNo=");
 
         return Constant.AdminHtml.DRAFT;
     }

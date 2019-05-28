@@ -34,7 +34,7 @@ public class ArchivedateController extends BaseController {
     public String archives(HashMap<String,Object> map){
         List<ArchivedateDTO> archives=(List<ArchivedateDTO>) CoventUtils.getApiResultData(archivedateClient.getArchives());
 
-        map.put(Constant.Session.ARCHIVEDATES,archives);
+        map.put(Constant.ArchiveDate.ARCHIVEDATES,archives);
 
         System.out.println(archives);
         return Constant.IndexHtml.ARCHIVES;
@@ -47,12 +47,12 @@ public class ArchivedateController extends BaseController {
                        @PathVariable("month") Integer month,
                        HashMap<String,Object> map){
         ArchivedateDTO archive=(ArchivedateDTO) CoventUtils.getApiResultData(archivedateClient.getArchiveByTime(year, month));
-        map.put(Constant.Session.ARCHIVEDATE,archive);
+        map.put(Constant.ArchiveDate.ARCHIVEDATE,archive);
 
         PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
                 articleClient.getArticlesByArchiveId(archive.getId(),pageNo,pageSize));
 
-        map.put(Constant.Session.PAGE,pageDTO);
+        map.put(Constant.Page.PAGE,pageDTO);
         map.put(Constant.Session.PATH,"/archives/"+year+"/"+month+".html?pageNo=");
 
         return Constant.IndexHtml.ARCHIVE_ARTICLES;

@@ -17,7 +17,7 @@
 				<!-- Navbar Menu -->
 				<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
 					<li class="nav-item">
-						<a href="${request.contextPath}/user/logout" class="nav-link logout">
+						<a href="${request.contextPath}/logout.html" class="nav-link logout">
 							<span class="d-none d-sm-inline">退出</span>
 							<i class="fa fa-sign-out"></i>
 						</a>

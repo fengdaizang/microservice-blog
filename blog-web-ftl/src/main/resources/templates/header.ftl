@@ -1,4 +1,13 @@
 <header>
+    <!-- 编写js代码 -->
+    <script type="text/javascript">
+        function search() {
+            var keyword = $("#keyword").val();
+            $.get("${request.contextPath}/search", {"keyword": keyword}, function (data) {
+                window.location.reload();
+            });
+        }
+    </script>
     <div class="banner">
         <div class="fn-clear wrapper">
             <h1 class="fn-inline">
@@ -9,10 +18,10 @@
             <small> &nbsp; ${blogSubtitle}</small>
             <div class="fn-right">
                 <#if isLoggedIn>
-                    <a href="${request.contextPath}/admin-index.do#main" title="管理">
+                    <a href="${request.contextPath}/admin/index.html" title="管理">
                         <i class="icon-setting"></i> 管理
                     </a>
-                    <a href="${logoutURL}">
+                    <a href="${request.contextPath}/logut.html">
                         <i class="icon-logout"></i> 退出
                     </a>
                     <#else>
@@ -51,36 +60,37 @@
                 </a>
             </nav>
             <div class="fn-right">
-                <form class="form" action="${request.contextPath}/search">
+                <form class="form">
                     <input placeholder="搜索" id="search" type="text" name="keyword"/>
-                    <button type="submit"><i class="icon-search"></i></button>
+                    <button type="button" onclick="search()"><i class="icon-search"></i></button>
                 </form>
             </div>
         </div>
     </div>
 </header>
+
 <div class="responsive fn-none">
     <i class="icon-list"></i>
     <ul class="list">
         <#if isLoggedIn>
             <li>
-                <a href="${request.contextPath}/admin-index.do#main" title="管理">
+                <a href="${request.contextPath}/admin/index.html" title="管理">
                     <i class="icon-setting"></i> 管理
                 </a>
             </li>
             <li>
-                <a href="${logoutURL}">
+                <a href="${request.contextPath}/logout.html">
                     <i class="icon-logout"></i> 退出
                 </a>
             </li>
             <#else>
                 <li>
-                    <a href="${loginURL}">
+                    <a href="${request.contextPath}/login.html">
                         <i class="icon-login"></i> 登录
                     </a>
                 </li>
                 <li>
-                    <a href="${request.contextPath}/register">
+                    <a href="${request.contextPath}/register.html">
                         <i class="icon-register"></i> 注册
                     </a>
                 </li>

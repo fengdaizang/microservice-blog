@@ -79,7 +79,7 @@ public class PageDTO<T> {
         long indexPage = 1;
         if (pageNo - 2 <= 0){
             indexPage = 1;
-        }else if (totalPage - pageNo <= 2){
+        }else if (totalPage - pageNo <= 2&&totalPage>5){
             indexPage = totalPage - 4;
         } else {
             indexPage = pageNo - 2;

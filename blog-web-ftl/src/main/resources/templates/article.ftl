@@ -61,7 +61,7 @@
                                                 <span class="tooltipped tooltipped-n" aria-label="评论数">
                                     <i class="icon-comments"></i>
                                     <a href="${request.contextPath}${article.articlePermalink}#comments">
-                                        ${article.articleCommentCount} 评论！</a>
+                                        ${article.articleCommentCount} 评论</a>
                                 </span>
                                                 &nbsp; | &nbsp;
                                                 <span class="tooltipped tooltipped-n" aria-label="浏览量">

@@ -54,7 +54,7 @@ public class TagController {
         PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
                 articleClient.getArticlesByTagId(tag.getId(),pageNo,pageSize));
 
-        session.setAttribute(Constant.Session.PAGE,pageDTO);
+        session.setAttribute(Constant.Page.PAGE,pageDTO);
         session.setAttribute(Constant.Session.PATH,"/tags/"+title+".html?pageNo=");
 
         return Constant.IndexHtml.TAG_ARTICLES;

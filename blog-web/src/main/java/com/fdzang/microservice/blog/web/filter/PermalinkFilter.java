@@ -56,7 +56,7 @@ public class PermalinkFilter implements Filter {
 					CoventUtils.getApiResultData(commentClient.getCommentByArticleId(article.getId()));
 
 			session.setAttribute(Constant.Article.ARTICLE,article);
-			session.setAttribute(Constant.Session.ARTICLECOMMENTS,articleComments);
+			session.setAttribute(Constant.Comment.ARTICLECOMMENTS,articleComments);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/article");
 			try {

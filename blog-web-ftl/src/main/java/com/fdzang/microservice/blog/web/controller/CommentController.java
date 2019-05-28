@@ -5,6 +5,7 @@ import com.fdzang.microservice.blog.article.feign.client.CommentClient;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
+import com.fdzang.microservice.blog.ucenter.feign.client.OptionsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,9 @@ public class CommentController extends BaseController {
 
     @Autowired
     private CommentClient commentClient;
+
+    @Autowired
+    private OptionsClient optionsClient;
 
     @GetMapping("/dynamic")
     public String dynamic(HashMap<String,Object> map){
@@ -59,6 +63,8 @@ public class CommentController extends BaseController {
     public Boolean commentMgr(String id){
         Boolean bool = (Boolean)CoventUtils.getApiResultData(commentClient.deleteComment(id));
 
+        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,-1);
+
         return bool;
     }
 
@@ -70,7 +76,7 @@ public class CommentController extends BaseController {
                                         @RequestParam("commentValidate")String commentValidate,
                                         @RequestParam("commentURL")String commentURL,
                                         @RequestParam("comment")String comment){
-        String captcha=(String) session.getAttribute(Constant.Session.CAPTCHA);
+        String captcha=(String) session.getAttribute(Constant.Comment.CAPTCHA);
         if(!captcha.equalsIgnoreCase(commentValidate)){
             return "验证码不正确";
         }
@@ -82,7 +88,7 @@ public class CommentController extends BaseController {
         commentDTO.setCommentEmail(commentEmail);
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.addComment(commentDTO));
-
+        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
         if(bool){
             return "ok";
         }else{
@@ -105,6 +111,7 @@ public class CommentController extends BaseController {
         commentDTO.setCommentThumbnailUrl(userDTO.getUserAvatar());
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.addComment(commentDTO));
+        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
 
         if(bool){
             return "ok";
@@ -128,6 +135,7 @@ public class CommentController extends BaseController {
         commentDTO.setCommentThumbnailUrl(userDTO.getUserAvatar());
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.replyComment(commentDTO));
+        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
 
         if(bool){
             return "ok";
@@ -144,7 +152,7 @@ public class CommentController extends BaseController {
                                        @RequestParam("commentValidate")String commentValidate,
                                        @RequestParam("commentURL")String commentURL,
                                        @RequestParam("comment")String comment){
-        String captcha=(String) session.getAttribute(Constant.Session.REPLY_CAPTCHA);
+        String captcha=(String) session.getAttribute(Constant.Comment.REPLY_CAPTCHA);
         if(!captcha.equalsIgnoreCase(commentValidate)){
             return "验证码不正确";
         }
@@ -156,6 +164,7 @@ public class CommentController extends BaseController {
         commentDTO.setCommentEmail(commentEmail);
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.replyComment(commentDTO));
+        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
 
         if(bool){
             return "ok";

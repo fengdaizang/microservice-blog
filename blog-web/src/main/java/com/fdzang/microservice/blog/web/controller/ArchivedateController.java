@@ -37,7 +37,7 @@ public class ArchivedateController extends BaseController {
     public String archives(Map<String,Object> map){
         List<ArchivedateDTO> archives=(List<ArchivedateDTO>) CoventUtils.getApiResultData(archivedateClient.getArchives());
 
-        session.setAttribute(Constant.Session.ARCHIVEDATES,archives);
+        session.setAttribute(Constant.ArchiveDate.ARCHIVEDATES,archives);
 
         System.out.println(archives);
         return Constant.IndexHtml.ARCHIVES;
@@ -48,7 +48,7 @@ public class ArchivedateController extends BaseController {
                        @PathVariable("year") Integer year,
                        @PathVariable("month") Integer month){
         ArchivedateDTO archive=(ArchivedateDTO) CoventUtils.getApiResultData(archivedateClient.getArchiveByTime(year, month));
-        session.setAttribute(Constant.Session.ARCHIVEDATE,archive);
+        session.setAttribute(Constant.ArchiveDate.ARCHIVEDATE,archive);
 
         if(pageNO==null){
             pageNO=0;
@@ -58,7 +58,6 @@ public class ArchivedateController extends BaseController {
         }
         ApiResult<PageDTO<ArticleDTO>> result=articleClient.getArticlesByArchiveId(archive.getId(),pageNO,pageSize);
         PageDTO<ArticleDTO> data=result.getData();
-        int paginationPageCount=data.getTotalPage();
         List<ArticleDTO> articles=data.getResult();
 
         session.setAttribute(Constant.Article.ARTICLES,articles);

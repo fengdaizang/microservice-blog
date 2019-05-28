@@ -89,7 +89,7 @@ public abstract class BaseController {
 	}
 
 	protected UserDTO getCurrentUser(){
-	    UserDTO user = (UserDTO)session.getAttribute(Constant.Session.USER);
+	    UserDTO user = (UserDTO)session.getAttribute(Constant.User.USER);
 		if(user==null){
 			try {
 				response.sendRedirect("/login.html");

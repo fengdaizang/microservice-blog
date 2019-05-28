@@ -24,10 +24,11 @@ public interface OptionsClient {
     @GetMapping(value = "/zuul/options/getOptionById")
     ApiResult<OptionsDTO> getOptionById(@RequestParam("id") String id);
 
-    @PostMapping(value = "/zuul/options/updateOption")
-    ApiResult<Boolean> updateOption(@RequestBody OptionsDTO option);
+    @GetMapping(value = "/zuul/options/incrementById")
+    ApiResult<Boolean> incrementById(@RequestParam("id") String id,
+                                     @RequestParam("num") Integer num);
 
-    @PostMapping(value = "/zuul/options/updateOptionByKV")
+    @GetMapping(value = "/zuul/options/updateOptionByKV")
     ApiResult<Boolean> updateOptionByKV(@RequestParam("id") String id,
                                         @RequestParam("value") String value);
 }

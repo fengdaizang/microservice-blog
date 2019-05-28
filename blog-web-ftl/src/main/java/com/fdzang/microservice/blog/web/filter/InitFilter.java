@@ -60,27 +60,25 @@ public class InitFilter implements Filter {
             List<ArticleDTO> mostViewCountArticles = (List<ArticleDTO>) CoventUtils.getApiResultData(articleClient.getMostViewCountArticles());
 
             //更新网站浏览次数
-            String id = Constant.Session.STATISTICBLOGVIEWCOUNT;
-            OptionsDTO statisticBlogViewCount=(OptionsDTO)CoventUtils.getApiResultData(
-                    optionsClient.getOptionById(id));
-            int count=Integer.parseInt(statisticBlogViewCount.getOptionValue())+1;
-            statisticBlogViewCount.setOptionValue(count+"");
-            optionsClient.updateOption(statisticBlogViewCount);
-            session.setAttribute(Constant.Session.STATISTICBLOGVIEWCOUNT,count);
+            OptionsDTO viewCount=(OptionsDTO)CoventUtils.getApiResultData(
+                    optionsClient.getOptionById(Constant.Static.BLOG_VIEW_COUNT));
+            optionsClient.incrementById(Constant.Static.BLOG_VIEW_COUNT,1);
+            session.setAttribute(Constant.Static.BLOG_VIEW_COUNT,viewCount.getOptionValue());
 
+            //得到博客所有者信息
             UserDTO adminUser = null;
             for (OptionsDTO option : options) {
                 session.setAttribute(option.getId(), option.getOptionValue());
-                if (option.getId().equals(Constant.Session.ADMINEMAIL)) {
+                if (option.getId().equals(Constant.User.ADMINEMAIL)) {
                     String email=option.getOptionValue();
                     adminUser = (UserDTO) CoventUtils.getApiResultData(userClient.getUserByEmail(email));
-                    session.setAttribute(Constant.Session.ADMINUSER, adminUser);
-                    session.setAttribute(Constant.Session.USERNAME,adminUser.getUserName());
+                    session.setAttribute(Constant.User.ADMINUSER, adminUser);
+                    session.setAttribute(Constant.User.USERNAME,adminUser.getUserName());
                 }
             }
 
             session.setAttribute(Constant.Session.SERVEPATH, "");
-            session.setAttribute(Constant.Session.ISLOGGEDIN, false);
+            session.setAttribute(Constant.User.ISLOGGEDIN, false);
             session.setAttribute(Constant.Session.LOGINURL, "/login?goto=/admin-index.do#main");
             session.setAttribute(Constant.Tag.MOSTUSEDTAGS, mostUsedTags);
             session.setAttribute(Constant.Article.MOSTCOMMENTARTICLES, mostCommentArticles);

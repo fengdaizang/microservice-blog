@@ -41,7 +41,7 @@ public class IndexController {
         PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
                 articleClient.getArticles(keyword, pageNo, pageSize));
 
-        map.put(Constant.Session.PAGE,pageDTO);
+        map.put(Constant.Page.PAGE,pageDTO);
         map.put(Constant.Session.PATH,"/index.html?pageNo=");
 
         return Constant.IndexHtml.INDEX;
@@ -49,7 +49,7 @@ public class IndexController {
 
     @RequestMapping("/admin/index")
     public String adminIndex(){
-        UserDTO user = (UserDTO)session.getAttribute(Constant.Session.USER);
+        UserDTO user = (UserDTO)session.getAttribute(Constant.User.USER);
         if(user==null){
             return Constant.AdminHtml.LOGIN;
         }else{
@@ -61,7 +61,7 @@ public class IndexController {
     public String search(String keyword){
 
         session.setAttribute(Constant.Session.KEYWORD,keyword);
-        return Constant.IndexHtml.SEARCH;
+        return "OK";
     }
 
     @RequestMapping("/register")
@@ -74,6 +74,15 @@ public class IndexController {
         return Constant.AdminHtml.LOGIN;
     }
 
+    @RequestMapping("/logout")
+    public String logout(){
+        session.setAttribute(Constant.User.ISLOGGEDIN,false);
+        session.removeAttribute(Constant.User.USER);
+        session.removeAttribute(Constant.User.USERNAME);
+
+        return Constant.IndexHtml.INDEX;
+    }
+
     /**
      * 获取验证码
      * @param response
@@ -83,7 +92,7 @@ public class IndexController {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         String checkCodeValue = CaptchaUtils.drawImg(output);
         //将生成的验证码存入session
-        session.setAttribute(Constant.Session.CAPTCHA, checkCodeValue);
+        session.setAttribute(Constant.Comment.CAPTCHA, checkCodeValue);
 
         try {
             ServletOutputStream out = response.getOutputStream();
@@ -102,7 +111,7 @@ public class IndexController {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         String checkCodeValue = CaptchaUtils.drawImg(output);
         //将生成的验证码存入session
-        session.setAttribute(Constant.Session.REPLY_CAPTCHA, checkCodeValue);
+        session.setAttribute(Constant.Comment.REPLY_CAPTCHA, checkCodeValue);
 
         try {
             ServletOutputStream out = response.getOutputStream();

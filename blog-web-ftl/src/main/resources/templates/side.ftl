@@ -66,7 +66,7 @@
                     <ul>
                         <#list mostViewCountArticles as article>
                             <li>
-                                <a rel="nofollow" aria-label="${article.articleCommentCount} 评论"
+                                <a rel="nofollow" aria-label="${article.articleViewCount} 浏览"
                                    class="tooltipped tooltipped-e"
                                    href="${request.contextPath}${article.articlePermalink}">
                                     ${article.articleTitle}
