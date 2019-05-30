@@ -66,6 +66,8 @@ public class ConvertUtils {
         BeanUtils.copyProperties(articleDO,articleDTO);
         articleDTO.setArticleAbstract(
                 MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleAbstract()));
+        articleDTO.setArticleContent(
+                MarkDown2HtmlUtils.markdown2Html(articleDTO.getArticleContent()));
         return articleDTO;
     }
 

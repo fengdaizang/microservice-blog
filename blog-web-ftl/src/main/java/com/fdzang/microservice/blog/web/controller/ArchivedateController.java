@@ -53,7 +53,11 @@ public class ArchivedateController extends BaseController {
                 articleClient.getArticlesByArchiveId(archive.getId(),pageNo,pageSize));
 
         map.put(Constant.Page.PAGE,pageDTO);
-        map.put(Constant.Session.PATH,"/archives/"+year+"/"+month+".html?pageNo=");
+        String path="/archives/"+year+"/"+month+".html?pageNo=";
+        if(pageSize!=5){
+            path="/archives/"+year+"/"+month+".html?pageSize="+pageSize+"&pageNo=";
+        }
+        map.put(Constant.Session.PATH,path);
 
         return Constant.IndexHtml.ARCHIVE_ARTICLES;
     }

@@ -46,7 +46,11 @@ public class IndexController {
                 articleClient.getArticles(keyword, pageNo, pageSize));
 
         map.put(Constant.Page.PAGE,pageDTO);
-        map.put(Constant.Session.PATH,"/index.html?pageNo=");
+        String path="/index.html?pageNo=";
+        if(pageSize!=5){
+            path="/index.html?pageSize="+pageSize+"&pageNo=";
+        }
+        map.put(Constant.Session.PATH,path);
 
         return Constant.IndexHtml.INDEX;
     }
@@ -83,9 +87,8 @@ public class IndexController {
     public String logout(){
         session.setAttribute(Constant.User.ISLOGGEDIN,false);
         session.removeAttribute(Constant.User.USER);
-        session.removeAttribute(Constant.User.USERNAME);
 
-        return Constant.IndexHtml.INDEX;
+        return "redirect:index.html";
     }
 
     /**

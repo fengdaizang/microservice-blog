@@ -4,6 +4,7 @@ import com.fdzang.microservice.blog.article.common.dto.CommentDTO;
 import com.fdzang.microservice.blog.article.feign.client.CommentClient;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
+import com.fdzang.microservice.blog.ucenter.common.dto.OptionsDTO;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import com.fdzang.microservice.blog.ucenter.feign.client.OptionsClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,10 @@ public class CommentController extends BaseController {
     public Boolean commentMgr(String id){
         Boolean bool = (Boolean)CoventUtils.getApiResultData(commentClient.deleteComment(id));
 
-        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,-1);
+        optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,-1);
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,optionsDTO.getOptionValue());
 
         return bool;
     }
@@ -88,7 +92,12 @@ public class CommentController extends BaseController {
         commentDTO.setCommentEmail(commentEmail);
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.addComment(commentDTO));
-        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
+        optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,1);
+
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,optionsDTO.getOptionValue());
+
         if(bool){
             return "ok";
         }else{
@@ -111,7 +120,11 @@ public class CommentController extends BaseController {
         commentDTO.setCommentThumbnailUrl(userDTO.getUserAvatar());
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.addComment(commentDTO));
-        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
+        optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,1);
+
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,optionsDTO.getOptionValue());
 
         if(bool){
             return "ok";
@@ -135,7 +148,11 @@ public class CommentController extends BaseController {
         commentDTO.setCommentThumbnailUrl(userDTO.getUserAvatar());
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.replyComment(commentDTO));
-        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
+        optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,1);
+
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,optionsDTO.getOptionValue());
 
         if(bool){
             return "ok";
@@ -164,7 +181,11 @@ public class CommentController extends BaseController {
         commentDTO.setCommentEmail(commentEmail);
 
         Boolean bool=(Boolean) CoventUtils.getApiResultData(commentClient.replyComment(commentDTO));
-        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,1);
+        optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,1);
+
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,optionsDTO.getOptionValue());
 
         if(bool){
             return "ok";

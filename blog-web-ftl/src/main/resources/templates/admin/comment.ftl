@@ -68,6 +68,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                <#if comments??>
                                                 <#list comments as comment>
                                                     <tr>
                                                         <td scope="row">${comment_index+1}</td>
@@ -83,6 +84,11 @@
                                                         </td>
                                                     </tr>
                                                 </#list>
+                                                <#else>
+                                                        <tr>
+                                                            <td colspan="6">该列表很懒，什么都没有留下。。。</td>
+                                                        </tr>
+                                                </#if>
                                             </tbody>
                                         </table>
                                     </div>

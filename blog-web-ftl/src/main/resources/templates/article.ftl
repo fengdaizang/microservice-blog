@@ -72,7 +72,7 @@
                         </header>
 
                         <div class="content-reset">
-                            ${article.articleAbstract}
+                            ${article.articleContent}
                         </div>
 
                         <footer class="tags">

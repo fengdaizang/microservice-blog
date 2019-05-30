@@ -55,7 +55,12 @@ public class TagController {
                 articleClient.getArticlesByTagId(tag.getId(),pageNo,pageSize));
 
         session.setAttribute(Constant.Page.PAGE,pageDTO);
-        session.setAttribute(Constant.Session.PATH,"/tags/"+title+".html?pageNo=");
+
+        String path="/tags/"+title+".html?pageNo=";
+        if(pageSize!=5){
+            path="/tags/"+title+".html?pageSize="+pageSize+"&pageNo=";
+        }
+        session.setAttribute(Constant.Session.PATH,path);
 
         return Constant.IndexHtml.TAG_ARTICLES;
     }

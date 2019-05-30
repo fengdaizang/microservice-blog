@@ -10,6 +10,7 @@ import com.fdzang.microservice.blog.common.entity.PageDTO;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.common.utils.TimeUtils;
+import com.fdzang.microservice.blog.ucenter.common.dto.OptionsDTO;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
 import com.fdzang.microservice.blog.ucenter.feign.client.OptionsClient;
 import org.apache.commons.lang3.StringUtils;
@@ -82,6 +83,9 @@ public class ArticleController extends BaseController {
         if(Constant.Article.YES.equals(article.getArticleIsPublished())){
             isPush=true;
             optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,1);
+            OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                    optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT));
+            session.setAttribute(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,optionsDTO.getOptionValue());
         }
 
         article.setArticleAuthorEmail(user.getUserEmail());
@@ -115,6 +119,10 @@ public class ArticleController extends BaseController {
             newPush=true;
             optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,1);
         }
+
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,optionsDTO.getOptionValue());
 
         Boolean tagBool=true;
         if(!articleDTO.getArticleTags().equals(article.getArticleTags())){
@@ -153,11 +161,19 @@ public class ArticleController extends BaseController {
                 CoventUtils.getApiResultData(commentClient.getCommentByArticleId(id));
 
         optionsClient.incrementById(Constant.Static.BLOG_ARTICLE_COUNT,-1);
-        optionsClient.incrementById(Constant.Static.BLOG_COMMENT_COUNT,articleComments.size());
+        optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,articleComments.size());
+        OptionsDTO optionsDTO=(OptionsDTO)CoventUtils.getApiResultData(
+                optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT));
+        session.setAttribute(Constant.Static.PUBLISHED_BLOG_COMMENT_COUNT,optionsDTO.getOptionValue());
+
         Boolean isPush=false;
         if(Constant.Article.YES.equals(articleDTO.getArticleIsPublished())){
             isPush=true;
             optionsClient.incrementById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,-1);
+
+            OptionsDTO articleCount=(OptionsDTO)CoventUtils.getApiResultData(
+                    optionsClient.getOptionById(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT));
+            session.setAttribute(Constant.Static.PUBLISHED_BLOG_ARTICLE_COUNT,articleCount.getOptionValue());
         }
 
         Boolean articleBool=(Boolean) CoventUtils.getApiResultData(articleClient.deleteArticle(id));
@@ -192,7 +208,12 @@ public class ArticleController extends BaseController {
         }
 
         map.put(Constant.Page.PAGE,articles);
-        map.put(Constant.Session.PATH,"/article/mgr?pageNo=");
+
+        String path="/article/mgr?pageNo=";
+        if(pageSize!=5){
+            path="/article/mgr?pageSize="+pageSize+"&pageNo=";
+        }
+        map.put(Constant.Session.PATH,path);
 
         return Constant.AdminHtml.ARTICLE;
     }
@@ -228,7 +249,12 @@ public class ArticleController extends BaseController {
         }
 
         map.put(Constant.Page.PAGE,articles);
-        map.put(Constant.Session.PATH,"/article/draft/mgr?pageNo=");
+
+        String path="/article/draft/mgr?pageNo=";
+        if(pageSize!=5){
+            path="/article/draft/mgr?pageSize="+pageSize+"&pageNo=";
+        }
+        map.put(Constant.Session.PATH,path);
 
         return Constant.AdminHtml.DRAFT;
     }

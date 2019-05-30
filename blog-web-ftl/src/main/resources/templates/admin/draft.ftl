@@ -128,32 +128,32 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <#if page??><br/>
+                                    <div style="float: right" class="row clearfix">
+                                        <nav class="btn-group" role="group" >
+                                        <#if 1 != page.pages?first>
+                                            <a type="button" href="${request.contextPath}${path}${page.previous}" class="btn btn-info">&laquo;</a>
+                                            <a type="button" class="btn btn-info" href="${request.contextPath}${path}1">1</a>
+                                        <span class="btn btn-info">...</span>
+                                        </#if>
+                                        <#list page.pages as pageNum>
+                                            <#if pageNum == page.pageNo>
+                                            <span class="btn btn-default">${pageNum}</span>
+                                            <#else>
+                                            <a class="btn btn-info" href="${request.contextPath}${path}${pageNum}">${pageNum}</a>
+                                            </#if>
+                                        </#list>
+                                        <#if page.pages?last != page.totalPage>
+                                        <span class="btn btn-info">...</span>
+                                        <a href="${request.contextPath}${path}${page.totalPage}" class="btn btn-info">${page.totalPage}</a>
+                                        <a href="${request.contextPath}${path}${page.next}" class="btn btn-info">&raquo;</a>
+                                        </#if>
+                                        </nav>
+                                    </div>
+                                    </#if>
                                 </div>
                             </div>
                         </div>
-                        <#if page??>
-                        <div class="fn-clear">
-                            <nav class="pagination fn-right">
-                            <#if 1 != page.pages?first>
-                                <a href="${request.contextPath}${path}${page.previous}" class="page-number">&laquo;</a>
-                                <a class="page-number" href="${request.contextPath}${path}1">1</a>
-                                <span class="page-number">...</span>
-                            </#if>
-                            <#list page.pages as pageNum>
-                                <#if pageNum == page.pageNo>
-                                    <span class="page-number current">${pageNum}</span>
-                                <#else>
-                                    <a class="page-number" href="${request.contextPath}${path}${pageNum}">${pageNum}</a>
-                                </#if>
-                            </#list>
-                            <#if page.pages?last != page.totalPage>
-                                <span class="page-number">...</span>
-                                <a href="${request.contextPath}${path}${page.totalPage}" class="page-number">${page.totalPage}</a>
-                                <a href="${request.contextPath}${path}${page.next}" class="page-number">&raquo;</a>
-                            </#if>
-                            </nav>
-                        </div>
-                        </#if>
                     </div>
                 </div>
             </section>

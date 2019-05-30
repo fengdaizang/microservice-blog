@@ -113,7 +113,7 @@ public class Constant {
 
         public static final String BLOG_VIEW_COUNT = "statisticBlogViewCount";
         public static final String BLOG_ARTICLE_COUNT = "statisticBlogArticleCount";
-        public static final String BLOG_COMMENT_COUNT = "statisticBlogCommentCount";
+        public static final String PUBLISHED_BLOG_COMMENT_COUNT = "statisticPublishedBlogCommentCount";
         public static final String PUBLISHED_BLOG_ARTICLE_COUNT = "statisticPublishedBlogArticleCount";
 
     }

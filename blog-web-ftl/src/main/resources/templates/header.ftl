@@ -21,7 +21,7 @@
                     <a href="${request.contextPath}/admin/index.html" title="管理">
                         <i class="icon-setting"></i> 管理
                     </a>
-                    <a href="${request.contextPath}/logut.html">
+                    <a href="${request.contextPath}/logout.html">
                         <i class="icon-logout"></i> 退出
                     </a>
                     <#else>
