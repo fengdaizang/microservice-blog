@@ -41,7 +41,7 @@ public class ArchivedateController extends BaseController {
     }
 
     @GetMapping("/archives/{year}/{month}")
-    public String tags(@RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+    public String getArticleByArchive(@RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
                        @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize,
                        @PathVariable("year") Integer year,
                        @PathVariable("month") Integer month,

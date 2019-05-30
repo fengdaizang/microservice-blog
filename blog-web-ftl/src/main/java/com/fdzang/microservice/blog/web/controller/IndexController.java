@@ -11,8 +11,10 @@ import com.fdzang.microservice.blog.web.utils.CaptchaUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +39,7 @@ public class IndexController {
         String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
         if(StringUtils.isEmpty(keyword)){
             keyword="";
+            session.removeAttribute(Constant.Session.KEYWORD);
         }
         PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
                 articleClient.getArticles(keyword, pageNo, pageSize));
@@ -57,8 +60,9 @@ public class IndexController {
         }
     }
 
-    @RequestMapping("/search")
-    public String search(String keyword){
+    @ResponseBody
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword){
 
         session.setAttribute(Constant.Session.KEYWORD,keyword);
         return "OK";

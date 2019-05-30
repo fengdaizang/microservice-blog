@@ -218,7 +218,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDTO getArticleById(String id) {
         ArticleDOWithBLOBs articleDOWithBLOBs=articleMapper.selectByPrimaryKey(id);
-
         ArticleDTO articleDTO=new ArticleDTO();
         BeanUtils.copyProperties(articleDOWithBLOBs,articleDTO);
 

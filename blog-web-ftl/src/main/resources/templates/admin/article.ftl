@@ -126,7 +126,7 @@
                                                         <td>${article.articleCommentCount }</td>
                                                         <td>${article.articleViewCount }</td>
                                                         <td>${article.articleCreateDate?string["yyyy-MM-dd HH:mm:ss"] }</td>
-                                                        <td><a href="${request.contextPath}/article/edit?id=${article.id}.html"
+                                                        <td><a href="${request.contextPath}/article/edit?id=${article.id}"
                                                                class="btn btn-primary btn-xs">更新</a>
                                                             <a href="#" class="btn btn-danger btn-xs"
                                                                onclick="deleteArticle(${article.id})">删除</a>

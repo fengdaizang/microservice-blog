@@ -38,6 +38,7 @@ public class TagServiceImpl implements TagService {
         example.setOrderByClause(" tag_published_ref_count desc");
         example.setStartPos(0);
         example.setPageSize(Constant.Page.DEFAULTSIZE);
+        example.createCriteria().andTagPublishedRefCountGreaterThan(0);
 
         List<TagDO> tagDOS=tagMapper.selectByExample(example);
         if(CollectionUtils.isNotEmpty(tagDOS)){
@@ -86,9 +87,10 @@ public class TagServiceImpl implements TagService {
                 List<TagDO> tagDOS=tagMapper.selectByExample(example);
 
                 TagDO tagDO=new TagDO();
+                String tid=TimeUtils.getTimestamp();
                 if(CollectionUtils.isNotEmpty(tagDOS)){
                     tagDO=tagDOS.get(0);
-
+                    tid = tagDO.getId();
                     //更新标签信息
                     tagDO.setTagReferenceCount(tagDO.getTagReferenceCount()+1);
                     if(isPush){
@@ -97,7 +99,7 @@ public class TagServiceImpl implements TagService {
                     tagMapper.updateByPrimaryKey(tagDO);
                 }else{
                     //先创建标签
-                    tagDO.setId(TimeUtils.getTimestamp());
+                    tagDO.setId(tid);
                     tagDO.setTagReferenceCount(1);
                     if(isPush){
                         tagDO.setTagPublishedRefCount(1);
@@ -107,12 +109,11 @@ public class TagServiceImpl implements TagService {
                     tagDO.setTagTitle(t);
                     tagMapper.insert(tagDO);
                 }
-
                 //关联文章与标签
                 TagArticleDO tagArticleDO=new TagArticleDO();
                 tagArticleDO.setId(TimeUtils.getTimestamp());
                 tagArticleDO.setArticleId(id);
-                tagArticleDO.setTagId(tagDO.getId());
+                tagArticleDO.setTagId(tid);
                 tagArticleMapper.insert(tagArticleDO);
             }
         } catch (Exception e) {
@@ -123,106 +124,9 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Boolean updateArticleAndTag(String tags,String id, Boolean oldPush, Boolean newPush) {
-        try {
-            String[] tag=tags.split(",");
-            List<String> relIds=new ArrayList<>();
-            List<String> tagIds=new ArrayList<>();
-            for (String t:tag) {
-                if(StringUtils.isEmpty(t)){
-                    continue;
-                }
-
-                TagDOExample example=new TagDOExample();
-                example.createCriteria().andTagTitleEqualTo(t);
-                List<TagDO> tagDOS=tagMapper.selectByExample(example);
-
-                TagDO tagDO=new TagDO();
-                if(CollectionUtils.isNotEmpty(tagDOS)){
-                    tagDO=tagDOS.get(0);
-
-                    //更新标签信息
-                    if(oldPush){
-                        tagDO.setTagPublishedRefCount(tagDO.getTagPublishedRefCount()-1);
-                    }
-                    if(newPush){
-                        tagDO.setTagPublishedRefCount(tagDO.getTagPublishedRefCount()+1);
-                    }
-                    tagMapper.updateByPrimaryKey(tagDO);
-                }else{
-                    //先创建标签
-                    tagDO.setId(TimeUtils.getTimestamp());
-                    tagDO.setTagReferenceCount(1);
-                    if(newPush){
-                        tagDO.setTagPublishedRefCount(1);
-                    }else{
-                        tagDO.setTagPublishedRefCount(0);
-                    }
-                    tagDO.setTagTitle(t);
-                    tagMapper.insert(tagDO);
-                }
-
-                TagArticleDOExample relExample=new TagArticleDOExample();
-                relExample.createCriteria().andArticleIdEqualTo(id)
-                        .andTagIdEqualTo(tagDO.getId());
-
-                List<TagArticleDO> tagArticleDOS=tagArticleMapper.selectByExample(relExample);
-                if(CollectionUtils.isEmpty(tagArticleDOS)){
-                    //关联文章与标签
-                    TagArticleDO tagArticleDO=new TagArticleDO();
-                    tagArticleDO.setId(TimeUtils.getTimestamp());
-                    tagArticleDO.setArticleId(id);
-                    tagArticleDO.setTagId(tagDO.getId());
-                    tagArticleMapper.insert(tagArticleDO);
-
-                    relIds.add(tagArticleDO.getId());
-                }else{
-                    relIds.add(tagArticleDOS.get(0).getId());
-                }
-
-            }
-
-            /**
-             * 清理未关联的标签
-             */
-            TagArticleDOExample relExample=new TagArticleDOExample();
-            relExample.createCriteria().andArticleIdEqualTo(id)
-                    .andIdNotIn(relIds);
-            List<TagArticleDO> tagArticleDOS=tagArticleMapper.selectByExample(relExample);
-            if(CollectionUtils.isNotEmpty(tagArticleDOS)){
-                for (TagArticleDO rel:tagArticleDOS) {
-                    tagArticleMapper.deleteByPrimaryKey(rel.getId());
-                    tagIds.add(rel.getTagId());
-                }
-            }
-
-            /**
-             * 减去去掉的关联数
-             */
-            TagDOExample example=new TagDOExample();
-            example.createCriteria().andIdIn(tagIds);
-            List<TagDO> tagDOS=tagMapper.selectByExample(example);
-            if(CollectionUtils.isNotEmpty(tagDOS)) {
-                for (TagDO tagDO:tagDOS) {
-                    //更新标签信息
-                    tagDO.setTagReferenceCount(tagDO.getTagReferenceCount()-1);
-                    if(oldPush){
-                        tagDO.setTagPublishedRefCount(tagDO.getTagPublishedRefCount()-1);
-                    }
-                    tagMapper.updateByPrimaryKey(tagDO);
-                }
-            }
-
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
     public Boolean deleteArticleAndTag(String id,Boolean isPush) {
         try {
+            List<String> tids=new ArrayList<>();
             /**
              * 清理未关联的标签
              */
@@ -231,6 +135,7 @@ public class TagServiceImpl implements TagService {
             List<TagArticleDO> tagArticleDOS=tagArticleMapper.selectByExample(relExample);
             if(CollectionUtils.isNotEmpty(tagArticleDOS)){
                 for (TagArticleDO rel:tagArticleDOS) {
+                    tids.add(rel.getTagId());
                     tagArticleMapper.deleteByPrimaryKey(rel.getId());
                 }
             }
@@ -239,7 +144,7 @@ public class TagServiceImpl implements TagService {
              * 减去去掉的关联数
              */
             TagDOExample example=new TagDOExample();
-            example.createCriteria();
+            example.createCriteria().andIdIn(tids);
             List<TagDO> tagDOS=tagMapper.selectByExample(example);
             if(CollectionUtils.isNotEmpty(tagDOS)) {
                 for (TagDO tagDO:tagDOS) {

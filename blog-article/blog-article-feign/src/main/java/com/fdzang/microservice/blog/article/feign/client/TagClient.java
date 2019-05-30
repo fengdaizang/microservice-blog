@@ -30,12 +30,6 @@ public interface TagClient {
                                         @RequestParam("id") String id,
                                         @RequestParam("isPush") Boolean isPush);
 
-    @GetMapping("/zuul/tag/updateArticleAndTag")
-    ApiResult<Boolean> updateArticleAndTag(@RequestParam("tags") String tags,
-                                           @RequestParam("id") String id,
-                                           @RequestParam("oldPush") Boolean oldPush,
-                                           @RequestParam("newPush") Boolean newPush);
-
     @GetMapping("/zuul/tag/deleteArticleAndTag")
     ApiResult<Boolean> deleteArticleAndTag(@RequestParam("id") String id,
                         @RequestParam("isPush") Boolean isPush);

@@ -12,27 +12,6 @@
   </@head>
 </head>
 <body>
-<!-- 编写js代码 -->
-<script type="text/javascript">
-    function push(status) {
-        $("#articleIsPublished").val(status);
-        $.post("${request.contextPath}/article/push", $("#new_article_form").serialize(), function (data) {
-            if (data) {
-                alert("发布成功！");
-                if(status==1){
-                    window.location.href="${request.contextPath}/article/mgr";
-                }else{
-                    window.location.href="${request.contextPath}/link/search";
-                }
-
-            }
-            else {
-                alert("发布失败，请重试！");
-                window.location.reload();
-            }
-        });
-    }
-</script>
 <div class="page">
     <#include "header.ftl">
     <div class="page-content d-flex align-items-stretch">
@@ -41,7 +20,7 @@
             <!-- Page Header-->
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">新增文章</h2>
+                    <h2 class="no-margin-bottom">配置管理</h2>
                 </div>
             </header>
             <!-- Breadcrumb-->
@@ -60,10 +39,9 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header d-flex align-items-center">
-                                    <h3 class="h4">填写文章内容</h3>
+                                    <h3 class="h4">修改配置内容</h3>
                                 </div>
                                 <div class="card-body">
-                                    <p>注意：正文和摘要均支持markdown格式</p>
                                     <form method="post" id="new_article_form" action="${request.contextPath}/options/update">
                                         <input type="hidden" name="articleIsPublished" id="articleIsPublished">
                                         <div class="form-group">

@@ -62,9 +62,10 @@ public class ArchivedateServiceImpl implements ArchivedateService {
             List<ArchivedateDO> archivedateDOS=archivedateMapper.selectByExample(example);
 
             ArchivedateDO archivedateDO=new ArchivedateDO();
+            String aid=TimeUtils.getTimestamp();
             if(CollectionUtils.isNotEmpty(archivedateDOS)){
                 archivedateDO=archivedateDOS.get(0);
-
+                aid=archivedateDO.getId();
                 archivedateDO.setArchivedateArticleCount(
                         archivedateDO.getArchivedateArticleCount()+1);
                 if(isPush){
@@ -73,7 +74,7 @@ public class ArchivedateServiceImpl implements ArchivedateService {
                 }
                 archivedateMapper.updateByPrimaryKey(archivedateDO);
             }else{
-                archivedateDO.setId(TimeUtils.getTimestamp());
+                archivedateDO.setId(aid);
                 archivedateDO.setArchiveTime(archivedate);
                 archivedateDO.setArchivedateArticleCount(1);
                 if(isPush){
@@ -87,7 +88,7 @@ public class ArchivedateServiceImpl implements ArchivedateService {
             ArchivedateArticleDO archivedateArticleDO=new ArchivedateArticleDO();
             archivedateArticleDO.setId(TimeUtils.getTimestamp());
             archivedateArticleDO.setArticleId(id);
-            archivedateArticleDO.setArchivedateId(archivedateDO.getId());
+            archivedateArticleDO.setArchivedateId(aid);
             archivedateArticleMapper.insert(archivedateArticleDO);
         } catch (Exception e) {
             return false;

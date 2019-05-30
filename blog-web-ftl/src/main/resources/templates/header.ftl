@@ -55,13 +55,10 @@
                 <a rel="archive" href="${request.contextPath}/links.html">
                     <i class="icon-link"></i> 友情链接
                 </a>
-                <a rel="alternate" href="${request.contextPath}/blog-articles-rss.do" rel="section">
-                    <i class="icon-rss"></i> RSS
-                </a>
             </nav>
             <div class="fn-right">
                 <form class="form">
-                    <input placeholder="搜索" id="search" type="text" name="keyword"/>
+                    <input placeholder="搜索" id="keyword" type="text" name="keyword"/>
                     <button type="button" onclick="search()"><i class="icon-search"></i></button>
                 </form>
             </div>
@@ -119,11 +116,6 @@
         <li>
             <a rel="archive" href="${request.contextPath}/links.html">
                 <i class="icon-link"></i> 友情链接
-            </a>
-        </li>
-        <li>
-            <a rel="alternate" href="${request.contextPath}/blog-articles-rss.do" rel="section">
-                <i class="icon-rss"></i> RSS
             </a>
         </li>
     </ul>

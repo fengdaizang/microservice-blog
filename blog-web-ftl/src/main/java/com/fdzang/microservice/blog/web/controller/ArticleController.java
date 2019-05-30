@@ -118,8 +118,13 @@ public class ArticleController extends BaseController {
 
         Boolean tagBool=true;
         if(!articleDTO.getArticleTags().equals(article.getArticleTags())){
-            tagBool=(Boolean) CoventUtils.getApiResultData(
-                    tagClient.updateArticleAndTag(article.getArticleTags(),article.getId(),oldPush,newPush));
+            Boolean tag1Bool=(Boolean) CoventUtils.getApiResultData(
+                    tagClient.deleteArticleAndTag(article.getId(),oldPush));
+
+            Boolean tag2Bool=(Boolean) CoventUtils.getApiResultData(
+                    tagClient.addArticleAndTag(article.getArticleTags(),article.getId(),newPush));
+
+            tagBool=tag1Bool&&tag2Bool;
         }
 
         Boolean articleBool=(Boolean) CoventUtils.getApiResultData(articleClient.updateArticle(article));

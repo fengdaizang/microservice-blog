@@ -43,7 +43,7 @@
         <div class="content-inner">
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">文章管理</h2>
+                    <h2 class="no-margin-bottom">草稿夹管理</h2>
                 </div>
             </header>
             <!-- Breadcrumb-->
@@ -51,7 +51,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="${request.contextPath}/admin/index.html">首页</a></li>
                     <li class="breadcrumb-item active">文章</li>
-                    <li class="breadcrumb-item active">文章管理</li>
+                    <li class="breadcrumb-item active">草稿夹</li>
                 </ul>
             </div>
             <section class="tables">
@@ -84,7 +84,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <span class="card-title">文章管理</span>
+                                    <span class="card-title">草稿夹管理</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

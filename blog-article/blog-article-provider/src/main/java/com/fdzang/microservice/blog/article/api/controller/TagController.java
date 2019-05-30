@@ -43,14 +43,6 @@ public class TagController extends BaseController {
         return ok(tagService.addArticleAndTag(tags,id,isPush));
     }
 
-    @GetMapping(value = "/updateArticleAndTag")
-    public ApiResult updateArticleAndTag(@RequestParam("tags") String tags,
-                                         @RequestParam("id") String id,
-                                         @RequestParam("oldPush") Boolean oldPush,
-                                         @RequestParam("newPush") Boolean newPush){
-        return ok(tagService.updateArticleAndTag(tags,id,oldPush,newPush));
-    }
-
     @GetMapping(value = "/deleteArticleAndTag")
     public ApiResult deleteArticleAndTag(@RequestParam("id") String id,
                                          @RequestParam("isPush") Boolean isPush){
