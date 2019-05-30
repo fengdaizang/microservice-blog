@@ -130,12 +130,14 @@
                                                                class="btn btn-primary btn-xs">更新</a>
                                                             <a href="#" class="btn btn-danger btn-xs"
                                                                onclick="deleteArticle(${article.id})">删除</a>
-                                                            <#if article.articlePutTop == '0' >
-                                                                <a href="#" class="btn btn-success btn-xs"
-                                                                   onclick="pushTop(${article.id},1)">置顶</a>
-                                                            <#else >
-                                                                <a href="#" class="btn btn-success btn-xs"
-                                                                   onclick="pushTop(${article.id},0)">取消置顶</a>
+                                                            <#if user.userRole == 'adminRole'>
+                                                                <#if article.articlePutTop == '0' >
+                                                                    <a href="#" class="btn btn-success btn-xs"
+                                                                       onclick="pushTop(${article.id},1)">置顶</a>
+                                                                <#else >
+                                                                    <a href="#" class="btn btn-success btn-xs"
+                                                                       onclick="pushTop(${article.id},0)">取消置顶</a>
+                                                                </#if>
                                                             </#if>
                                                         </td>
                                                     </tr>

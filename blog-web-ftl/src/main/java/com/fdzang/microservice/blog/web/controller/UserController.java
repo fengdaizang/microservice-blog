@@ -114,8 +114,7 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @GetMapping("/search")
-    public Boolean userSearch(@RequestParam("keyword")String keyword,
-                              HashMap<String,Object> map){
+    public Boolean userSearch(@RequestParam("keyword")String keyword){
         List<UserDTO> userDTOS=(List<UserDTO>) CoventUtils.getApiResultData(userClient.getUserByKeyWord(keyword));
 
         if(userDTOS !=null){

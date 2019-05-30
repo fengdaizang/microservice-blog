@@ -179,6 +179,8 @@ public class ArticleController extends BaseController {
         String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
         if(StringUtils.isEmpty(keyword)){
             keyword="";
+        }else {
+            session.removeAttribute(Constant.Session.KEYWORD);
         }
         if(Constant.UserRole.DEFAULT.equals(userDTO.getUserRole())){
             articles=(PageDTO<ArticleDTO>)CoventUtils.getApiResultData(

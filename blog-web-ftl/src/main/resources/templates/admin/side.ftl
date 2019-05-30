@@ -17,6 +17,7 @@
             </ul>
         </li>
         <li><a href="${request.contextPath}/comment/mgr.html"> <i class="icon-grid"></i>评论管理</a></li>
+        <#if user.userRole == 'adminRole'>
         <li><a href="#tools" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>工具</a>
             <ul id="tools" class="collapse list-unstyled ">
                 <li><a href="${request.contextPath}/link/mgr.html">链接管理</a></li>
@@ -25,5 +26,6 @@
                 <li><a href="${request.contextPath}/tag/mgr.html">其他</a></li>
             </ul>
         </li>
+        </#if>
     </ul>
 </nav>

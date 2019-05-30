@@ -16,7 +16,7 @@
 <script type="text/javascript">
     function deleteTag()
     {
-        $.get("${request.contextPath}/article/search",{"keyword":keyword}, function(data){
+        $.get("${request.contextPath}/tag/delete", function(data){
             if(data>0){
                 alert("共移除"+data+"个标签！");
                 window.location.reload();

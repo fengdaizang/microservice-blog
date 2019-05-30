@@ -39,6 +39,7 @@ public class IndexController {
         String keyword=(String)session.getAttribute(Constant.Session.KEYWORD);
         if(StringUtils.isEmpty(keyword)){
             keyword="";
+        }else {
             session.removeAttribute(Constant.Session.KEYWORD);
         }
         PageDTO<ArticleDTO> pageDTO=(PageDTO<ArticleDTO>) CoventUtils.getApiResultData(
