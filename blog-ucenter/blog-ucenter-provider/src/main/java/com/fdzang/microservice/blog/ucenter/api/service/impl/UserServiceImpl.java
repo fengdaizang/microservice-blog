@@ -2,7 +2,6 @@ package com.fdzang.microservice.blog.ucenter.api.service.impl;
 
 import com.fdzang.microservice.blog.common.exception.BlogException;
 import com.fdzang.microservice.blog.common.exception.ErrorCode;
-import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.ucenter.api.service.UserService;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;

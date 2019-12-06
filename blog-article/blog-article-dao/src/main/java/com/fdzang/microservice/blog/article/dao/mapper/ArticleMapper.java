@@ -3,6 +3,7 @@ package com.fdzang.microservice.blog.article.dao.mapper;
 import com.fdzang.microservice.blog.article.dao.domain.ArticleDO;
 import com.fdzang.microservice.blog.article.dao.domain.ArticleDOExample;
 import com.fdzang.microservice.blog.article.dao.domain.ArticleDOWithBLOBs;
+
 import java.util.List;
 
 public interface ArticleMapper {

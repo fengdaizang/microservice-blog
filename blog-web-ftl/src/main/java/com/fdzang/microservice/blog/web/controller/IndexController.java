@@ -3,7 +3,6 @@ package com.fdzang.microservice.blog.web.controller;
 import com.fdzang.microservice.blog.article.common.dto.ArticleDTO;
 import com.fdzang.microservice.blog.article.feign.client.ArticleClient;
 import com.fdzang.microservice.blog.common.entity.PageDTO;
-import com.fdzang.microservice.blog.common.framework.ApiResult;
 import com.fdzang.microservice.blog.common.utils.Constant;
 import com.fdzang.microservice.blog.common.utils.CoventUtils;
 import com.fdzang.microservice.blog.ucenter.common.dto.UserDTO;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class IndexController {

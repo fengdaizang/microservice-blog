@@ -2,6 +2,7 @@ package com.fdzang.microservice.blog.ucenter.dao.mapper;
 
 import com.fdzang.microservice.blog.ucenter.dao.domain.UserDO;
 import com.fdzang.microservice.blog.ucenter.dao.domain.UserDOExample;
+
 import java.util.List;
 
 public interface UserMapper {

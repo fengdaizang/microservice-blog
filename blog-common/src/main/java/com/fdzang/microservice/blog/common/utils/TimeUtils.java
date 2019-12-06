@@ -1,7 +1,6 @@
 package com.fdzang.microservice.blog.common.utils;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;

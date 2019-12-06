@@ -2,6 +2,7 @@ package com.fdzang.microservice.blog.article.dao.mapper;
 
 import com.fdzang.microservice.blog.article.dao.domain.ArchivedateDO;
 import com.fdzang.microservice.blog.article.dao.domain.ArchivedateDOExample;
+
 import java.util.List;
 
 public interface ArchivedateMapper {

@@ -2,6 +2,7 @@ package com.fdzang.microservice.blog.ucenter.dao.mapper;
 
 import com.fdzang.microservice.blog.ucenter.dao.domain.OptionsDO;
 import com.fdzang.microservice.blog.ucenter.dao.domain.OptionsDOExample;
+
 import java.util.List;
 
 public interface OptionsMapper {
