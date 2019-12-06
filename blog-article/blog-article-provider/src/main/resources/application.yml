@@ -1,9 +1,9 @@
 server:
-  port: 7004
+  port: 7003
 
 spring:
   profiles:
-    active: local
+    active: product
   application:
     name: blog-article-v1
   output:

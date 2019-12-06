@@ -1,13 +1,13 @@
 spring:
   datasource:
     username: root
-    password: 123456
-    url: jdbc:mysql://120.78.121.110:3306/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    password: th228614654
+    url: jdbc:mysql://118.25.214.237:3306/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     driver-class-name: com.mysql.jdbc.Driver
 
 eureka:
   client:
     service-url:
-      defaultZone: http://120.78.121.110:7001/eureka/,http://120.78.121.110:7002/eureka/,http://120.78.121.110:7003/eureka/
+      defaultZone: http://fdzang.top:7001/eureka/,http://fdzang.top:7002/eureka/
   instance:
     prefer-ip-address: true

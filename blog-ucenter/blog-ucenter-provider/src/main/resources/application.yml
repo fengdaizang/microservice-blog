@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: local
+    active: product
   application:
     name: blog-ucenter-v1
   output:
