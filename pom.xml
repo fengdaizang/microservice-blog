@@ -21,7 +21,7 @@
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.16.18</lombok.version>
         <commons.lang3.version>3.7</commons.lang3.version>
-        <guava.version>23.6-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <fastjson.version>1.2.54</fastjson.version>
         <commons.collections4.version>4.1</commons.collections4.version>
         <commons-codec.version>1.11</commons-codec.version>
